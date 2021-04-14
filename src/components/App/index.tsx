@@ -1,12 +1,9 @@
 import React from "react";
 import "./styles.css";
+import { Canvas } from "../Canvas";
 
 function App() {
-  return (
-    <div style={{ display: "flex", height: "100vh" }}>
-      <h1 className="text">Press to start</h1>
-    </div>
-  );
+  return <Canvas />;
 }
 
 export default App;
