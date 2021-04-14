@@ -39,5 +39,23 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ]
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.2.3",
+    "mobx": "^5.8.0",
+    "mobx-react": "^5.4.3"
   }
 }
