@@ -1,9 +1,5 @@
-import React from "react";
-import "./styles.css";
-import { Canvas } from "../Canvas";
+import { Routes } from "../../routes";
 
-function App() {
-  return <Canvas />;
-}
+const App = () => <Routes />;
 
 export default App;
