@@ -11,7 +11,7 @@ export const Canvas = () => {
   const tick = () => {
     if (!canvasRef.current) return;
     renderFrame();
-    requestAnimationFrame(tick);
+    // requestAnimationFrame(tick);
     requestIdRef.current = requestAnimationFrame(tick);
   };
 
