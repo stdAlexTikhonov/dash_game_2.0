@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Drawer from "../Drawer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,11 +25,9 @@ export default function DenseAppBar() {
   const classes = useStyles();
 
   return (
-    <AppBar position="absolute" className={classes.appBar}>
+    <AppBar position="absolute" className={classes.appBar} elevation={0}>
       <Toolbar variant="dense" className={classes.root}>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          <MenuIcon />
-        </IconButton>
+        <Drawer />
       </Toolbar>
     </AppBar>
   );

@@ -5,6 +5,7 @@ import AppBar from "../AppBar";
 const App = () => (
   <Box height="100vh" width="100%" display="flex" bgcolor="black">
     <AppBar />
+
     <Routes />
   </Box>
 );
