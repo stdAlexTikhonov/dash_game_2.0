@@ -22,7 +22,5 @@ export const Canvas = () => {
     };
   }, []);
 
-  return (
-    <canvas width={500} ref={canvasRef} style={{ border: "1px solid black" }} />
-  );
+  return <canvas width={window.innerWidth} ref={canvasRef} />;
 };
