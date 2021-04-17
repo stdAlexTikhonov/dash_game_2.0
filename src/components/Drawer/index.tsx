@@ -68,7 +68,7 @@ export default function TemporaryDrawer() {
           onClick={() => history.push("/levels")}
         >
           <ListItemIcon>{<AppsIcon />}</ListItemIcon>
-          <ListItemText primary={"Level list"} />
+          <ListItemText primary={"Level List"} />
         </ListItem>
         <ListItem
           button
