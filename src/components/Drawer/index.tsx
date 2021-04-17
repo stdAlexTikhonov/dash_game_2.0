@@ -57,29 +57,18 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItem button key={"some_key"}>
+        <ListItem button key={"key_game"}>
           <ListItemIcon>{<MailIcon />}</ListItemIcon>
-          <ListItemText primary={<Link to="/">Reset</Link>} />
+          <ListItemText primary={<Link to="/">Start Game</Link>} />
         </ListItem>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button key={"key_levels"}>
+          <ListItemIcon>{<MailIcon />}</ListItemIcon>
+          <ListItemText primary={<Link to="/levels">Level list</Link>} />
+        </ListItem>
+        <ListItem button key={"key_settings"}>
+          <ListItemIcon>{<MailIcon />}</ListItemIcon>
+          <ListItemText primary={<Link to="/settings">Settings</Link>} />
+        </ListItem>
       </List>
     </div>
   );
