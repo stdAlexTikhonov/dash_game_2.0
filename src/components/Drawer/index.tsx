@@ -5,14 +5,13 @@ import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import AppsIcon from "@material-ui/icons/Apps";
+import SettingsIcon from "@material-ui/icons/Settings";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 
 const useStyles = makeStyles({
   list: {
@@ -60,7 +59,7 @@ export default function TemporaryDrawer() {
     >
       <List>
         <ListItem button key={"key_game"} onClick={() => history.push("/")}>
-          <ListItemIcon>{<MailIcon />}</ListItemIcon>
+          <ListItemIcon>{<PlayArrowIcon />}</ListItemIcon>
           <ListItemText primary={"Start Game"} />
         </ListItem>
         <ListItem
@@ -68,7 +67,7 @@ export default function TemporaryDrawer() {
           key={"key_levels"}
           onClick={() => history.push("/levels")}
         >
-          <ListItemIcon>{<MailIcon />}</ListItemIcon>
+          <ListItemIcon>{<AppsIcon />}</ListItemIcon>
           <ListItemText primary={"Level list"} />
         </ListItem>
         <ListItem
@@ -76,7 +75,7 @@ export default function TemporaryDrawer() {
           key={"key_settings"}
           onClick={() => history.push("/settings")}
         >
-          <ListItemIcon>{<MailIcon />}</ListItemIcon>
+          <ListItemIcon>{<SettingsIcon />}</ListItemIcon>
           <ListItemText primary={"Settings"} />
         </ListItem>
       </List>
