@@ -12,6 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   list: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles({
 type Anchor = "top" | "left" | "bottom" | "right";
 
 export default function TemporaryDrawer() {
+  const history = useHistory();
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -57,17 +59,25 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItem button key={"key_game"}>
+        <ListItem button key={"key_game"} onClick={() => history.push("/")}>
           <ListItemIcon>{<MailIcon />}</ListItemIcon>
-          <ListItemText primary={<Link to="/">Start Game</Link>} />
+          <ListItemText primary={"Start Game"} />
         </ListItem>
-        <ListItem button key={"key_levels"}>
+        <ListItem
+          button
+          key={"key_levels"}
+          onClick={() => history.push("/levels")}
+        >
           <ListItemIcon>{<MailIcon />}</ListItemIcon>
-          <ListItemText primary={<Link to="/levels">Level list</Link>} />
+          <ListItemText primary={"Level list"} />
         </ListItem>
-        <ListItem button key={"key_settings"}>
+        <ListItem
+          button
+          key={"key_settings"}
+          onClick={() => history.push("/settings")}
+        >
           <ListItemIcon>{<MailIcon />}</ListItemIcon>
-          <ListItemText primary={<Link to="/settings">Settings</Link>} />
+          <ListItemText primary={"Settings"} />
         </ListItem>
       </List>
     </div>
