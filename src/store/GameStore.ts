@@ -1,16 +1,27 @@
-import { observable, computed, configure, action } from "mobx";
+import { makeAutoObservable } from "mobx";
 
-configure({ enforceActions: "observed" });
+class GameStore {
+  multiplayer = false;
+  devMode = false;
 
-export class GameStore {
-  @observable multiplayer = false;
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-  @action setMultiplayer() {
+  setMultiplayer() {
     this.multiplayer = true;
   }
 
-  @action resetMultiplayer() {
+  resetMultiplayer() {
     this.multiplayer = false;
+  }
+
+  setDevMode() {
+    this.devMode = true;
+  }
+
+  resetDevMode() {
+    this.devMode = false;
   }
 }
 
