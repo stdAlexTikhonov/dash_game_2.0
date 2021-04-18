@@ -48,8 +48,9 @@ export const LevelList = () => {
       >
         Random
       </Button>
-      {levels.map((item) => (
+      {levels.map((item, i) => (
         <Button
+          key={i}
           className={classes.card}
           onClick={() => {
             GameStore.setLevel(item);
