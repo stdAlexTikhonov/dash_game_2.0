@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 class GameStore {
   multiplayer = false;
   devMode = false;
+  level = 0;
 
   constructor() {
     makeAutoObservable(this);
@@ -22,6 +23,10 @@ class GameStore {
 
   resetDevMode() {
     this.devMode = false;
+  }
+
+  setLevel(level: number) {
+    this.level = level;
   }
 }
 
