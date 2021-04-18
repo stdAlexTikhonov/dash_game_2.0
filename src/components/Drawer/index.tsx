@@ -12,6 +12,9 @@ import { useHistory } from "react-router-dom";
 import AppsIcon from "@material-ui/icons/Apps";
 import SettingsIcon from "@material-ui/icons/Settings";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import GameStore from "../../store/GameStore";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 
 const useStyles = makeStyles({
   list: {
@@ -48,6 +51,11 @@ export default function TemporaryDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
+  const handleMultiplayer = () => {
+    if (GameStore.multiplayer) GameStore.resetMultiplayer();
+    else GameStore.setMultiplayer();
+  };
+
   const list = (anchor: Anchor) => (
     <div
       className={clsx(classes.list, {
@@ -78,6 +86,16 @@ export default function TemporaryDrawer() {
           <ListItemIcon>{<SettingsIcon />}</ListItemIcon>
           <ListItemText primary={"Settings"} />
         </ListItem>
+        <ListItem button key={"key_mult"} onClick={handleMultiplayer}>
+          <ListItemIcon>
+            {GameStore.multiplayer ? (
+              <PersonAddDisabledIcon />
+            ) : (
+              <PersonAddIcon />
+            )}
+          </ListItemIcon>
+          <ListItemText primary={"Multiplayer"} />
+        </ListItem>
       </List>
     </div>
   );
@@ -98,7 +116,7 @@ export default function TemporaryDrawer() {
           <Drawer
             anchor={anchor}
             open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
+            // onClose={toggleDrawer(anchor, false)}
           >
             {list(anchor)}
           </Drawer>
