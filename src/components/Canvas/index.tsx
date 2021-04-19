@@ -25,7 +25,7 @@ export const Canvas = () => {
       setContext((_) => canvasRef.current!.getContext("2d"));
 
     return () => {
-      cancelAnimationFrame(requestIdRef.current!);
+      cancelAnimationFrame(requestIdRef!.current!);
     };
   }, []);
 

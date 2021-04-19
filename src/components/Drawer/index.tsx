@@ -76,7 +76,7 @@ export const TemporaryDrawer = observer(() => {
       <List>
         <ListItem button key={"key_game"} onClick={() => history.push("/")}>
           <ListItemIcon>{<PlayArrowIcon />}</ListItemIcon>
-          <ListItemText primary={"Start Game"} />
+          <ListItemText primary={"New Game"} />
         </ListItem>
         <ListItem
           button
