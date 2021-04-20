@@ -4,6 +4,7 @@ class GameStore {
   multiplayer = false;
   devMode = false;
   level = 0;
+  level_map: string[][] | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -27,6 +28,10 @@ class GameStore {
 
   setLevel(level: number) {
     this.level = level;
+  }
+
+  setLevelMap(level_map: string[][] | null) {
+    this.level_map = level_map;
   }
 }
 

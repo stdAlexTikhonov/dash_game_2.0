@@ -1,29 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
+import GameStore from "../../store/GameStore";
+import { observer } from "mobx-react-lite";
 
-export const Dev = () => {
-  const requestIdRef = useRef(null as null | number);
-  const codeRef = useRef<HTMLElement>(null);
-
-  const renderFrame = () => {
-    codeRef.current!.innerText = "Hi";
-  };
-
-  const tick = () => {
-    if (!codeRef.current) return;
-    requestIdRef.current = requestAnimationFrame(tick);
-    renderFrame();
-  };
-
-  useEffect(() => {
-    requestAnimationFrame(tick);
-    return () => {
-      cancelAnimationFrame(requestIdRef!.current!);
-    };
-  }, []);
-
+export const Dev = observer(() => {
   return (
-    <code style={{ background: "white", margin: "auto" }} ref={codeRef}>
-      Hello
-    </code>
+    <pre
+      style={{
+        background: "white",
+        margin: "auto",
+        fontFamily: "monospace",
+        fontSize: 25,
+      }}
+    >
+      {GameStore.level_map &&
+        GameStore.level_map.map((item) => item.join(" ")).join("\n\r")}
+    </pre>
   );
-};
+});

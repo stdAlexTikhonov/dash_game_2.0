@@ -4,6 +4,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import GameStore from "../../store/GameStore";
 import { useHistory } from "react-router-dom";
+import Levels from "../../levels";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,25 +40,17 @@ export const LevelList = () => {
 
   return (
     <Box className={classes.block}>
-      <Button
-        className={classes.card}
-        onClick={() => {
-          GameStore.setLevel(0);
-          history.push("/");
-        }}
-      >
-        Random
-      </Button>
       {levels.map((item, i) => (
         <Button
           key={i}
           className={classes.card}
           onClick={() => {
-            GameStore.setLevel(item);
+            GameStore.setLevel(i);
+            GameStore.setLevelMap(Levels[i]);
             history.push("/");
           }}
         >
-          {item}
+          {i}
         </Button>
       ))}
     </Box>
