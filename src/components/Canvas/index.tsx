@@ -1,23 +1,31 @@
 import { useRef, useEffect, useState } from "react";
 import ground from "../../assets/images/ground.png";
+import GameStore from "../../store/GameStore";
 
 export const Canvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
+  const [width] = useState(window.innerWidth);
+  const [height] = useState(document.body.clientHeight);
   const requestIdRef = useRef(null as null | number);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
   const image = new Image();
 
   const renderFrame = () => {
-    context!.drawImage(image, 0, 0, 32, 32);
+    context!.fillRect(0, 0, width, height);
+
+    GameStore.level_map!.forEach((row, j) => {
+      row.forEach((cell, i) => {
+        if (cell === ".") context!.drawImage(image, i * 32, j * 32, 32, 32);
+      });
+    });
   };
 
   const tick = () => {
     if (!context) return;
 
     renderFrame();
-    // requestIdRef.current = requestAnimationFrame(tick);
+    requestIdRef.current = requestAnimationFrame(tick);
   };
 
   useEffect(() => {
@@ -34,11 +42,5 @@ export const Canvas = () => {
     requestAnimationFrame(tick);
   }, [context]);
 
-  return (
-    <canvas
-      width={window.innerWidth}
-      height={document.body.clientHeight}
-      ref={canvasRef}
-    />
-  );
+  return <canvas width={width} height={height} ref={canvasRef} />;
 };
