@@ -1,5 +1,25 @@
 import { makeAutoObservable, autorun } from "mobx";
 
+const STOP_OBJECTS = [
+  "O",
+  "+",
+  "U",
+  "R",
+  "#",
+  "C",
+  "E",
+  "Z",
+  "X",
+  "P",
+  "L",
+  "M",
+  "N",
+  "W",
+  "Y",
+  "D",
+  ">",
+  "<",
+];
 class GameStore {
   multiplayer = false;
   devMode = false;
@@ -60,29 +80,38 @@ class GameStore {
     const maxY = this.level_map!.length - 1;
     const maxX = this.level_map![0]!.length - 1;
 
-    if (this.player1.direction === "UP")
-      this.setPlayer1Position(
-        this.player1.y > 0 ? this.player1.y - 1 : 0,
-        this.player1.x
-      );
+    if (this.player1.direction === "UP" && this.player1.y > 0)
+      if (
+        !STOP_OBJECTS.includes(
+          this.level_map![this.player1.y - 1][this.player1.x]
+        )
+      )
+        this.setPlayer1Position(this.player1.y - 1, this.player1.x);
 
-    if (this.player1.direction === "DOWN")
-      this.setPlayer1Position(
-        this.player1.y < maxY ? this.player1.y + 1 : maxY,
-        this.player1.x
-      );
+    if (this.player1.direction === "DOWN" && this.player1.y < maxY)
+      if (
+        !STOP_OBJECTS.includes(
+          this.level_map![this.player1.y + 1][this.player1.x]
+        )
+      )
+        this.setPlayer1Position(this.player1.y + 1, this.player1.x);
 
-    if (this.player1.direction === "LEFT")
-      this.setPlayer1Position(
-        this.player1.y,
-        this.player1.x > 0 ? this.player1.x - 1 : 0
-      );
+    if (this.player1.direction === "LEFT" && this.player1.x > 0)
+      if (
+        !STOP_OBJECTS.includes(
+          this.level_map![this.player1.y][this.player1.x - 1]
+        )
+      )
+        this.setPlayer1Position(this.player1.y, this.player1.x - 1);
 
-    if (this.player1.direction === "RIGHT")
-      this.setPlayer1Position(
-        this.player1.y,
-        this.player1.x < maxX ? this.player1.x + 1 : maxX
-      );
+    if (this.player1.direction === "RIGHT" && this.player1.x < maxX)
+      if (
+        !STOP_OBJECTS.includes(
+          this.level_map![this.player1.y][this.player1.x + 1]
+        )
+      )
+        this.setPlayer1Position(this.player1.y, this.player1.x + 1);
+
     this.state++;
   }
 
