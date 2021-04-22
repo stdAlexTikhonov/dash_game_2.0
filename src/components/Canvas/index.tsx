@@ -1,9 +1,29 @@
 import { useRef, useEffect, useState } from "react";
 import ground from "../../assets/images/ground.png";
+import merphy from "../../assets/images/merphy.png";
+import wall from "../../assets/images/wall.png";
+import ram from "../../assets/images/ram.png";
+import rock from "../../assets/images/rock.png";
+import food from "../../assets/images/food.png";
+import exit from "../../assets/images/exit.png";
+import scissors from "../../assets/images/scissors.png";
+import electron from "../../assets/images/electron.png";
+import ram2 from "../../assets/images/RAM2.png";
+import ram3 from "../../assets/images/RAM3.png";
+import bug from "../../assets/images/bug.png";
+import computer from "../../assets/images/computer.png";
+import orange_disk from "../../assets/images/orange_disk.png";
+import yellow_disk from "../../assets/images/yellow_disk.png";
+import portal_right from "../../assets/images/portal_right.png";
+import portal_left from "../../assets/images/portal_left.png";
+import P from "../../assets/images/P.png";
+import W from "../../assets/images/W.png";
+import N from "../../assets/images/N.png";
+import L from "../../assets/images/L.png";
+import M from "../../assets/images/M.png";
 import GameStore from "../../store/GameStore";
 import { BLOCK_WIDTH } from "../../utils/constansts";
 import { observer } from "mobx-react-lite";
-import { ContactSupportOutlined } from "@material-ui/icons";
 
 export const Canvas = observer(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -13,10 +33,10 @@ export const Canvas = observer(() => {
   const [viewport_height] = useState(Math.floor(height / BLOCK_WIDTH));
   const [count, setCount] = useState(0);
   const requestIdRef = useRef(null as null | number);
-  const previousTimeRef = useRef(0);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
-  const image = new Image();
+  const ground_img = new Image();
+  const merphy_img = new Image();
 
   const renderFrame = () => {
     context!.fillRect(0, 0, width, height);
@@ -37,7 +57,26 @@ export const Canvas = observer(() => {
           let pos_x = (i - viewport_start_x) * BLOCK_WIDTH;
           let pos_y = (j - viewport_start_y) * BLOCK_WIDTH;
           if (cell === ".")
-            context!.drawImage(image, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
+            context!.drawImage(
+              ground_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "A")
+            context!.drawImage(
+              merphy_img,
+              0,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
         }
       });
     });
@@ -69,7 +108,8 @@ export const Canvas = observer(() => {
   }, [count]);
 
   useEffect(() => {
-    image.src = ground;
+    ground_img.src = ground;
+    merphy_img.src = merphy;
     requestAnimationFrame(tick);
   }, [context]);
 
