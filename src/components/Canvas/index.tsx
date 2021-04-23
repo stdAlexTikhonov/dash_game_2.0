@@ -143,7 +143,7 @@ export const Canvas = observer(() => {
             context!.drawImage(
               scissors_img,
               state8 * BLOCK_WIDTH,
-              BLOCK_WIDTH,
+              0,
               BLOCK_WIDTH,
               BLOCK_WIDTH,
               pos_x,
@@ -155,7 +155,7 @@ export const Canvas = observer(() => {
           if (cell === "Z")
             context!.drawImage(
               electron_img,
-              state8 * BLOCK_WIDTH,
+              state6 * BLOCK_WIDTH,
               0,
               BLOCK_WIDTH,
               BLOCK_WIDTH,
