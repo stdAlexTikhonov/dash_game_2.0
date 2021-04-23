@@ -37,6 +37,26 @@ export const Canvas = observer(() => {
 
   const ground_img = new Image();
   const merphy_img = new Image();
+  const wall_img = new Image();
+  const ram_img = new Image();
+  const rock_img = new Image();
+  const food_img = new Image();
+  const exit_img = new Image();
+  const scissors_img = new Image();
+  const electron_img = new Image();
+  const ram2_img = new Image();
+  const ram3_img = new Image();
+  const bug_img = new Image();
+  const computer_img = new Image();
+  const orange_disk_img = new Image();
+  const yellow_disk_img = new Image();
+  const portal_right_img = new Image();
+  const portal_left_img = new Image();
+  const P_img = new Image();
+  const W_img = new Image();
+  const N_img = new Image();
+  const L_img = new Image();
+  const M_img = new Image();
 
   const renderFrame = () => {
     context!.fillRect(0, 0, width, height);
@@ -77,6 +97,166 @@ export const Canvas = observer(() => {
               BLOCK_WIDTH,
               BLOCK_WIDTH
             );
+
+          if (cell === "#")
+            context!.drawImage(
+              wall_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "+")
+            context!.drawImage(ram_img, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
+
+          if (cell === "O")
+            context!.drawImage(
+              rock_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "*")
+            context!.drawImage(
+              food_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "E")
+            context!.drawImage(
+              exit_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "X")
+            context!.drawImage(
+              scissors_img,
+              0,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "Z")
+            context!.drawImage(
+              electron_img,
+              0,
+              0,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "R")
+            context!.drawImage(
+              ram2_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "U")
+            context!.drawImage(
+              ram3_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "B")
+            context!.drawImage(
+              bug_img,
+              BLOCK_WIDTH,
+              0,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "C")
+            context!.drawImage(
+              computer_img,
+              BLOCK_WIDTH,
+              0,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "D")
+            context!.drawImage(
+              orange_disk_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "Y")
+            context!.drawImage(
+              yellow_disk_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === ">")
+            context!.drawImage(
+              portal_right_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "<")
+            context!.drawImage(
+              portal_left_img,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "P")
+            context!.drawImage(P_img, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
+
+          if (cell === "W")
+            context!.drawImage(W_img, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
+
+          if (cell === "N")
+            context!.drawImage(N_img, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
+
+          if (cell === "L")
+            context!.drawImage(L_img, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
+
+          if (cell === "M")
+            context!.drawImage(M_img, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
         }
       });
     });
@@ -110,6 +290,27 @@ export const Canvas = observer(() => {
   useEffect(() => {
     ground_img.src = ground;
     merphy_img.src = merphy;
+    wall_img.src = wall;
+    ram_img.src = ram;
+    rock_img.src = rock;
+    food_img.src = food;
+    exit_img.src = exit;
+    scissors_img.src = scissors;
+    electron_img.src = electron;
+    ram2_img.src = ram2;
+    ram3_img.src = ram3;
+    bug_img.src = bug;
+    computer_img.src = computer;
+    orange_disk_img.src = orange_disk;
+    yellow_disk_img.src = yellow_disk;
+    portal_right_img.src = portal_right;
+    portal_left_img.src = portal_left;
+    P_img.src = P;
+    W_img.src = W;
+    N_img.src = N;
+    L_img.src = L;
+    M_img.src = M;
+
     requestAnimationFrame(tick);
   }, [context]);
 
