@@ -59,6 +59,8 @@ export const Canvas = observer(() => {
   const M_img = new Image();
 
   const renderFrame = () => {
+    const state8 = GameStore.state % 8;
+    const state6 = GameStore.state % 6;
     context!.fillRect(0, 0, width, height);
     const viewport_start_x =
       GameStore.player1.x - Math.floor(viewport_width / 2);
@@ -140,7 +142,7 @@ export const Canvas = observer(() => {
           if (cell === "X")
             context!.drawImage(
               scissors_img,
-              0,
+              state8 * BLOCK_WIDTH,
               BLOCK_WIDTH,
               BLOCK_WIDTH,
               BLOCK_WIDTH,
@@ -153,7 +155,7 @@ export const Canvas = observer(() => {
           if (cell === "Z")
             context!.drawImage(
               electron_img,
-              0,
+              state8 * BLOCK_WIDTH,
               0,
               BLOCK_WIDTH,
               BLOCK_WIDTH,
@@ -184,7 +186,7 @@ export const Canvas = observer(() => {
           if (cell === "B")
             context!.drawImage(
               bug_img,
-              BLOCK_WIDTH,
+              state6 * BLOCK_WIDTH,
               0,
               BLOCK_WIDTH,
               BLOCK_WIDTH,
@@ -197,7 +199,7 @@ export const Canvas = observer(() => {
           if (cell === "C")
             context!.drawImage(
               computer_img,
-              BLOCK_WIDTH,
+              state8 * BLOCK_WIDTH,
               0,
               BLOCK_WIDTH,
               BLOCK_WIDTH,
