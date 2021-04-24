@@ -61,6 +61,7 @@ export const Canvas = observer(() => {
   const renderFrame = () => {
     const state8 = GameStore.state % 8;
     const state6 = GameStore.state % 6;
+    const state3 = GameStore.state % 3;
     context!.fillRect(0, 0, width, height);
     const viewport_start_x =
       GameStore.player1.x - Math.floor(viewport_width / 2);
@@ -90,8 +91,8 @@ export const Canvas = observer(() => {
           if (cell === "A")
             context!.drawImage(
               merphy_img,
-              0,
-              BLOCK_WIDTH,
+              state3 * BLOCK_WIDTH,
+              GameStore.player1.dy * BLOCK_WIDTH,
               BLOCK_WIDTH,
               BLOCK_WIDTH,
               pos_x,

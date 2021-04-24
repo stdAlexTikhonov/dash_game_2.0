@@ -30,6 +30,7 @@ class GameStore {
     direction: null as string | null,
     x: 0,
     y: 0,
+    dy: 1,
   };
 
   constructor() {
@@ -119,6 +120,10 @@ class GameStore {
     if (this.level_map) this.level_map[this.player1.y][this.player1.x] = " ";
     this.player1.x = x;
     this.player1.y = y;
+  }
+
+  setPlayer1DY(dy: number) {
+    this.player1.dy = dy;
   }
 }
 
