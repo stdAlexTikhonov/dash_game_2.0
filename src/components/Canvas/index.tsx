@@ -64,9 +64,9 @@ export const Canvas = observer(() => {
     const state3 = GameStore.state % 3;
     context!.fillRect(0, 0, width, height);
     const viewport_start_x =
-      GameStore.player1.x - Math.floor(viewport_width / 2);
+      GameStore.players[0].x - Math.floor(viewport_width / 2);
     const viewport_start_y =
-      GameStore.player1.y - Math.floor(viewport_height / 2);
+      GameStore.players[0].y - Math.floor(viewport_height / 2);
     const viewport_end_x = viewport_start_x + viewport_width;
     const viewport_end_y = viewport_start_y + viewport_height;
 
@@ -92,7 +92,7 @@ export const Canvas = observer(() => {
             context!.drawImage(
               merphy_img,
               state3 * BLOCK_WIDTH,
-              GameStore.player1.dy * BLOCK_WIDTH,
+              GameStore.players[0].dy * BLOCK_WIDTH,
               BLOCK_WIDTH,
               BLOCK_WIDTH,
               pos_x,

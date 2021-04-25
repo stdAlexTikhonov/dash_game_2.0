@@ -16,27 +16,27 @@ ReactDOM.render(
 document.onkeydown = (e: { code: string }) => {
   switch (e.code) {
     case "ArrowDown":
-      GameStore.setPlayer1Direction("DOWN");
-      GameStore.setPlayer1DY(0);
+      GameStore.players[0].setPlayer1Direction("DOWN");
+      GameStore.players[0].setPlayer1DY(0);
       break;
     case "ArrowUp":
-      GameStore.setPlayer1Direction("UP");
-      GameStore.setPlayer1DY(2);
+      GameStore.players[0].setPlayer1Direction("UP");
+      GameStore.players[0].setPlayer1DY(2);
       break;
     case "ArrowLeft":
-      GameStore.setPlayer1Direction("LEFT");
-      GameStore.setPlayer1DY(0);
+      GameStore.players[0].setPlayer1Direction("LEFT");
+      GameStore.players[0].setPlayer1DY(0);
       break;
     case "ArrowRight":
-      GameStore.setPlayer1Direction("RIGHT");
-      GameStore.setPlayer1DY(2);
+      GameStore.players[0].setPlayer1Direction("RIGHT");
+      GameStore.players[0].setPlayer1DY(2);
       break;
   }
 };
 
 document.onkeyup = () => {
-  GameStore.setPlayer1Direction(null);
-  GameStore.setPlayer1DY(1);
+  GameStore.players[0].setPlayer1Direction(null);
+  GameStore.players[0].setPlayer1DY(1);
 };
 
 // If you want to start measuring performance in your app, pass a function
