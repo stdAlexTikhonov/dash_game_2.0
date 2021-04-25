@@ -1,4 +1,4 @@
-import { makeAutoObservable, autorun } from "mobx";
+import { makeAutoObservable } from "mobx";
 import GameStore from "./GameStore";
 
 const STOP_OBJECTS = [
@@ -31,7 +31,7 @@ class Player {
     makeAutoObservable(this);
   }
 
-  setPlayer1Direction(dir: string | null) {
+  setDirection(dir: string | null) {
     this.direction = dir;
   }
 
@@ -41,28 +41,28 @@ class Player {
 
     if (this.direction === "UP" && this.y > 0)
       if (!STOP_OBJECTS.includes(GameStore.level_map![this.y - 1][this.x]))
-        this.setPlayer1Position(this.y - 1, this.x);
+        this.setPosition(this.y - 1, this.x);
 
     if (this.direction === "DOWN" && this.y < maxY)
       if (!STOP_OBJECTS.includes(GameStore.level_map![this.y + 1][this.x]))
-        this.setPlayer1Position(this.y + 1, this.x);
+        this.setPosition(this.y + 1, this.x);
 
     if (this.direction === "LEFT" && this.x > 0)
       if (!STOP_OBJECTS.includes(GameStore.level_map![this.y][this.x - 1]))
-        this.setPlayer1Position(this.y, this.x - 1);
+        this.setPosition(this.y, this.x - 1);
 
     if (this.direction === "RIGHT" && this.x < maxX)
       if (!STOP_OBJECTS.includes(GameStore.level_map![this.y][this.x + 1]))
-        this.setPlayer1Position(this.y, this.x + 1);
+        this.setPosition(this.y, this.x + 1);
   }
 
-  setPlayer1Position(y: number, x: number) {
+  setPosition(y: number, x: number) {
     if (GameStore.level_map) GameStore.level_map[this.y][this.x] = " ";
     this.x = x;
     this.y = y;
   }
 
-  setPlayer1DY(dy: number) {
+  setState(dy: number) {
     this.dy = dy;
   }
 }

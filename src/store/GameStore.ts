@@ -46,7 +46,7 @@ class GameStore {
       level_map.forEach((row, i) => {
         row.forEach((item, j) => {
           if (item === "A") {
-            this.players[0].setPlayer1Position(i, j);
+            this.players[0].setPosition(i, j);
           }
         });
       });
