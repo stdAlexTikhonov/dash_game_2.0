@@ -99,7 +99,20 @@ export const Canvas: React.FC<{
             context!.drawImage(
               merphy_img,
               state3 * BLOCK_WIDTH,
-              GameStore.players[player].dy * BLOCK_WIDTH,
+              GameStore.players[0].dy * BLOCK_WIDTH,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              BLOCK_WIDTH,
+              BLOCK_WIDTH
+            );
+
+          if (cell === "H")
+            context!.drawImage(
+              merphy_img,
+              state3 * BLOCK_WIDTH,
+              GameStore.players[1].dy * BLOCK_WIDTH,
               BLOCK_WIDTH,
               BLOCK_WIDTH,
               pos_x,

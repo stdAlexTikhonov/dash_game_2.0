@@ -13,10 +13,14 @@ class GameStore {
     makeAutoObservable(this);
 
     autorun(() => {
-      if (this.level_map)
-        this.players.forEach((player) => {
-          this.level_map![player.y][player.x] = "A";
-        });
+      if (this.level_map) {
+        const player1 = this.players[0];
+        this.level_map![player1.y][player1.x] = "A";
+        if (this.multiplayer) {
+          const player2 = this.players[1];
+          this.level_map![player2.y][player2.x] = "H";
+        }
+      }
     });
   }
 
