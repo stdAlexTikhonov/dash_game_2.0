@@ -22,10 +22,14 @@ class GameStore {
 
   setMultiplayer() {
     this.multiplayer = true;
+    this.players.push(new Player());
+    this.players[1].setPosition(this.players[0].y, this.players[0].x);
   }
 
   resetMultiplayer() {
     this.multiplayer = false;
+    const player = this.players.pop();
+    this.level_map![player!.y][player!.x] = " ";
   }
 
   setDevMode() {
@@ -47,6 +51,7 @@ class GameStore {
         row.forEach((item, j) => {
           if (item === "A") {
             this.players[0].setPosition(i, j);
+            this.multiplayer && this.players[1].setPosition(i, j);
           }
         });
       });

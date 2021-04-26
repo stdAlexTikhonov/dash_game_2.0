@@ -42,8 +42,10 @@ export const Game = observer(() => {
     <Dev />
   ) : (
     <Box display="flex">
-      <Canvas count={count} width={width} height={height} />
-      {multiplayer && <Canvas count={count} width={width} height={height} />}
+      <Canvas count={count} width={width} height={height} player={0} />
+      {multiplayer && (
+        <Canvas count={count} width={width} height={height} player={1} />
+      )}
     </Box>
   );
 });
