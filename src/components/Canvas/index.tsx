@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import ground from "../../assets/images/ground.png";
 import merphy from "../../assets/images/merphy.png";
 import wall from "../../assets/images/wall.png";
@@ -25,36 +25,44 @@ import GameStore from "../../store/GameStore";
 import { BLOCK_WIDTH } from "../../utils/constansts";
 import { observer } from "mobx-react-lite";
 
-export const Canvas: React.FC<{ count: number }> = observer(({ count }) => {
+const ground_img = new Image();
+const merphy_img = new Image();
+const wall_img = new Image();
+const ram_img = new Image();
+const rock_img = new Image();
+const food_img = new Image();
+const exit_img = new Image();
+const scissors_img = new Image();
+const electron_img = new Image();
+const ram2_img = new Image();
+const ram3_img = new Image();
+const bug_img = new Image();
+const computer_img = new Image();
+const orange_disk_img = new Image();
+const yellow_disk_img = new Image();
+const portal_right_img = new Image();
+const portal_left_img = new Image();
+const P_img = new Image();
+const W_img = new Image();
+const N_img = new Image();
+const L_img = new Image();
+const M_img = new Image();
+
+export const Canvas: React.FC<{
+  count: number;
+  width: number;
+  height: number;
+}> = observer(({ count, width, height }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [width] = useState(window.innerWidth);
-  const [height] = useState(document.body.clientHeight);
-  const [viewport_width] = useState(Math.floor(width / BLOCK_WIDTH));
+  const [viewport_width, setViewport] = useState(
+    Math.floor(width / BLOCK_WIDTH)
+  );
   const [viewport_height] = useState(Math.floor(height / BLOCK_WIDTH));
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
-  const ground_img = new Image();
-  const merphy_img = new Image();
-  const wall_img = new Image();
-  const ram_img = new Image();
-  const rock_img = new Image();
-  const food_img = new Image();
-  const exit_img = new Image();
-  const scissors_img = new Image();
-  const electron_img = new Image();
-  const ram2_img = new Image();
-  const ram3_img = new Image();
-  const bug_img = new Image();
-  const computer_img = new Image();
-  const orange_disk_img = new Image();
-  const yellow_disk_img = new Image();
-  const portal_right_img = new Image();
-  const portal_left_img = new Image();
-  const P_img = new Image();
-  const W_img = new Image();
-  const N_img = new Image();
-  const L_img = new Image();
-  const M_img = new Image();
+  useEffect(() => {
+    setViewport(Math.floor(width / BLOCK_WIDTH));
+  }, [width]);
 
   const renderFrame = () => {
     const state8 = GameStore.state % 8;
@@ -314,7 +322,6 @@ export const Canvas: React.FC<{ count: number }> = observer(({ count }) => {
   useEffect(() => {
     if (canvasRef.current)
       setContext((_) => canvasRef.current!.getContext("2d"));
-    if (count % 5 === 0) GameStore.updateState();
     if (context) renderFrame();
   }, [count]);
 
