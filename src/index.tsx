@@ -31,12 +31,44 @@ document.onkeydown = (e: { code: string }) => {
       GameStore.players[0].setDirection("RIGHT");
       GameStore.players[0].setState(2);
       break;
+    case "KeyS":
+      if (!GameStore.multiplayer) return;
+      GameStore.players[1].setDirection("DOWN");
+      GameStore.players[1].setState(0);
+      break;
+    case "KeyW":
+      if (!GameStore.multiplayer) return;
+      GameStore.players[1].setDirection("UP");
+      GameStore.players[1].setState(2);
+      break;
+    case "KeyA":
+      if (!GameStore.multiplayer) return;
+      GameStore.players[1].setDirection("LEFT");
+      GameStore.players[1].setState(0);
+      break;
+    case "KeyD":
+      if (!GameStore.multiplayer) return;
+      GameStore.players[1].setDirection("RIGHT");
+      GameStore.players[1].setState(2);
+      break;
   }
 };
 
-document.onkeyup = () => {
-  GameStore.players[0].setDirection(null);
-  GameStore.players[0].setState(1);
+document.onkeyup = (e) => {
+  switch (e.code) {
+    case "KeyW":
+    case "KeyA":
+    case "KeyS":
+    case "KeyD":
+      if (!GameStore.multiplayer) return;
+      GameStore.players[1].setDirection(null);
+      GameStore.players[1].setState(1);
+      break;
+    default:
+      GameStore.players[0].setDirection(null);
+      GameStore.players[0].setState(1);
+      break;
+  }
 };
 
 // If you want to start measuring performance in your app, pass a function
