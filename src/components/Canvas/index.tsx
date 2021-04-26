@@ -25,14 +25,12 @@ import GameStore from "../../store/GameStore";
 import { BLOCK_WIDTH } from "../../utils/constansts";
 import { observer } from "mobx-react-lite";
 
-export const Canvas = observer(() => {
+export const Canvas: React.FC<{ count: number }> = observer(({ count }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [width] = useState(window.innerWidth);
   const [height] = useState(document.body.clientHeight);
   const [viewport_width] = useState(Math.floor(width / BLOCK_WIDTH));
   const [viewport_height] = useState(Math.floor(height / BLOCK_WIDTH));
-  const [count, setCount] = useState(0);
-  const requestIdRef = useRef(null as null | number);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
   const ground_img = new Image();
@@ -265,31 +263,6 @@ export const Canvas = observer(() => {
     });
   };
 
-  const tick = (time: any) => {
-    if (!context) return;
-
-    renderFrame();
-
-    // Pass on a function to the setter of the state
-    // to make sure we always have the latest state
-    setCount((prevCount) => prevCount + 1);
-
-    requestIdRef.current = requestAnimationFrame(tick);
-  };
-
-  useEffect(() => {
-    if (canvasRef.current)
-      setContext((_) => canvasRef.current!.getContext("2d"));
-
-    return () => {
-      cancelAnimationFrame(requestIdRef!.current!);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (count % 5 === 0) GameStore.updateState();
-  }, [count]);
-
   useEffect(() => {
     ground_img.src = ground;
     merphy_img.src = merphy;
@@ -313,9 +286,37 @@ export const Canvas = observer(() => {
     N_img.src = N;
     L_img.src = L;
     M_img.src = M;
+  }, [
+    M_img,
+    L_img,
+    N_img,
+    W_img,
+    P_img,
+    portal_left_img,
+    portal_right_img,
+    yellow_disk_img,
+    orange_disk_img,
+    computer_img,
+    bug_img,
+    ram3_img,
+    ram2_img,
+    ground_img,
+    merphy_img,
+    wall_img,
+    ram_img,
+    rock_img,
+    food_img,
+    exit_img,
+    scissors_img,
+    electron_img,
+  ]);
 
-    requestAnimationFrame(tick);
-  }, [context]);
+  useEffect(() => {
+    if (canvasRef.current)
+      setContext((_) => canvasRef.current!.getContext("2d"));
+    if (count % 5 === 0) GameStore.updateState();
+    if (context) renderFrame();
+  }, [count]);
 
   return <canvas width={width} height={height} ref={canvasRef} />;
 });
