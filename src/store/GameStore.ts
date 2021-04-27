@@ -1,5 +1,6 @@
 import { makeAutoObservable, autorun } from "mobx";
 import Player from "./Player";
+import FallenObject from "./FallenObject";
 
 class GameStore {
   multiplayer = false;
@@ -8,6 +9,9 @@ class GameStore {
   level_map: string[][] | null = null;
   state = 0;
   players = [new Player()];
+  rocks: FallenObject[] = [];
+  stars: FallenObject[] = [];
+  orange_disks: FallenObject[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -21,6 +25,17 @@ class GameStore {
           this.level_map![player2.y][player2.x] = "H";
         }
       }
+      this.rocks.forEach((rock) => {
+        this.level_map![rock.y][rock.x] = "O";
+      });
+
+      this.stars.forEach((star) => {
+        this.level_map![star.y][star.x] = "*";
+      });
+
+      this.orange_disks.forEach((disk) => {
+        this.level_map![disk.y][disk.x] = "D";
+      });
     });
   }
 
@@ -57,12 +72,27 @@ class GameStore {
             this.players[0].setPosition(i, j);
             this.multiplayer && this.players[1].setPosition(i, j);
           }
+
+          if (item === "O") {
+            this.rocks.push(new FallenObject(i, j));
+          }
+
+          if (item === "*") {
+            this.stars.push(new FallenObject(i, j));
+          }
+
+          if (item === "D") {
+            this.orange_disks.push(new FallenObject(i, j));
+          }
         });
       });
   }
 
   updateState() {
     this.players.forEach((player) => player.updateState());
+    this.rocks.forEach((rock) => rock.updateState());
+    this.stars.forEach((star) => star.updateState());
+    this.orange_disks.forEach((disk) => disk.updateState());
     this.state++;
   }
 }
