@@ -8,7 +8,7 @@ class GameStore {
   level = 1;
   level_map: string[][] | null = null;
   state = 0;
-  players = [new Player()];
+  players: Player[] = [];
   rocks: FallenObject[] = [];
   stars: FallenObject[] = [];
   orange_disks: FallenObject[] = [];
@@ -42,8 +42,8 @@ class GameStore {
 
   setMultiplayer() {
     this.multiplayer = true;
-    this.players.push(new Player());
-    this.players[1].setPosition(this.players[0].y, this.players[0].x);
+    const [player] = this.players;
+    this.players.push(new Player(player.y, player.x));
   }
 
   resetMultiplayer() {
@@ -69,13 +69,14 @@ class GameStore {
     this.rocks = [];
     this.stars = [];
     this.orange_disks = [];
+    this.players = [];
     this.level_map = level_map;
     if (level_map)
       level_map.forEach((row, i) => {
         row.forEach((item, j) => {
           if (item === "A") {
-            this.players[0].setPosition(i, j);
-            this.multiplayer && this.players[1].setPosition(i, j);
+            this.players.push(new Player(i, j));
+            this.multiplayer && this.players.push(new Player(i, j));
           }
 
           if (item === "O") {

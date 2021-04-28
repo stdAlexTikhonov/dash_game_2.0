@@ -23,11 +23,13 @@ const STOP_OBJECTS = [
 ];
 class Player {
   direction = null as string | null;
-  x = 0;
-  y = 0;
+  x = -1;
+  y = -1;
   dy = 1;
 
-  constructor() {
+  constructor(y: number, x: number) {
+    this.y = y;
+    this.x = x;
     makeAutoObservable(this);
   }
 
