@@ -25,9 +25,6 @@ class GameStore {
           this.level_map![player2.y][player2.x] = "H";
         }
       }
-      this.rocks.forEach((rock) => {
-        this.level_map![rock.y][rock.x] = "O";
-      });
 
       this.stars.forEach((star) => {
         this.level_map![star.y][star.x] = "*";
@@ -35,6 +32,10 @@ class GameStore {
 
       this.orange_disks.forEach((disk) => {
         this.level_map![disk.y][disk.x] = "D";
+      });
+
+      this.rocks.forEach((rock) => {
+        this.level_map![rock.y][rock.x] = "O";
       });
     });
   }
