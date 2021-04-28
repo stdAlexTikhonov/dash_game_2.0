@@ -5,7 +5,7 @@ import FallenObject from "./FallenObject";
 class GameStore {
   multiplayer = false;
   devMode = false;
-  level = 0;
+  level = 1;
   level_map: string[][] | null = null;
   state = 0;
   players = [new Player()];
@@ -65,6 +65,10 @@ class GameStore {
   }
 
   setLevelMap(level_map: string[][] | null) {
+    this.level_map = [];
+    this.rocks = [];
+    this.stars = [];
+    this.orange_disks = [];
     this.level_map = level_map;
     if (level_map)
       level_map.forEach((row, i) => {
