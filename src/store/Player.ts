@@ -59,7 +59,9 @@ class Player {
   }
 
   setPosition(y: number, x: number) {
-    if (GameStore.level_map) GameStore.level_map[this.y][this.x] = " ";
+    if (GameStore.level_map) {
+      GameStore.level_map[this.y][this.x] = " ";
+    }
     this.x = x;
     this.y = y;
   }

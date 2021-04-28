@@ -1,6 +1,7 @@
-import { makeAutoObservable, autorun } from "mobx";
+import { makeAutoObservable, autorun, computed } from "mobx";
 import Player from "./Player";
 import FallenObject from "./FallenObject";
+import Star from "./Star";
 
 class GameStore {
   multiplayer = false;
@@ -10,11 +11,12 @@ class GameStore {
   state = 0;
   players: Player[] = [];
   rocks: FallenObject[] = [];
-  stars: FallenObject[] = [];
+  stars: Star[] = [];
   orange_disks: FallenObject[] = [];
+  stars_start_length: number = 0;
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, { scores: computed });
 
     autorun(() => {
       if (this.level_map) {
@@ -84,7 +86,7 @@ class GameStore {
           }
 
           if (item === "*") {
-            this.stars.push(new FallenObject(i, j));
+            this.stars.push(new Star(i, j));
           }
 
           if (item === "D") {
@@ -92,6 +94,7 @@ class GameStore {
           }
         });
       });
+    this.stars_start_length = this.stars.length;
   }
 
   updateState() {
@@ -99,7 +102,16 @@ class GameStore {
     this.rocks.forEach((rock) => rock.updateState());
     this.stars.forEach((star) => star.updateState());
     this.orange_disks.forEach((disk) => disk.updateState());
+    this.checkStars();
     this.state++;
+  }
+
+  checkStars() {
+    this.stars = this.stars.filter((star) => star.alive);
+  }
+
+  get scores() {
+    return this.stars_start_length - this.stars.length;
   }
 }
 
