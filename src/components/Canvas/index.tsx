@@ -308,30 +308,7 @@ export const Canvas: React.FC<{
     N_img.src = N;
     L_img.src = L;
     M_img.src = M;
-  }, [
-    M_img,
-    L_img,
-    N_img,
-    W_img,
-    P_img,
-    portal_left_img,
-    portal_right_img,
-    yellow_disk_img,
-    orange_disk_img,
-    computer_img,
-    bug_img,
-    ram3_img,
-    ram2_img,
-    ground_img,
-    merphy_img,
-    wall_img,
-    ram_img,
-    rock_img,
-    food_img,
-    exit_img,
-    scissors_img,
-    electron_img,
-  ]);
+  }, []);
 
   useEffect(() => {
     if (canvasRef.current)

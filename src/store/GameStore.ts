@@ -1,7 +1,5 @@
-import { makeAutoObservable, autorun, computed } from "mobx";
+import { makeAutoObservable, autorun } from "mobx";
 import Player from "./Player";
-import FallenObject from "./FallenObject";
-import Star from "./Star";
 
 class GameStore {
   multiplayer = false;
@@ -10,13 +8,9 @@ class GameStore {
   level_map: string[][] | null = null;
   state = 0;
   players: Player[] = [];
-  rocks: FallenObject[] = [];
-  stars: Star[] = [];
-  orange_disks: FallenObject[] = [];
-  stars_start_length: number = 0;
 
   constructor() {
-    makeAutoObservable(this, { scores: computed });
+    makeAutoObservable(this);
 
     autorun(() => {
       if (this.level_map) {
@@ -27,18 +21,6 @@ class GameStore {
           this.level_map![player2.y][player2.x] = "H";
         }
       }
-
-      this.stars.forEach((star) => {
-        this.level_map![star.y][star.x] = "*";
-      });
-
-      this.orange_disks.forEach((disk) => {
-        this.level_map![disk.y][disk.x] = "D";
-      });
-
-      this.rocks.forEach((rock) => {
-        this.level_map![rock.y][rock.x] = "O";
-      });
     });
   }
 
@@ -68,9 +50,7 @@ class GameStore {
 
   setLevelMap(level_map: string[][] | null) {
     this.level_map = [];
-    this.rocks = [];
-    this.stars = [];
-    this.orange_disks = [];
+
     this.players = [];
     this.level_map = level_map;
     if (level_map)
@@ -80,38 +60,14 @@ class GameStore {
             this.players.push(new Player(i, j));
             this.multiplayer && this.players.push(new Player(i, j));
           }
-
-          if (item === "O") {
-            this.rocks.push(new FallenObject(i, j));
-          }
-
-          if (item === "*") {
-            this.stars.push(new Star(i, j));
-          }
-
-          if (item === "D") {
-            this.orange_disks.push(new FallenObject(i, j));
-          }
         });
       });
-    this.stars_start_length = this.stars.length;
   }
 
   updateState() {
     this.players.forEach((player) => player.updateState());
-    this.rocks.forEach((rock) => rock.updateState());
-    this.stars.forEach((star) => star.updateState());
-    this.orange_disks.forEach((disk) => disk.updateState());
-    this.checkStars();
+
     this.state++;
-  }
-
-  checkStars() {
-    this.stars = this.stars.filter((star) => star.alive);
-  }
-
-  get scores() {
-    return this.stars_start_length - this.stars.length;
   }
 }
 
