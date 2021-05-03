@@ -49,11 +49,11 @@ const L_img = new Image();
 const M_img = new Image();
 
 export const Canvas: React.FC<{
-  count: number;
   width: number;
   height: number;
   player: number;
-}> = observer(({ count, width, height, player }) => {
+}> = observer(({ width, height, player }) => {
+  const count = GameStore.state;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [viewport_width, setViewport] = useState(
     Math.floor(width / BLOCK_WIDTH)
