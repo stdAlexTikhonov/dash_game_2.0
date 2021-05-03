@@ -11,6 +11,7 @@ export const Game = observer(() => {
   const [width, setWidth] = useState(
     multiplayer ? window.innerWidth / 2 : window.innerWidth
   );
+
   const [height] = useState(document.body.clientHeight);
   const requestIdRef = useRef(null as null | number);
 
