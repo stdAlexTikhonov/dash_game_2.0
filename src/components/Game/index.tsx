@@ -4,6 +4,7 @@ import { Dev } from "../DevMode";
 import GameStore from "../../store/GameStore";
 import { observer } from "mobx-react-lite";
 import Box from "@material-ui/core/Box";
+import World from "../../characters/World";
 
 export const Game = observer(() => {
   const [count, setCount] = useState(0);
@@ -29,6 +30,7 @@ export const Game = observer(() => {
   }, [multiplayer]);
 
   useEffect(() => {
+    World.setMap(GameStore.level_map!);
     tick();
     return () => {
       cancelAnimationFrame(requestIdRef!.current!);

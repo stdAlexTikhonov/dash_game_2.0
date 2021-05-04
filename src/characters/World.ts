@@ -1,16 +1,12 @@
 import ground from "../assets/images/ground.png";
-
-export class World {
-  width: number;
-  height: number;
+class World {
+  width: number = 0;
+  height: number = 0;
   counter: number;
-  world_map: string[][];
+  world_map: string[][] = [];
   ground_img: HTMLImageElement;
-  constructor(world_map: string[][]) {
-    this.width = world_map[0].length;
-    this.height = world_map.length;
+  constructor() {
     this.counter = 0;
-    this.world_map = world_map;
     this.ground_img = new Image();
     this.ground_img.src = ground;
   }
@@ -31,8 +27,8 @@ export class World {
         if (cell === ".")
           context.drawImage(
             this.ground_img,
-            x,
-            y,
+            x * World.BLOCK_WIDTH,
+            y * World.BLOCK_WIDTH,
             World.BLOCK_WIDTH,
             World.BLOCK_WIDTH
           );
@@ -43,4 +39,12 @@ export class World {
   tick() {
     this.counter++;
   }
+
+  setMap(world_map: string[][]) {
+    this.width = world_map[0].length;
+    this.height = world_map.length;
+    this.world_map = world_map;
+  }
 }
+
+export default new World();
