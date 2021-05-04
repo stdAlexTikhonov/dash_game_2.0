@@ -12,12 +12,10 @@ import { useHistory } from "react-router-dom";
 import AppsIcon from "@material-ui/icons/Apps";
 import SettingsIcon from "@material-ui/icons/Settings";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import GameStore from "../../store/GameStore";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import Divider from "@material-ui/core/Divider";
 import CodeIcon from "@material-ui/icons/Code";
-import { observer } from "mobx-react-lite";
 
 const useStyles = makeStyles({
   list: {
@@ -30,7 +28,7 @@ const useStyles = makeStyles({
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
-export const TemporaryDrawer = observer(() => {
+export const TemporaryDrawer = () => {
   const history = useHistory();
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -55,13 +53,13 @@ export const TemporaryDrawer = observer(() => {
   };
 
   const handleMultiplayer = () => {
-    if (GameStore.multiplayer) GameStore.resetMultiplayer();
-    else GameStore.setMultiplayer();
+    // if (GameStore.multiplayer) GameStore.resetMultiplayer();
+    // else GameStore.setMultiplayer();
   };
 
   const handleDevMode = () => {
-    if (GameStore.devMode) GameStore.resetDevMode();
-    else GameStore.setDevMode();
+    // if (GameStore.devMode) GameStore.resetDevMode();
+    // else GameStore.setDevMode();
   };
 
   const list = (anchor: Anchor) => (
@@ -110,21 +108,20 @@ export const TemporaryDrawer = observer(() => {
       <List>
         <ListItem button key={"key_mult"} onClick={handleMultiplayer}>
           <ListItemIcon>
-            {GameStore.multiplayer ? (
+            {/* {GameStore.multiplayer ? (
               <PersonAddDisabledIcon />
             ) : (
               <PersonAddIcon />
-            )}
+            )} */}
+            <PersonAddIcon />
           </ListItemIcon>
-          <ListItemText
-            primary={GameStore.multiplayer ? "Remove player" : "Add player"}
-          />
+          <ListItemText primary={"Add player"} />
         </ListItem>
         <ListItem button key={"key_dev"} onClick={handleDevMode}>
           <ListItemIcon>
             <CodeIcon />
           </ListItemIcon>
-          <ListItemText primary={GameStore.devMode ? "Reset DEV" : "Set DEV"} />
+          <ListItemText primary={"Set DEV"} />
         </ListItem>
       </List>
     </div>
@@ -156,4 +153,4 @@ export const TemporaryDrawer = observer(() => {
       ))}
     </div>
   );
-});
+};

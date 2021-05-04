@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import GameStore from "../../store/GameStore";
+
 import { useHistory } from "react-router-dom";
 import Levels from "../../levels";
 
@@ -45,8 +45,8 @@ export const LevelList = () => {
           key={i}
           className={classes.card}
           onClick={() => {
-            GameStore.setLevel(i);
-            GameStore.setLevelMap(Levels[i]);
+            // GameStore.setLevel(i);
+            // GameStore.setLevelMap(Levels[i]);
             history.push("/");
           }}
         >

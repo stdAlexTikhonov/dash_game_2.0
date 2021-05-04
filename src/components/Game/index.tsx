@@ -1,17 +1,13 @@
 import { useRef, useEffect, useState } from "react";
 import { Canvas } from "../Canvas";
 import { Dev } from "../DevMode";
-import GameStore from "../../store/GameStore";
-import { observer } from "mobx-react-lite";
+
 import Box from "@material-ui/core/Box";
 import World from "../../characters/World";
+import Levels from "../../levels";
 
-export const Game = observer(() => {
+export const Game = () => {
   const [count, setCount] = useState(0);
-  const { devMode, multiplayer } = GameStore;
-  const [width, setWidth] = useState(
-    multiplayer ? window.innerWidth / 2 : window.innerWidth
-  );
 
   const [height] = useState(document.body.clientHeight);
   const requestIdRef = useRef(null as null | number);
@@ -25,12 +21,12 @@ export const Game = observer(() => {
     requestIdRef.current = requestAnimationFrame(tick);
   };
 
-  useEffect(() => {
-    setWidth(multiplayer ? window.innerWidth / 2 : window.innerWidth);
-  }, [multiplayer]);
+  // useEffect(() => {
+  //   setWidth(multiplayer ? window.innerWidth / 2 : window.innerWidth);
+  // }, [multiplayer]);
 
   useEffect(() => {
-    World.setMap(GameStore.level_map!);
+    World.setMap(Levels[1]);
     tick();
     return () => {
       cancelAnimationFrame(requestIdRef!.current!);
@@ -38,15 +34,14 @@ export const Game = observer(() => {
   }, []);
 
   useEffect(() => {
-    if (count % 5 === 0) GameStore.updateState();
+    if (count % 5 === 0) {
+      World.tick();
+    }
   }, [count]);
 
-  return devMode ? (
-    <Dev />
-  ) : (
+  return (
     <Box display="flex" flexDirection="row-reverse">
-      <Canvas width={width} height={height} player={0} />
-      {multiplayer && <Canvas width={width} height={height} player={1} />}
+      <Canvas />
     </Box>
   );
-});
+};
