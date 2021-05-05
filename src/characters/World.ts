@@ -358,7 +358,20 @@ class World {
     });
   }
 
+  updateMap() {
+    const copy = Array.from({ length: this.height }, () =>
+      Array.from({ length: this.width }, () => " ")
+    );
+
+    // copy[this.player!.y][this.player!.x] = "A";
+    copy[this.player!.y][this.player!.x] = "A";
+
+    return copy;
+  }
+
   tick() {
+    this.player!.updateState(this.world_map);
+    this.world_map = this.updateMap();
     this.counter++;
   }
 

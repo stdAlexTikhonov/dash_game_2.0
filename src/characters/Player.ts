@@ -49,11 +49,11 @@ export class Player {
         this.setPosition(this.y + 1, this.x);
 
     if (this.direction === "LEFT" && this.x > 0)
-      if (Player.STOP_OBJECTS.includes(world[this.y][this.x - 1]))
+      if (!Player.STOP_OBJECTS.includes(world[this.y][this.x - 1]))
         this.setPosition(this.y, this.x - 1);
 
     if (this.direction === "RIGHT" && this.x < maxX)
-      if (Player.STOP_OBJECTS.includes(world[this.y][this.x + 1]))
+      if (!Player.STOP_OBJECTS.includes(world[this.y][this.x + 1]))
         this.setPosition(this.y, this.x + 1);
   }
 
