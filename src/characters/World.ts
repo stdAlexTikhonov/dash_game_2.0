@@ -21,9 +21,14 @@ import N from "../assets/images/N.png";
 import L from "../assets/images/L.png";
 import M from "../assets/images/M.png";
 import { Player } from "./Player";
+
+type GameObject = {
+  x: number;
+  y: number;
+};
 class World {
   viewport_w: number = window.innerWidth;
-  viewport_h: number = document.body.clientHeight;
+  viewport_h: number = window.innerHeight;
   width: number = 0;
   height: number = 0;
   counter: number;
@@ -51,6 +56,7 @@ class World {
   N_img: HTMLImageElement;
   L_img: HTMLImageElement;
   M_img: HTMLImageElement;
+  MOTHERBOARD: GameObject[] = [];
 
   constructor() {
     this.counter = 0;
@@ -106,6 +112,8 @@ class World {
     const state8 = this.counter % 8;
     const state6 = this.counter % 6;
     const state3 = this.counter % 3;
+
+    context.fillStyle = "black";
 
     context.fillRect(0, 0, this.viewport_w, this.viewport_h);
 
@@ -363,7 +371,10 @@ class World {
       Array.from({ length: this.width }, () => " ")
     );
 
-    // copy[this.player!.y][this.player!.x] = "A";
+    this.MOTHERBOARD.forEach((M) => {
+      copy[M.y][M.x] = ".";
+    });
+
     copy[this.player!.y][this.player!.x] = "A";
 
     return copy;
@@ -382,6 +393,7 @@ class World {
     world_map.forEach((row, y) => {
       row.forEach((cell, x) => {
         if (cell === "A") this.player = new Player(y, x);
+        if (cell === ".") this.MOTHERBOARD.push({ x: x, y: y });
       });
     });
   }
