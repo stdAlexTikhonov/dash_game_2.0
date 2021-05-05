@@ -57,6 +57,7 @@ class World {
   L_img: HTMLImageElement;
   M_img: HTMLImageElement;
   MOTHERBOARD: GameObject[] = [];
+  multiplayer: boolean = false;
 
   constructor() {
     this.counter = 0;
@@ -110,6 +111,11 @@ class World {
 
   setViewportWidth(width: number) {
     this.viewport_w = width;
+  }
+
+  draw2(context: CanvasRenderingContext2D) {
+    context.fillStyle = "white";
+    context.fillRect(0, 0, this.viewport_w, this.viewport_h);
   }
 
   draw(context: CanvasRenderingContext2D) {

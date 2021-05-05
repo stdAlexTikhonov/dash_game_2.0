@@ -40,6 +40,7 @@ export const Game = () => {
     World.width = multiplayer
       ? window.innerWidth / 32 / 2
       : window.innerWidth / 32;
+    World.multiplayer = multiplayer;
   }, [multiplayer]);
 
   useEffect(() => {
@@ -50,8 +51,8 @@ export const Game = () => {
 
   return (
     <Box display="flex" flexDirection="row-reverse">
-      <Canvas />
-      {multiplayer && <Canvas />}
+      <Canvas player={1} />
+      {multiplayer && <Canvas player={2} />}
     </Box>
   );
 };
