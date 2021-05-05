@@ -1,9 +1,11 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import World from "../../characters/World";
+import { useAppSelector } from "../../hooks";
+import { getMultiplayer } from "../../store/gameSlice";
 
 export const Canvas = () => {
   const count = World.counter;
-
+  const multiplayer = useAppSelector(getMultiplayer);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
@@ -17,8 +19,8 @@ export const Canvas = () => {
 
   return (
     <canvas
-      width={window.innerWidth}
-      height={document.body.clientHeight}
+      width={multiplayer ? window.innerWidth / 2 : window.innerWidth}
+      height={window.innerHeight}
       ref={canvasRef}
     />
   );

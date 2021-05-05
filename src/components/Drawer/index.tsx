@@ -16,6 +16,8 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import Divider from "@material-ui/core/Divider";
 import CodeIcon from "@material-ui/icons/Code";
+import { toggleMultiplayer, getMultiplayer } from "../../store/gameSlice";
+import { useAppSelector, useAppDispatch } from "../../hooks";
 
 const useStyles = makeStyles({
   list: {
@@ -30,6 +32,8 @@ type Anchor = "top" | "left" | "bottom" | "right";
 
 export const TemporaryDrawer = () => {
   const history = useHistory();
+  const dispath = useAppDispatch();
+  const multiplayer = useAppSelector(getMultiplayer);
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -52,10 +56,7 @@ export const TemporaryDrawer = () => {
     setState({ ...state, [anchor]: open });
   };
 
-  const handleMultiplayer = () => {
-    // if (GameStore.multiplayer) GameStore.resetMultiplayer();
-    // else GameStore.setMultiplayer();
-  };
+  const handleMultiplayer = () => dispath(toggleMultiplayer());
 
   const handleDevMode = () => {
     // if (GameStore.devMode) GameStore.resetDevMode();
@@ -108,14 +109,9 @@ export const TemporaryDrawer = () => {
       <List>
         <ListItem button key={"key_mult"} onClick={handleMultiplayer}>
           <ListItemIcon>
-            {/* {GameStore.multiplayer ? (
-              <PersonAddDisabledIcon />
-            ) : (
-              <PersonAddIcon />
-            )} */}
-            <PersonAddIcon />
+            {multiplayer ? <PersonAddDisabledIcon /> : <PersonAddIcon />}
           </ListItemIcon>
-          <ListItemText primary={"Add player"} />
+          <ListItemText primary={"Second player"} />
         </ListItem>
         <ListItem button key={"key_dev"} onClick={handleDevMode}>
           <ListItemIcon>

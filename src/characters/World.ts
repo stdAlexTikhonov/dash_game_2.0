@@ -108,6 +108,10 @@ class World {
 
   static BLOCK_WIDTH = 32;
 
+  setViewportWidth(width: number) {
+    this.viewport_w = width;
+  }
+
   draw(context: CanvasRenderingContext2D) {
     const state8 = this.counter % 8;
     const state6 = this.counter % 6;
@@ -387,8 +391,8 @@ class World {
   }
 
   setMap(world_map: string[][]) {
-    this.width = world_map[0].length;
-    this.height = world_map.length;
+    this.width = this.viewport_w / World.BLOCK_WIDTH;
+    this.height = this.viewport_h / World.BLOCK_WIDTH;
     this.world_map = world_map;
     world_map.forEach((row, y) => {
       row.forEach((cell, x) => {

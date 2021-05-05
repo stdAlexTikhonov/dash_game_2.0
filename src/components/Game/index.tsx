@@ -5,10 +5,12 @@ import { Dev } from "../DevMode";
 import Box from "@material-ui/core/Box";
 import World from "../../characters/World";
 import Levels from "../../levels";
+import { useAppSelector } from "../../hooks";
+import { getMultiplayer } from "../../store/gameSlice";
 
 export const Game = () => {
   const [count, setCount] = useState(0);
-
+  const multiplayer = useAppSelector(getMultiplayer);
   const [height] = useState(document.body.clientHeight);
   const requestIdRef = useRef(null as null | number);
 
@@ -34,6 +36,13 @@ export const Game = () => {
   }, []);
 
   useEffect(() => {
+    World.viewport_w = multiplayer ? window.innerWidth / 2 : window.innerWidth;
+    World.width = multiplayer
+      ? window.innerWidth / 32 / 2
+      : window.innerWidth / 32;
+  }, [multiplayer]);
+
+  useEffect(() => {
     if (count % 5 === 0) {
       World.tick();
     }
@@ -42,6 +51,7 @@ export const Game = () => {
   return (
     <Box display="flex" flexDirection="row-reverse">
       <Canvas />
+      {multiplayer && <Canvas />}
     </Box>
   );
 };
