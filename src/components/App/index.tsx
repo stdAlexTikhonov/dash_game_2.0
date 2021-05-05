@@ -5,7 +5,6 @@ import World from "../../characters/World";
 
 const App = () => {
   const handleKeyDown = (e: { code: string }) => {
-    console.log(e.code);
     switch (e.code) {
       case "ArrowUp":
         World.player?.setDirection("UP");
@@ -19,11 +18,29 @@ const App = () => {
       case "ArrowLeft":
         World.player?.setDirection("LEFT");
         break;
+      case "KeyW":
+        World.player2?.setDirection("UP");
+        break;
+      case "KeyS":
+        World.player2?.setDirection("DOWN");
+        break;
+      case "KeyD":
+        World.player2?.setDirection("RIGHT");
+        break;
+      case "KeyA":
+        World.player2?.setDirection("LEFT");
+        break;
     }
   };
 
   const handleKeyUp = (e: { code: string }) => {
     switch (e.code) {
+      case "KeyW":
+      case "KeyS":
+      case "KeyA":
+      case "KeyD":
+        World.player2?.setDirection(null);
+        break;
       default:
         World.player?.setDirection(null);
         break;

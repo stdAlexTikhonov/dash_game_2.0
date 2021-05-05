@@ -38,6 +38,7 @@ class World {
   wall_img: HTMLImageElement;
   ram_img: HTMLImageElement;
   player: Player | null = null;
+  player2: Player | null = null;
   rock_img: HTMLImageElement;
   food_img: HTMLImageElement;
   exit_img: HTMLImageElement;
@@ -114,11 +115,6 @@ class World {
   }
 
   draw2(context: CanvasRenderingContext2D) {
-    context.fillStyle = "white";
-    context.fillRect(0, 0, this.viewport_w, this.viewport_h);
-  }
-
-  draw(context: CanvasRenderingContext2D) {
     const state8 = this.counter % 8;
     const state6 = this.counter % 6;
     const state3 = this.counter % 3;
@@ -127,8 +123,8 @@ class World {
 
     context.fillRect(0, 0, this.viewport_w, this.viewport_h);
 
-    const viewport_start_x = this.player!.x - Math.floor(this.width / 2);
-    const viewport_start_y = this.player!.y - Math.floor(this.height / 2);
+    const viewport_start_x = this.player2!.x - Math.floor(this.width / 2);
+    const viewport_start_y = this.player2!.y - Math.floor(this.height / 2);
     const viewport_end_x = viewport_start_x + this.width;
     const viewport_end_y = viewport_start_y + this.height;
 
@@ -163,18 +159,18 @@ class World {
               World.BLOCK_WIDTH
             );
 
-          // if (cell === "H")
-          //   context!.drawImage(
-          //     merphy_img,
-          //     state3 * World.BLOCK_WIDTH,
-          //     GameStore.players[1].dy * World.BLOCK_WIDTH,
-          //     World.BLOCK_WIDTH,
-          //     World.BLOCK_WIDTH,
-          //     pos_x,
-          //     pos_y,
-          //     World.BLOCK_WIDTH,
-          //     World.BLOCK_WIDTH
-          //   );
+          if (cell === "H")
+            context!.drawImage(
+              this.merphy_img,
+              state3 * World.BLOCK_WIDTH,
+              this.player2!.dy * World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
 
           if (cell === "#")
             context!.drawImage(
@@ -376,6 +372,274 @@ class World {
     });
   }
 
+  draw(context: CanvasRenderingContext2D) {
+    const state8 = this.counter % 8;
+    const state6 = this.counter % 6;
+    const state3 = this.counter % 3;
+
+    context.fillStyle = "black";
+
+    context.fillRect(0, 0, this.viewport_w, this.viewport_h);
+
+    const viewport_start_x = this.player!.x - Math.floor(this.width / 2);
+    const viewport_start_y = this.player!.y - Math.floor(this.height / 2);
+    const viewport_end_x = viewport_start_x + this.width;
+    const viewport_end_y = viewport_start_y + this.height;
+
+    this.world_map.forEach((row, y) => {
+      const draw_view_y_flag = y >= viewport_start_y - 1 && y <= viewport_end_y;
+      row.forEach((cell, x) => {
+        const draw_view_x_flag =
+          x >= viewport_start_x - 1 && x <= viewport_end_x;
+
+        if (draw_view_y_flag && draw_view_x_flag) {
+          let pos_x = (x - viewport_start_x) * World.BLOCK_WIDTH;
+          let pos_y = (y - viewport_start_y) * World.BLOCK_WIDTH;
+          if (cell === ".")
+            context!.drawImage(
+              this.ground_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "A")
+            context!.drawImage(
+              this.merphy_img,
+              state3 * World.BLOCK_WIDTH,
+              this.player!.dy * World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "H")
+            context!.drawImage(
+              this.merphy_img,
+              state3 * World.BLOCK_WIDTH,
+              this.player2!.dy * World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "#")
+            context!.drawImage(
+              this.wall_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "+")
+            context!.drawImage(
+              this.ram_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "O")
+            context!.drawImage(
+              this.rock_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "*")
+            context!.drawImage(
+              this.food_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "E")
+            context!.drawImage(
+              this.exit_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "X")
+            context!.drawImage(
+              this.scissors_img,
+              state8 * World.BLOCK_WIDTH,
+              0,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "Z")
+            context!.drawImage(
+              this.electron_img,
+              state6 * World.BLOCK_WIDTH,
+              0,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "R")
+            context!.drawImage(
+              this.ram2_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "U")
+            context!.drawImage(
+              this.ram3_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "B")
+            context!.drawImage(
+              this.bug_img,
+              state6 * World.BLOCK_WIDTH,
+              0,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "C")
+            context!.drawImage(
+              this.computer_img,
+              state8 * World.BLOCK_WIDTH,
+              0,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "D")
+            context!.drawImage(
+              this.orange_disk_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "Y")
+            context!.drawImage(
+              this.yellow_disk_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === ">")
+            context!.drawImage(
+              this.portal_right_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "<")
+            context!.drawImage(
+              this.portal_left_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "P")
+            context!.drawImage(
+              this.P_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "W")
+            context!.drawImage(
+              this.W_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "N")
+            context!.drawImage(
+              this.N_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "L")
+            context!.drawImage(
+              this.L_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+
+          if (cell === "M")
+            context!.drawImage(
+              this.M_img,
+              pos_x,
+              pos_y,
+              World.BLOCK_WIDTH,
+              World.BLOCK_WIDTH
+            );
+        }
+      });
+    });
+  }
+
+  setMultiplayer() {
+    this.multiplayer = true;
+    this.player2 = new Player(this.player!.y, this.player!.x);
+  }
+
+  resetMultiplayer() {
+    this.multiplayer = false;
+    this.player2 = null;
+  }
+
   updateMap() {
     const copy = Array.from({ length: this.height }, () =>
       Array.from({ length: this.width }, () => " ")
@@ -386,12 +650,14 @@ class World {
     });
 
     copy[this.player!.y][this.player!.x] = "A";
+    if (this.player2) copy[this.player2!.y][this.player2!.x] = "H";
 
     return copy;
   }
 
   tick() {
     this.player!.updateState(this.world_map);
+    this.player2?.updateState(this.world_map);
     this.world_map = this.updateMap();
     this.counter++;
   }
@@ -402,7 +668,9 @@ class World {
     this.world_map = world_map;
     world_map.forEach((row, y) => {
       row.forEach((cell, x) => {
-        if (cell === "A") this.player = new Player(y, x);
+        if (cell === "A") {
+          this.player = new Player(y, x);
+        }
         if (cell === ".") this.MOTHERBOARD.push({ x: x, y: y });
       });
     });

@@ -40,7 +40,8 @@ export const Game = () => {
     World.width = multiplayer
       ? window.innerWidth / 32 / 2
       : window.innerWidth / 32;
-    World.multiplayer = multiplayer;
+    if (multiplayer) World.setMultiplayer();
+    else World.resetMultiplayer();
   }, [multiplayer]);
 
   useEffect(() => {
