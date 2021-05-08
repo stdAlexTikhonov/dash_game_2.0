@@ -3,6 +3,7 @@ export class Player {
   y: number;
   dy: number;
   direction: string | null;
+  prev_horizontal_state: string = "LEFT";
 
   constructor(y: number, x: number) {
     this.y = y;
@@ -49,12 +50,16 @@ export class Player {
         this.setPosition(this.y + 1, this.x);
 
     if (this.direction === "LEFT" && this.x > 0)
-      if (!Player.STOP_OBJECTS.includes(world[this.y][this.x - 1]))
+      if (!Player.STOP_OBJECTS.includes(world[this.y][this.x - 1])) {
         this.setPosition(this.y, this.x - 1);
+        this.prev_horizontal_state = "LEFT";
+      }
 
     if (this.direction === "RIGHT" && this.x < maxX)
-      if (!Player.STOP_OBJECTS.includes(world[this.y][this.x + 1]))
+      if (!Player.STOP_OBJECTS.includes(world[this.y][this.x + 1])) {
+        this.prev_horizontal_state = "RIGHT";
         this.setPosition(this.y, this.x + 1);
+      }
   }
 
   setPosition(y: number, x: number) {

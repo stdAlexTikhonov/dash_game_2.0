@@ -8,11 +8,15 @@ const App = () => {
     switch (e.code) {
       case "ArrowUp":
         World.player?.setDirection("UP");
-        World.player?.setState(0);
+        if (World.player?.prev_horizontal_state === "LEFT")
+          World.player?.setState(0);
+        else World.player?.setState(2);
         break;
       case "ArrowDown":
         World.player?.setDirection("DOWN");
-        World.player?.setState(2);
+        if (World.player?.prev_horizontal_state === "LEFT")
+          World.player?.setState(0);
+        else World.player?.setState(2);
         break;
       case "ArrowRight":
         World.player?.setDirection("RIGHT");
@@ -24,11 +28,15 @@ const App = () => {
         break;
       case "KeyW":
         World.player2?.setDirection("UP");
-        World.player2?.setState(0);
+        if (World.player2?.prev_horizontal_state === "LEFT")
+          World.player2?.setState(0);
+        else World.player2?.setState(2);
         break;
       case "KeyS":
         World.player2?.setDirection("DOWN");
-        World.player2?.setState(2);
+        if (World.player2?.prev_horizontal_state === "LEFT")
+          World.player2?.setState(0);
+        else World.player2?.setState(2);
         break;
       case "KeyD":
         World.player2?.setDirection("RIGHT");
