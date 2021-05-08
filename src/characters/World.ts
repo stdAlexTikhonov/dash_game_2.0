@@ -664,8 +664,9 @@ class World {
 
   setMap(world_map: string[][]) {
     this.width = this.viewport_w / World.BLOCK_WIDTH;
-    this.height = this.viewport_h / World.BLOCK_WIDTH;
+    this.height = world_map.length;
     this.world_map = world_map;
+    console.log(world_map);
     world_map.forEach((row, y) => {
       row.forEach((cell, x) => {
         if (cell === "A") {
