@@ -8,27 +8,35 @@ const App = () => {
     switch (e.code) {
       case "ArrowUp":
         World.player?.setDirection("UP");
+        World.player?.setState(0);
         break;
       case "ArrowDown":
         World.player?.setDirection("DOWN");
+        World.player?.setState(2);
         break;
       case "ArrowRight":
         World.player?.setDirection("RIGHT");
+        World.player?.setState(2);
         break;
       case "ArrowLeft":
         World.player?.setDirection("LEFT");
+        World.player?.setState(0);
         break;
       case "KeyW":
         World.player2?.setDirection("UP");
+        World.player2?.setState(0);
         break;
       case "KeyS":
         World.player2?.setDirection("DOWN");
+        World.player2?.setState(2);
         break;
       case "KeyD":
         World.player2?.setDirection("RIGHT");
+        World.player2?.setState(2);
         break;
       case "KeyA":
         World.player2?.setDirection("LEFT");
+        World.player2?.setState(0);
         break;
     }
   };
@@ -40,9 +48,11 @@ const App = () => {
       case "KeyA":
       case "KeyD":
         World.player2?.setDirection(null);
+        World.player2?.setState(1);
         break;
       default:
         World.player?.setDirection(null);
+        World.player?.setState(1);
         break;
     }
   };
