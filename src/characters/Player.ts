@@ -37,8 +37,6 @@ export class Player {
   }
 
   updateState(world: string[][]) {
-    console.log(world.length);
-    console.log(this.y);
     const maxY = world!.length - 1;
     const maxX = world![0]!.length - 1;
 
