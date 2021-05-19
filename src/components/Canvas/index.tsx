@@ -1,5 +1,4 @@
-import { useRef, useEffect, useState, useMemo } from "react";
-import World from "../../characters/World";
+import { useEffect } from "react";
 import { useAppSelector } from "../../hooks";
 import { getMultiplayer } from "../../store/gameSlice";
 import Box from "@material-ui/core/Box";
@@ -13,7 +12,6 @@ export const Canvas: React.FC<Props> = ({ player }) => {
     const box = document.getElementById("test");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    console.log(canvas);
     box?.appendChild(canvas);
   }, []);
 
