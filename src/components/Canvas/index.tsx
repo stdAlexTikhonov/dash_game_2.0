@@ -18,7 +18,7 @@ export const Canvas: React.FC<Props> = ({ player }) => {
     if (context) {
       switch (player) {
         case 1:
-          World.draw(context);
+          World.draw(context, 0);
           break;
         case 2:
           World.draw2(context);

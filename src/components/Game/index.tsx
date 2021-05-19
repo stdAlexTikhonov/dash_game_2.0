@@ -29,7 +29,7 @@ export const Game = () => {
 
   useEffect(() => {
     World.setMap(Levels[1]);
-    tick();
+
     return () => {
       cancelAnimationFrame(requestIdRef!.current!);
     };
@@ -44,16 +44,10 @@ export const Game = () => {
     else World.resetMultiplayer();
   }, [multiplayer]);
 
-  useEffect(() => {
-    if (count % 5 === 0) {
-      World.tick();
-    }
-  }, [count]);
-
   return (
     <Box display="flex" flexDirection="row-reverse">
-      <Canvas player={1} />
-      {multiplayer && <Canvas player={2} />}
+      {/* <Canvas player={1} />
+      {multiplayer && <Canvas player={2} />} */}
     </Box>
   );
 };
