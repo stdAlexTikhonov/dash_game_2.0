@@ -129,245 +129,246 @@ class World {
     const viewport_end_y = viewport_start_y + this.height;
 
     this.world_map.forEach((row, y) => {
-      const draw_view_y_flag = y >= viewport_start_y - 1 && y <= viewport_end_y;
+      const draw_view_y_flag =
+        y >= viewport_start_y - 1 && y <= viewport_end_y + 100;
       row.forEach((cell, x) => {
         const draw_view_x_flag =
           x >= viewport_start_x - 1 && x <= viewport_end_x;
 
-        if (draw_view_y_flag && draw_view_x_flag) {
-          let pos_x = (x - viewport_start_x) * World.BLOCK_WIDTH;
-          let pos_y = (y - viewport_start_y) * World.BLOCK_WIDTH;
-          if (cell === ".")
-            context!.drawImage(
-              this.ground_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        // if (draw_view_y_flag && draw_view_x_flag) {
+        let pos_x = (x - viewport_start_x) * World.BLOCK_WIDTH;
+        let pos_y = (y - viewport_start_y) * World.BLOCK_WIDTH;
+        if (cell === ".")
+          context!.drawImage(
+            this.ground_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "A")
-            context!.drawImage(
-              this.merphy_img,
-              state3 * World.BLOCK_WIDTH,
-              this.player!.dy * World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "A")
+          context!.drawImage(
+            this.merphy_img,
+            state3 * World.BLOCK_WIDTH,
+            this.player!.dy * World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "H")
-            context!.drawImage(
-              this.merphy_img,
-              state3 * World.BLOCK_WIDTH,
-              this.player2!.dy * World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "H")
+          context!.drawImage(
+            this.merphy_img,
+            state3 * World.BLOCK_WIDTH,
+            this.player2!.dy * World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "#")
-            context!.drawImage(
-              this.wall_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "#")
+          context!.drawImage(
+            this.wall_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "+")
-            context!.drawImage(
-              this.ram_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "+")
+          context!.drawImage(
+            this.ram_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "O")
-            context!.drawImage(
-              this.rock_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "O")
+          context!.drawImage(
+            this.rock_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "*")
-            context!.drawImage(
-              this.food_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "*")
+          context!.drawImage(
+            this.food_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "E")
-            context!.drawImage(
-              this.exit_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "E")
+          context!.drawImage(
+            this.exit_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "X")
-            context!.drawImage(
-              this.scissors_img,
-              state8 * World.BLOCK_WIDTH,
-              0,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "X")
+          context!.drawImage(
+            this.scissors_img,
+            state8 * World.BLOCK_WIDTH,
+            0,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "Z")
-            context!.drawImage(
-              this.electron_img,
-              state6 * World.BLOCK_WIDTH,
-              0,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "Z")
+          context!.drawImage(
+            this.electron_img,
+            state6 * World.BLOCK_WIDTH,
+            0,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "R")
-            context!.drawImage(
-              this.ram2_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "R")
+          context!.drawImage(
+            this.ram2_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "U")
-            context!.drawImage(
-              this.ram3_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "U")
+          context!.drawImage(
+            this.ram3_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "B")
-            context!.drawImage(
-              this.bug_img,
-              state6 * World.BLOCK_WIDTH,
-              0,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "B")
+          context!.drawImage(
+            this.bug_img,
+            state6 * World.BLOCK_WIDTH,
+            0,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "C")
-            context!.drawImage(
-              this.computer_img,
-              state8 * World.BLOCK_WIDTH,
-              0,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "C")
+          context!.drawImage(
+            this.computer_img,
+            state8 * World.BLOCK_WIDTH,
+            0,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "D")
-            context!.drawImage(
-              this.orange_disk_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "D")
+          context!.drawImage(
+            this.orange_disk_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "Y")
-            context!.drawImage(
-              this.yellow_disk_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "Y")
+          context!.drawImage(
+            this.yellow_disk_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === ">")
-            context!.drawImage(
-              this.portal_right_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === ">")
+          context!.drawImage(
+            this.portal_right_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "<")
-            context!.drawImage(
-              this.portal_left_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "<")
+          context!.drawImage(
+            this.portal_left_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "P")
-            context!.drawImage(
-              this.P_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "P")
+          context!.drawImage(
+            this.P_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "W")
-            context!.drawImage(
-              this.W_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "W")
+          context!.drawImage(
+            this.W_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "N")
-            context!.drawImage(
-              this.N_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "N")
+          context!.drawImage(
+            this.N_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "L")
-            context!.drawImage(
-              this.L_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+        if (cell === "L")
+          context!.drawImage(
+            this.L_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
 
-          if (cell === "M")
-            context!.drawImage(
-              this.M_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-        }
+        if (cell === "M")
+          context!.drawImage(
+            this.M_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+        // }
       });
     });
   }
@@ -392,270 +393,270 @@ class World {
         const draw_view_x_flag =
           x >= viewport_start_x - 1 && x <= viewport_end_x;
 
-        if (draw_view_y_flag && draw_view_x_flag) {
-          let pos_x = (x - viewport_start_x) * World.BLOCK_WIDTH;
-          let pos_y = (y - viewport_start_y) * World.BLOCK_WIDTH;
+        // if (draw_view_y_flag && draw_view_x_flag) {
+        let pos_x = (x - viewport_start_x) * World.BLOCK_WIDTH;
+        let pos_y = (y - viewport_start_y) * World.BLOCK_WIDTH;
 
+        switch (this.player?.direction) {
+          case "RIGHT":
+            pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+            break;
+          case "LEFT":
+            pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+            break;
+          case "UP":
+            pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+            break;
+          case "DOWN":
+            pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+            break;
+        }
+
+        if (cell === ".")
+          context!.drawImage(
+            this.ground_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "A") {
           switch (this.player?.direction) {
             case "RIGHT":
-              pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "LEFT":
               pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
               break;
-            case "UP":
-              pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+            case "LEFT":
+              pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
               break;
-            case "DOWN":
+            case "UP":
               pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
               break;
+            case "DOWN":
+              pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+              break;
           }
-
-          if (cell === ".")
-            context!.drawImage(
-              this.ground_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "A") {
-            switch (this.player?.direction) {
-              case "RIGHT":
-                pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-                break;
-              case "LEFT":
-                pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-                break;
-              case "UP":
-                pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-                break;
-              case "DOWN":
-                pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-                break;
-            }
-            context!.drawImage(
-              this.merphy_img,
-              state3 * World.BLOCK_WIDTH,
-              this.player!.dy * World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-          }
-          if (cell === "H")
-            context!.drawImage(
-              this.merphy_img,
-              state3 * World.BLOCK_WIDTH,
-              this.player2!.dy * World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "#")
-            context!.drawImage(
-              this.wall_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "+")
-            context!.drawImage(
-              this.ram_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "O")
-            context!.drawImage(
-              this.rock_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "*")
-            context!.drawImage(
-              this.food_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "E")
-            context!.drawImage(
-              this.exit_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "X")
-            context!.drawImage(
-              this.scissors_img,
-              state8 * World.BLOCK_WIDTH,
-              0,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "Z")
-            context!.drawImage(
-              this.electron_img,
-              state6 * World.BLOCK_WIDTH,
-              0,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "R")
-            context!.drawImage(
-              this.ram2_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "U")
-            context!.drawImage(
-              this.ram3_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "B")
-            context!.drawImage(
-              this.bug_img,
-              state6 * World.BLOCK_WIDTH,
-              0,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "C")
-            context!.drawImage(
-              this.computer_img,
-              state8 * World.BLOCK_WIDTH,
-              0,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "D")
-            context!.drawImage(
-              this.orange_disk_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "Y")
-            context!.drawImage(
-              this.yellow_disk_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === ">")
-            context!.drawImage(
-              this.portal_right_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "<")
-            context!.drawImage(
-              this.portal_left_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "P")
-            context!.drawImage(
-              this.P_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "W")
-            context!.drawImage(
-              this.W_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "N")
-            context!.drawImage(
-              this.N_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "L")
-            context!.drawImage(
-              this.L_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
-
-          if (cell === "M")
-            context!.drawImage(
-              this.M_img,
-              pos_x,
-              pos_y,
-              World.BLOCK_WIDTH,
-              World.BLOCK_WIDTH
-            );
+          context!.drawImage(
+            this.merphy_img,
+            state3 * World.BLOCK_WIDTH,
+            this.player!.dy * World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
         }
+        if (cell === "H")
+          context!.drawImage(
+            this.merphy_img,
+            state3 * World.BLOCK_WIDTH,
+            this.player2!.dy * World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "#")
+          context!.drawImage(
+            this.wall_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "+")
+          context!.drawImage(
+            this.ram_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "O")
+          context!.drawImage(
+            this.rock_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "*")
+          context!.drawImage(
+            this.food_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "E")
+          context!.drawImage(
+            this.exit_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "X")
+          context!.drawImage(
+            this.scissors_img,
+            state8 * World.BLOCK_WIDTH,
+            0,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "Z")
+          context!.drawImage(
+            this.electron_img,
+            state6 * World.BLOCK_WIDTH,
+            0,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "R")
+          context!.drawImage(
+            this.ram2_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "U")
+          context!.drawImage(
+            this.ram3_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "B")
+          context!.drawImage(
+            this.bug_img,
+            state6 * World.BLOCK_WIDTH,
+            0,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "C")
+          context!.drawImage(
+            this.computer_img,
+            state8 * World.BLOCK_WIDTH,
+            0,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "D")
+          context!.drawImage(
+            this.orange_disk_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "Y")
+          context!.drawImage(
+            this.yellow_disk_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === ">")
+          context!.drawImage(
+            this.portal_right_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "<")
+          context!.drawImage(
+            this.portal_left_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "P")
+          context!.drawImage(
+            this.P_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "W")
+          context!.drawImage(
+            this.W_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "N")
+          context!.drawImage(
+            this.N_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "L")
+          context!.drawImage(
+            this.L_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "M")
+          context!.drawImage(
+            this.M_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+        // }
       });
     });
   }

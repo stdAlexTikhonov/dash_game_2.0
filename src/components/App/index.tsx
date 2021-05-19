@@ -8,8 +8,7 @@ const App = () => {
       height="100vh"
       width="100%"
       display="flex"
-      bgcolor="transparent"
-      position="absolute"
+      bgcolor="black"
       tabIndex={0}
       // onKeyDown={handleKeyDown}
       // onKeyUp={handleKeyUp}

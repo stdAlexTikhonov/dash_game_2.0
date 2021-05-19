@@ -46,8 +46,8 @@ export const Game = () => {
 
   return (
     <Box display="flex" flexDirection="row-reverse">
-      {/* <Canvas player={1} />
-      {multiplayer && <Canvas player={2} />} */}
+      <Canvas player={1} />
+      {multiplayer && <Canvas player={2} />}
     </Box>
   );
 };
