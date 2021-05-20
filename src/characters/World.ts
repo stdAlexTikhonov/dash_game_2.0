@@ -58,6 +58,8 @@ class World {
   L_img: HTMLImageElement;
   M_img: HTMLImageElement;
   MOTHERBOARD: GameObject[] = [];
+  WALLS: GameObject[] = [];
+  BREAKS: GameObject[] = [];
   multiplayer: boolean = false;
 
   constructor() {
@@ -739,6 +741,10 @@ class World {
       copy[M.y][M.x] = ".";
     });
 
+    this.WALLS.forEach((W) => {
+      copy[W.y][W.x] = "#";
+    });
+
     copy[this.player!.y][this.player!.x] = "A";
     if (this.player2) copy[this.player2!.y][this.player2!.x] = "H";
 
@@ -763,6 +769,7 @@ class World {
           this.player = new Player(y, x);
         }
         if (cell === ".") this.MOTHERBOARD.push({ x: x, y: y });
+        if (cell === "#") this.WALLS.push({ x: x, y: y });
       });
     });
   }
