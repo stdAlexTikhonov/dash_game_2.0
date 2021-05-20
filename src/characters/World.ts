@@ -61,6 +61,7 @@ class World {
   WALLS: GameObject[] = [];
   BREAKS: GameObject[] = [];
   ROCKS: GameObject[] = [];
+  FOOD: GameObject[] = [];
   multiplayer: boolean = false;
 
   constructor() {
@@ -758,6 +759,10 @@ class World {
       copy[W.y][W.x] = "#";
     });
 
+    this.FOOD.forEach((F) => {
+      copy[F.y][F.x] = "*";
+    });
+
     copy[this.player!.y][this.player!.x] = "A";
     if (this.player2) copy[this.player2!.y][this.player2!.x] = "H";
 
@@ -785,6 +790,7 @@ class World {
         if (cell === "#") this.WALLS.push({ x: x, y: y });
         if (cell === "O") this.ROCKS.push({ x: x, y: y });
         if (cell === "+") this.BREAKS.push({ x: x, y: y });
+        if (cell === "*") this.FOOD.push({ x: x, y: y });
       });
     });
   }
