@@ -64,6 +64,7 @@ class World {
   FOOD: GameObject[] = [];
   EXIT: GameObject = { x: 0, y: 0 };
   SCISSORS: GameObject[] = [];
+  ELECTRONS: GameObject[] = [];
   multiplayer: boolean = false;
 
   constructor() {
@@ -769,6 +770,10 @@ class World {
       copy[X.y][X.x] = "X";
     });
 
+    this.ELECTRONS.forEach((Z) => {
+      copy[Z.y][Z.x] = "Z";
+    });
+
     copy[this.EXIT.y][this.EXIT.x] = "E";
 
     copy[this.player!.y][this.player!.x] = "A";
@@ -801,6 +806,7 @@ class World {
         if (cell === "*") this.FOOD.push({ x: x, y: y });
         if (cell === "E") this.EXIT = { x: x, y: y };
         if (cell === "X") this.SCISSORS.push({ x: x, y: y });
+        if (cell === "Z") this.ELECTRONS.push({ x: x, y: y });
       });
     });
   }
