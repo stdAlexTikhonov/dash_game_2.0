@@ -60,6 +60,7 @@ class World {
   MOTHERBOARD: GameObject[] = [];
   WALLS: GameObject[] = [];
   BREAKS: GameObject[] = [];
+  ROCKS: GameObject[] = [];
   multiplayer: boolean = false;
 
   constructor() {
@@ -745,6 +746,18 @@ class World {
       copy[W.y][W.x] = "#";
     });
 
+    this.BREAKS.forEach((B) => {
+      copy[B.y][B.x] = "+";
+    });
+
+    this.ROCKS.forEach((R) => {
+      copy[R.y][R.x] = "O";
+    });
+
+    this.WALLS.forEach((W) => {
+      copy[W.y][W.x] = "#";
+    });
+
     copy[this.player!.y][this.player!.x] = "A";
     if (this.player2) copy[this.player2!.y][this.player2!.x] = "H";
 
@@ -770,6 +783,8 @@ class World {
         }
         if (cell === ".") this.MOTHERBOARD.push({ x: x, y: y });
         if (cell === "#") this.WALLS.push({ x: x, y: y });
+        if (cell === "O") this.ROCKS.push({ x: x, y: y });
+        if (cell === "+") this.BREAKS.push({ x: x, y: y });
       });
     });
   }
