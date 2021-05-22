@@ -68,6 +68,7 @@ class World {
   RS: GameObject[] = [];
   US: GameObject[] = [];
   COMPUTERS: GameObject[] = [];
+  BUGS: GameObject[] = [];
   multiplayer: boolean = false;
 
   constructor() {
@@ -789,6 +790,10 @@ class World {
       copy[C.y][C.x] = "C";
     });
 
+    this.BUGS.forEach((B) => {
+      copy[B.y][B.x] = "B";
+    });
+
     copy[this.EXIT.y][this.EXIT.x] = "E";
 
     copy[this.player!.y][this.player!.x] = "A";
@@ -825,6 +830,7 @@ class World {
         if (cell === "R") this.RS.push({ x: x, y: y });
         if (cell === "U") this.US.push({ x: x, y: y });
         if (cell === "C") this.COMPUTERS.push({ x: x, y: y });
+        if (cell === "B") this.BUGS.push({ x: x, y: y });
       });
     });
   }
