@@ -74,6 +74,8 @@ class World {
   ORANGE_DISKS: GameObject[] = [];
   YELLOW_DISKS: GameObject[] = [];
   RED_DISKS: GameObject[] = [];
+  PORTALS_LEFT: GameObject[] = [];
+  PORTALS_RIGHT: GameObject[] = [];
   multiplayer: boolean = false;
 
   constructor() {
@@ -818,6 +820,9 @@ class World {
     this.YELLOW_DISKS.forEach((Y) => (copy[Y.y][Y.x] = "Y"));
     this.RED_DISKS.forEach((R) => (copy[R.y][R.x] = "%"));
 
+    this.PORTALS_LEFT.forEach((P) => (copy[P.y][P.x] = "<"));
+    this.PORTALS_RIGHT.forEach((P) => (copy[P.y][P.x] = ">"));
+
     copy[this.EXIT.y][this.EXIT.x] = "E";
 
     copy[this.player!.y][this.player!.x] = "A";
@@ -858,6 +863,8 @@ class World {
         if (cell === "D") this.ORANGE_DISKS.push({ x: x, y: y });
         if (cell === "Y") this.YELLOW_DISKS.push({ x: x, y: y });
         if (cell === "%") this.RED_DISKS.push({ x: x, y: y });
+        if (cell === "<") this.PORTALS_LEFT.push({ x: x, y: y });
+        if (cell === ">") this.PORTALS_RIGHT.push({ x: x, y: y });
       });
     });
   }
