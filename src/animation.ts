@@ -9,7 +9,6 @@ export const draw = () => {
   }
 
   if (World.player2) {
-    console.log("hello");
     World.draw2(context2!, frame);
   }
   World.draw(context!, frame);

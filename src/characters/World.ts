@@ -13,6 +13,7 @@ import bug from "../assets/images/bug.png";
 import computer from "../assets/images/computer.png";
 import orange_disk from "../assets/images/orange_disk.png";
 import yellow_disk from "../assets/images/yellow_disk.png";
+import red_disk from "../assets/images/red_disk.png";
 import portal_right from "../assets/images/portal_right.png";
 import portal_left from "../assets/images/portal_left.png";
 import P from "../assets/images/P.png";
@@ -50,6 +51,7 @@ class World {
   computer_img: HTMLImageElement;
   orange_disk_img: HTMLImageElement;
   yellow_disk_img: HTMLImageElement;
+  red_disk_img: HTMLImageElement;
   portal_right_img: HTMLImageElement;
   portal_left_img: HTMLImageElement;
   P_img: HTMLImageElement;
@@ -58,6 +60,27 @@ class World {
   L_img: HTMLImageElement;
   M_img: HTMLImageElement;
   MOTHERBOARD: GameObject[] = [];
+  WALLS: GameObject[] = [];
+  BREAKS: GameObject[] = [];
+  ROCKS: GameObject[] = [];
+  FOOD: GameObject[] = [];
+  EXITS: GameObject[] = [];
+  SCISSORS: GameObject[] = [];
+  ELECTRONS: GameObject[] = [];
+  RS: GameObject[] = [];
+  US: GameObject[] = [];
+  COMPUTERS: GameObject[] = [];
+  BUGS: GameObject[] = [];
+  ORANGE_DISKS: GameObject[] = [];
+  YELLOW_DISKS: GameObject[] = [];
+  RED_DISKS: GameObject[] = [];
+  PORTALS_LEFT: GameObject[] = [];
+  PORTALS_RIGHT: GameObject[] = [];
+  PS: GameObject[] = [];
+  WS: GameObject[] = [];
+  NS: GameObject[] = [];
+  LS: GameObject[] = [];
+  MS: GameObject[] = [];
   multiplayer: boolean = false;
 
   constructor() {
@@ -77,6 +100,7 @@ class World {
     this.computer_img = new Image();
     this.orange_disk_img = new Image();
     this.yellow_disk_img = new Image();
+    this.red_disk_img = new Image();
     this.portal_right_img = new Image();
     this.portal_left_img = new Image();
     this.P_img = new Image();
@@ -99,6 +123,7 @@ class World {
     this.computer_img.src = computer;
     this.orange_disk_img.src = orange_disk;
     this.yellow_disk_img.src = yellow_disk;
+    this.red_disk_img.src = red_disk;
     this.portal_right_img.src = portal_right;
     this.portal_left_img.src = portal_left;
     this.P_img.src = P;
@@ -653,6 +678,19 @@ class World {
             World.BLOCK_WIDTH
           );
 
+        if (cell === "%")
+          context!.drawImage(
+            this.red_disk_img,
+            0,
+            0,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
         if (cell === ">")
           context!.drawImage(
             this.portal_right_img,
@@ -739,6 +777,65 @@ class World {
       copy[M.y][M.x] = ".";
     });
 
+    this.WALLS.forEach((W) => {
+      copy[W.y][W.x] = "#";
+    });
+
+    this.BREAKS.forEach((B) => {
+      copy[B.y][B.x] = "+";
+    });
+
+    this.ROCKS.forEach((R) => {
+      copy[R.y][R.x] = "O";
+    });
+
+    this.WALLS.forEach((W) => {
+      copy[W.y][W.x] = "#";
+    });
+
+    this.FOOD.forEach((F) => {
+      copy[F.y][F.x] = "*";
+    });
+
+    this.SCISSORS.forEach((X) => {
+      copy[X.y][X.x] = "X";
+    });
+
+    this.ELECTRONS.forEach((Z) => {
+      copy[Z.y][Z.x] = "Z";
+    });
+
+    this.RS.forEach((R) => {
+      copy[R.y][R.x] = "R";
+    });
+
+    this.US.forEach((U) => {
+      copy[U.y][U.x] = "U";
+    });
+
+    this.COMPUTERS.forEach((C) => {
+      copy[C.y][C.x] = "C";
+    });
+
+    this.BUGS.forEach((B) => {
+      copy[B.y][B.x] = "B";
+    });
+
+    this.ORANGE_DISKS.forEach((D) => (copy[D.y][D.x] = "D"));
+    this.YELLOW_DISKS.forEach((Y) => (copy[Y.y][Y.x] = "Y"));
+    this.RED_DISKS.forEach((R) => (copy[R.y][R.x] = "%"));
+
+    this.PORTALS_LEFT.forEach((P) => (copy[P.y][P.x] = "<"));
+    this.PORTALS_RIGHT.forEach((P) => (copy[P.y][P.x] = ">"));
+
+    this.PS.forEach((P) => (copy[P.y][P.x] = "P"));
+    this.WS.forEach((P) => (copy[P.y][P.x] = "W"));
+    this.NS.forEach((P) => (copy[P.y][P.x] = "N"));
+    this.LS.forEach((P) => (copy[P.y][P.x] = "L"));
+    this.MS.forEach((P) => (copy[P.y][P.x] = "M"));
+
+    this.EXITS.forEach((E) => (copy[E.y][E.x] = "E"));
+
     copy[this.player!.y][this.player!.x] = "A";
     if (this.player2) copy[this.player2!.y][this.player2!.x] = "H";
 
@@ -763,6 +860,27 @@ class World {
           this.player = new Player(y, x);
         }
         if (cell === ".") this.MOTHERBOARD.push({ x: x, y: y });
+        if (cell === "#") this.WALLS.push({ x: x, y: y });
+        if (cell === "O") this.ROCKS.push({ x: x, y: y });
+        if (cell === "+") this.BREAKS.push({ x: x, y: y });
+        if (cell === "*") this.FOOD.push({ x: x, y: y });
+        if (cell === "E") this.EXITS.push({ x: x, y: y });
+        if (cell === "X") this.SCISSORS.push({ x: x, y: y });
+        if (cell === "Z") this.ELECTRONS.push({ x: x, y: y });
+        if (cell === "R") this.RS.push({ x: x, y: y });
+        if (cell === "U") this.US.push({ x: x, y: y });
+        if (cell === "C") this.COMPUTERS.push({ x: x, y: y });
+        if (cell === "B") this.BUGS.push({ x: x, y: y });
+        if (cell === "D") this.ORANGE_DISKS.push({ x: x, y: y });
+        if (cell === "Y") this.YELLOW_DISKS.push({ x: x, y: y });
+        if (cell === "%") this.RED_DISKS.push({ x: x, y: y });
+        if (cell === "<") this.PORTALS_LEFT.push({ x: x, y: y });
+        if (cell === ">") this.PORTALS_RIGHT.push({ x: x, y: y });
+        if (cell === "P") this.PS.push({ x: x, y: y });
+        if (cell === "W") this.WS.push({ x: x, y: y });
+        if (cell === "N") this.NS.push({ x: x, y: y });
+        if (cell === "L") this.LS.push({ x: x, y: y });
+        if (cell === "M") this.MS.push({ x: x, y: y });
       });
     });
   }
