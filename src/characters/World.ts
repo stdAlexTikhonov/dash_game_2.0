@@ -64,7 +64,7 @@ class World {
   BREAKS: GameObject[] = [];
   ROCKS: GameObject[] = [];
   FOOD: GameObject[] = [];
-  EXIT: GameObject = { x: 0, y: 0 };
+  EXITS: GameObject[] = [];
   SCISSORS: GameObject[] = [];
   ELECTRONS: GameObject[] = [];
   RS: GameObject[] = [];
@@ -834,7 +834,7 @@ class World {
     this.LS.forEach((P) => (copy[P.y][P.x] = "L"));
     this.MS.forEach((P) => (copy[P.y][P.x] = "M"));
 
-    copy[this.EXIT.y][this.EXIT.x] = "E";
+    this.EXITS.forEach((E) => (copy[E.y][E.x] = "E"));
 
     copy[this.player!.y][this.player!.x] = "A";
     if (this.player2) copy[this.player2!.y][this.player2!.x] = "H";
@@ -864,7 +864,7 @@ class World {
         if (cell === "O") this.ROCKS.push({ x: x, y: y });
         if (cell === "+") this.BREAKS.push({ x: x, y: y });
         if (cell === "*") this.FOOD.push({ x: x, y: y });
-        if (cell === "E") this.EXIT = { x: x, y: y };
+        if (cell === "E") this.EXITS.push({ x: x, y: y });
         if (cell === "X") this.SCISSORS.push({ x: x, y: y });
         if (cell === "Z") this.ELECTRONS.push({ x: x, y: y });
         if (cell === "R") this.RS.push({ x: x, y: y });
