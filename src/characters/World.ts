@@ -13,6 +13,7 @@ import bug from "../assets/images/bug.png";
 import computer from "../assets/images/computer.png";
 import orange_disk from "../assets/images/orange_disk.png";
 import yellow_disk from "../assets/images/yellow_disk.png";
+import red_disk from "../assets/images/red_disk.png";
 import portal_right from "../assets/images/portal_right.png";
 import portal_left from "../assets/images/portal_left.png";
 import P from "../assets/images/P.png";
@@ -50,6 +51,7 @@ class World {
   computer_img: HTMLImageElement;
   orange_disk_img: HTMLImageElement;
   yellow_disk_img: HTMLImageElement;
+  red_disk_img: HTMLImageElement;
   portal_right_img: HTMLImageElement;
   portal_left_img: HTMLImageElement;
   P_img: HTMLImageElement;
@@ -69,6 +71,9 @@ class World {
   US: GameObject[] = [];
   COMPUTERS: GameObject[] = [];
   BUGS: GameObject[] = [];
+  ORANGE_DISKS: GameObject[] = [];
+  YELLOW_DISKS: GameObject[] = [];
+  RED_DISKS: GameObject[] = [];
   multiplayer: boolean = false;
 
   constructor() {
@@ -88,6 +93,7 @@ class World {
     this.computer_img = new Image();
     this.orange_disk_img = new Image();
     this.yellow_disk_img = new Image();
+    this.red_disk_img = new Image();
     this.portal_right_img = new Image();
     this.portal_left_img = new Image();
     this.P_img = new Image();
@@ -110,6 +116,7 @@ class World {
     this.computer_img.src = computer;
     this.orange_disk_img.src = orange_disk;
     this.yellow_disk_img.src = yellow_disk;
+    this.red_disk_img.src = red_disk;
     this.portal_right_img.src = portal_right;
     this.portal_left_img.src = portal_left;
     this.P_img.src = P;
@@ -664,6 +671,19 @@ class World {
             World.BLOCK_WIDTH
           );
 
+        if (cell === "%")
+          context!.drawImage(
+            this.red_disk_img,
+            0,
+            0,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
         if (cell === ">")
           context!.drawImage(
             this.portal_right_img,
@@ -794,6 +814,10 @@ class World {
       copy[B.y][B.x] = "B";
     });
 
+    this.ORANGE_DISKS.forEach((D) => (copy[D.y][D.x] = "D"));
+    this.YELLOW_DISKS.forEach((Y) => (copy[Y.y][Y.x] = "Y"));
+    this.RED_DISKS.forEach((R) => (copy[R.y][R.x] = "%"));
+
     copy[this.EXIT.y][this.EXIT.x] = "E";
 
     copy[this.player!.y][this.player!.x] = "A";
@@ -831,6 +855,9 @@ class World {
         if (cell === "U") this.US.push({ x: x, y: y });
         if (cell === "C") this.COMPUTERS.push({ x: x, y: y });
         if (cell === "B") this.BUGS.push({ x: x, y: y });
+        if (cell === "D") this.ORANGE_DISKS.push({ x: x, y: y });
+        if (cell === "Y") this.YELLOW_DISKS.push({ x: x, y: y });
+        if (cell === "%") this.RED_DISKS.push({ x: x, y: y });
       });
     });
   }
