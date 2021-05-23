@@ -76,6 +76,11 @@ class World {
   RED_DISKS: GameObject[] = [];
   PORTALS_LEFT: GameObject[] = [];
   PORTALS_RIGHT: GameObject[] = [];
+  PS: GameObject[] = [];
+  WS: GameObject[] = [];
+  NS: GameObject[] = [];
+  LS: GameObject[] = [];
+  MS: GameObject[] = [];
   multiplayer: boolean = false;
 
   constructor() {
@@ -823,6 +828,12 @@ class World {
     this.PORTALS_LEFT.forEach((P) => (copy[P.y][P.x] = "<"));
     this.PORTALS_RIGHT.forEach((P) => (copy[P.y][P.x] = ">"));
 
+    this.PS.forEach((P) => (copy[P.y][P.x] = "P"));
+    this.WS.forEach((P) => (copy[P.y][P.x] = "W"));
+    this.NS.forEach((P) => (copy[P.y][P.x] = "N"));
+    this.LS.forEach((P) => (copy[P.y][P.x] = "L"));
+    this.MS.forEach((P) => (copy[P.y][P.x] = "M"));
+
     copy[this.EXIT.y][this.EXIT.x] = "E";
 
     copy[this.player!.y][this.player!.x] = "A";
@@ -865,6 +876,11 @@ class World {
         if (cell === "%") this.RED_DISKS.push({ x: x, y: y });
         if (cell === "<") this.PORTALS_LEFT.push({ x: x, y: y });
         if (cell === ">") this.PORTALS_RIGHT.push({ x: x, y: y });
+        if (cell === "P") this.PS.push({ x: x, y: y });
+        if (cell === "W") this.WS.push({ x: x, y: y });
+        if (cell === "N") this.NS.push({ x: x, y: y });
+        if (cell === "L") this.LS.push({ x: x, y: y });
+        if (cell === "M") this.MS.push({ x: x, y: y });
       });
     });
   }
