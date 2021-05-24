@@ -82,6 +82,7 @@ class World {
   LS: GameObject[] = [];
   MS: GameObject[] = [];
   multiplayer: boolean = false;
+  animation: boolean | undefined = false;
 
   constructor() {
     this.counter = 0;
@@ -131,6 +132,7 @@ class World {
     this.N_img.src = N;
     this.L_img.src = L;
     this.M_img.src = M;
+    this.animation = false;
   }
 
   static BLOCK_WIDTH = 32;
@@ -162,21 +164,21 @@ class World {
         // if (draw_view_y_flag && draw_view_x_flag) {
         let pos_x = (x - viewport_start_x) * World.BLOCK_WIDTH;
         let pos_y = (y - viewport_start_y) * World.BLOCK_WIDTH;
-
-        switch (this.player2?.direction) {
-          case "RIGHT":
-            pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-            break;
-          case "LEFT":
-            pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-            break;
-          case "UP":
-            pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-            break;
-          case "DOWN":
-            pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-            break;
-        }
+        if (this.player2?.animation)
+          switch (this.player2?.direction) {
+            case "RIGHT":
+              pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+              break;
+            case "LEFT":
+              pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+              break;
+            case "UP":
+              pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+              break;
+            case "DOWN":
+              pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+              break;
+          }
 
         if (cell === ".")
           context!.drawImage(
@@ -188,20 +190,21 @@ class World {
           );
 
         if (cell === "A") {
-          switch (this.player?.direction) {
-            case "RIGHT":
-              pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "LEFT":
-              pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "UP":
-              pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "DOWN":
-              pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-          }
+          if (this.player?.animation)
+            switch (this.player?.direction) {
+              case "RIGHT":
+                pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "LEFT":
+                pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "UP":
+                pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "DOWN":
+                pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+            }
           context!.drawImage(
             this.merphy_img,
             state3 * World.BLOCK_WIDTH,
@@ -215,20 +218,21 @@ class World {
           );
         }
         if (cell === "H") {
-          switch (this.player2?.direction) {
-            case "RIGHT":
-              pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "LEFT":
-              pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "UP":
-              pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "DOWN":
-              pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-          }
+          if (this.player2?.animation)
+            switch (this.player2?.direction) {
+              case "RIGHT":
+                pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "LEFT":
+                pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "UP":
+                pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "DOWN":
+                pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+            }
           context!.drawImage(
             this.merphy_img,
             state3 * World.BLOCK_WIDTH,
@@ -466,20 +470,21 @@ class World {
         let pos_x = (x - viewport_start_x) * World.BLOCK_WIDTH;
         let pos_y = (y - viewport_start_y) * World.BLOCK_WIDTH;
 
-        switch (this.player?.direction) {
-          case "RIGHT":
-            pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-            break;
-          case "LEFT":
-            pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-            break;
-          case "UP":
-            pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-            break;
-          case "DOWN":
-            pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-            break;
-        }
+        if (this.player?.animation)
+          switch (this.player?.direction) {
+            case "RIGHT":
+              pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+              break;
+            case "LEFT":
+              pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+              break;
+            case "UP":
+              pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+              break;
+            case "DOWN":
+              pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+              break;
+          }
 
         if (cell === ".")
           context!.drawImage(
@@ -491,20 +496,21 @@ class World {
           );
 
         if (cell === "A") {
-          switch (this.player?.direction) {
-            case "RIGHT":
-              pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "LEFT":
-              pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "UP":
-              pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "DOWN":
-              pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-          }
+          if (this.player?.animation)
+            switch (this.player?.direction) {
+              case "RIGHT":
+                pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "LEFT":
+                pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "UP":
+                pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "DOWN":
+                pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+            }
           context!.drawImage(
             this.merphy_img,
             state3 * World.BLOCK_WIDTH,
@@ -518,20 +524,21 @@ class World {
           );
         }
         if (cell === "H") {
-          switch (this.player2?.direction) {
-            case "RIGHT":
-              pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "LEFT":
-              pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "UP":
-              pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-            case "DOWN":
-              pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
-              break;
-          }
+          if (this.player2?.animation)
+            switch (this.player2?.direction) {
+              case "RIGHT":
+                pos_x += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "LEFT":
+                pos_x -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "UP":
+                pos_y -= (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+              case "DOWN":
+                pos_y += (World.BLOCK_WIDTH / 6) * value - World.BLOCK_WIDTH;
+                break;
+            }
           context!.drawImage(
             this.merphy_img,
             state3 * World.BLOCK_WIDTH,
