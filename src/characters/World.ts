@@ -780,6 +780,20 @@ class World {
       Array.from({ length: this.width }, () => " ")
     );
 
+    if (this.player)
+      this.MOTHERBOARD = this.MOTHERBOARD.filter((item) => {
+        const flag1 = item.x !== this.player!.x;
+        const flag2 = item.y !== this.player!.y;
+        return flag1 || flag2;
+      });
+
+    if (this.player2)
+      this.MOTHERBOARD = this.MOTHERBOARD.filter((item) => {
+        const flag1 = item.x !== this.player2!.x;
+        const flag2 = item.y !== this.player2!.y;
+        return flag1 || flag2;
+      });
+
     this.MOTHERBOARD.forEach((M) => {
       copy[M.y][M.x] = ".";
     });
