@@ -1,6 +1,9 @@
 import { Routes } from "../../routes";
 import Box from "@material-ui/core/Box";
 import AppBar from "../AppBar";
+import { useAppSelector } from "../../hooks";
+import { getMusic } from "../../store/gameSlice";
+import { useEffect } from "react";
 
 const App = () => {
   return (
