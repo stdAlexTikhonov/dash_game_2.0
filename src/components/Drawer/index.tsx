@@ -16,7 +16,14 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import Divider from "@material-ui/core/Divider";
 import CodeIcon from "@material-ui/icons/Code";
-import { toggleMultiplayer, getMultiplayer } from "../../store/gameSlice";
+import MusicNoteIcon from "@material-ui/icons/MusicNote";
+import MusicOffIcon from "@material-ui/icons/MusicOff";
+import {
+  toggleMultiplayer,
+  getMultiplayer,
+  getMusic,
+  toggleMusic,
+} from "../../store/gameSlice";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 
 const useStyles = makeStyles({
@@ -34,6 +41,7 @@ export const TemporaryDrawer = () => {
   const history = useHistory();
   const dispath = useAppDispatch();
   const multiplayer = useAppSelector(getMultiplayer);
+  const music = useAppSelector(getMusic);
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -42,25 +50,26 @@ export const TemporaryDrawer = () => {
     right: false,
   });
 
-  const toggleDrawer = (anchor: Anchor, open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    if (
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
+  const toggleDrawer =
+    (anchor: Anchor, open: boolean) =>
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
 
-    setState({ ...state, [anchor]: open });
-  };
+      setState({ ...state, [anchor]: open });
+    };
 
   const handleMultiplayer = () => dispath(toggleMultiplayer());
 
+  const handleMusic = () => dispath(toggleMusic());
+
   const handleDevMode = () => {
-    // if (GameStore.devMode) GameStore.resetDevMode();
-    // else GameStore.setDevMode();
+    //test
   };
 
   const list = (anchor: Anchor) => (
@@ -118,6 +127,12 @@ export const TemporaryDrawer = () => {
             <CodeIcon />
           </ListItemIcon>
           <ListItemText primary={"Set DEV"} />
+        </ListItem>
+        <ListItem button key={"key_music"} onClick={handleMusic}>
+          <ListItemIcon>
+            {music ? <MusicNoteIcon /> : <MusicOffIcon />}
+          </ListItemIcon>
+          <ListItemText primary={"Music"} />
         </ListItem>
       </List>
     </div>
