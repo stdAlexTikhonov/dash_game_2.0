@@ -12,6 +12,12 @@ const sound = new Howl({
 });
 
 const App = () => {
+  const music = useAppSelector(getMusic);
+
+  useEffect(() => {
+    if (music) sound.play();
+    else sound.pause();
+  }, [music]);
   return (
     <Box
       height="100vh"

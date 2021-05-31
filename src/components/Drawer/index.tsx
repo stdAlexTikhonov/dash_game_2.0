@@ -128,7 +128,7 @@ export const TemporaryDrawer = () => {
           </ListItemIcon>
           <ListItemText primary={"Set DEV"} />
         </ListItem>
-        <ListItem button key={"key_dev"} onClick={handleMusic}>
+        <ListItem button key={"key_music"} onClick={handleMusic}>
           <ListItemIcon>
             {music ? <MusicNoteIcon /> : <MusicOffIcon />}
           </ListItemIcon>
