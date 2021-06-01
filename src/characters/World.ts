@@ -772,6 +772,7 @@ class World {
 
   resetMultiplayer() {
     this.multiplayer = false;
+    if (this.player2) this.world_map[this.player2!.y][this.player2!.x] = " ";
     this.player2 = null;
   }
 

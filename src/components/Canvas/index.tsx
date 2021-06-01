@@ -15,7 +15,7 @@ export const Canvas: React.FC<Props> = ({ player }) => {
     canvas2.width = window.innerWidth / 2;
     canvas2.height = window.innerHeight;
     box?.appendChild(player === 1 ? canvas : canvas2);
-  }, []);
+  }, [multiplayer]);
 
   return (
     <Box
