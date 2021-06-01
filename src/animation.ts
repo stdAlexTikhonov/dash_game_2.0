@@ -1,7 +1,7 @@
 import World from "./characters/World";
 import { context, context2 } from "./components/Canvas/canvas";
 
-let frame = 0;
+export let frame = 0;
 
 export const draw = () => {
   if (frame === 0) {
