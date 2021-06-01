@@ -772,6 +772,7 @@ class World {
 
   resetMultiplayer() {
     this.multiplayer = false;
+    if (this.player2) this.world_map[this.player2!.y][this.player2!.x] = " ";
     this.player2 = null;
   }
 
@@ -864,8 +865,13 @@ class World {
   }
 
   tick() {
+    this.player!.setDirection(this.player!.user_input);
     this.player!.updateState(this.world_map);
-    if (this.player2) this.player2.updateState(this.world_map);
+    if (this.player2) {
+      this.player2!.setDirection(this.player2!.user_input);
+      this.player2.updateState(this.world_map);
+    }
+
     this.world_map = this.updateMap();
     this.counter++;
   }

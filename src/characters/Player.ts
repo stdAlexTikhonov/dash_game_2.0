@@ -4,8 +4,8 @@ export class Player {
   dy: number;
   direction: string | null;
   prev_horizontal_state: string = "LEFT";
-  reset_direction: boolean = false;
   animation: boolean = false;
+  user_input: string | null;
 
   constructor(y: number, x: number) {
     this.y = y;
@@ -13,6 +13,7 @@ export class Player {
     this.dy = 1;
     this.direction = null;
     this.animation = false;
+    this.user_input = null;
   }
 
   static STOP_OBJECTS = [
@@ -36,21 +37,18 @@ export class Player {
     "<",
   ];
 
-  resetDirection() {
-    this.reset_direction = true;
+  setDirection(dir: string | null) {
+    this.direction = dir;
   }
 
-  setDirection(dir: string | null) {
-    if (dir) this.reset_direction = false;
-    this.direction = dir;
+  setUserInput(dir: string | null) {
+    this.user_input = dir;
   }
 
   updateState(world: string[][]) {
     const maxY = world!.length - 1;
     const maxX = world![0]!.length - 1;
     this.animation = false;
-
-    if (this.reset_direction) this.setDirection(null);
 
     if (this.direction === "UP" && this.y > 0)
       if (!Player.STOP_OBJECTS.includes(world[this.y - 1][this.x])) {
