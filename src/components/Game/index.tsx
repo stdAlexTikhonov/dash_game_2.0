@@ -7,31 +7,34 @@ import World from "../../characters/World";
 import Levels from "../../levels";
 import { useAppSelector } from "../../hooks";
 import { getMultiplayer } from "../../store/gameSlice";
+import { context, context2 } from "../Canvas/canvas";
 
 export const Game = () => {
-  const [count, setCount] = useState(0);
   const multiplayer = useAppSelector(getMultiplayer);
-  const [height] = useState(document.body.clientHeight);
   const requestIdRef = useRef(null as null | number);
 
-  const tick = () => {
-    // Pass on a function to the setter of the state
-    // to make sure we always have the latest state
+  let frame = 0;
 
-    setCount((prevCount) => prevCount + 1);
+  const draw = () => {
+    if (frame === 0) {
+      World.tick();
+    }
 
-    requestIdRef.current = requestAnimationFrame(tick);
+    if (World.player2) {
+      World.draw2(context2!, frame);
+    }
+    World.draw(context!, frame);
+    frame = frame < 6 ? frame + 1 : 0;
+
+    requestIdRef.current = window.requestAnimationFrame(draw);
   };
-
-  // useEffect(() => {
-  //   setWidth(multiplayer ? window.innerWidth / 2 : window.innerWidth);
-  // }, [multiplayer]);
 
   useEffect(() => {
     World.setMap(Levels[1]);
+    draw();
 
     return () => {
-      cancelAnimationFrame(requestIdRef!.current!);
+      window.cancelAnimationFrame(requestIdRef.current!);
     };
   }, []);
 

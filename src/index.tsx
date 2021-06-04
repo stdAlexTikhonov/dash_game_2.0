@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import "./index.css";
-import { draw } from "./animation";
 import "./user_input";
 
 ReactDOM.render(
@@ -17,8 +16,6 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-
-draw();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

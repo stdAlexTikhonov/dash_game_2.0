@@ -46,6 +46,7 @@ export class Player extends GameObject {
   updateState(world: string[][]) {
     const maxY = world!.length - 1;
     const maxX = world![0]!.length - 1;
+
     this.animation = false;
 
     if (this.direction === "UP" && this.y > 0)
