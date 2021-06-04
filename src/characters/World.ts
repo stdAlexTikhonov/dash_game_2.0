@@ -775,8 +775,8 @@ class World {
   }
 
   updateMap() {
-    const copy = Array.from({ length: this.height }, () =>
-      Array.from({ length: this.width }, () => " ")
+    const copy = Array.from({ length: this.world_map.length }, () =>
+      Array.from({ length: this.world_map[0].length }, () => " ")
     );
 
     if (this.player)

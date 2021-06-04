@@ -7,7 +7,7 @@ import "./styles.css";
 
 export const StartScreen = () => {
   useEffect(() => {
-    fetch(Levels[4])
+    fetch(Levels[1])
       .then((r) => r.text())
       .then((text) => {
         const arr = text.split("\r\n").map((row) => row.split(""));

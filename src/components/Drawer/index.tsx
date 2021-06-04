@@ -18,11 +18,14 @@ import Divider from "@material-ui/core/Divider";
 import CodeIcon from "@material-ui/icons/Code";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import MusicOffIcon from "@material-ui/icons/MusicOff";
+import ClearIcon from "@material-ui/icons/Clear";
 import {
   toggleMultiplayer,
   getMultiplayer,
   getMusic,
   toggleMusic,
+  getDev,
+  toggleDev,
 } from "../../store/gameSlice";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 
@@ -42,6 +45,7 @@ export const TemporaryDrawer = () => {
   const dispath = useAppDispatch();
   const multiplayer = useAppSelector(getMultiplayer);
   const music = useAppSelector(getMusic);
+  const dev = useAppSelector(getDev);
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -68,9 +72,7 @@ export const TemporaryDrawer = () => {
 
   const handleMusic = () => dispath(toggleMusic());
 
-  const handleDevMode = () => {
-    //test
-  };
+  const handleDevMode = () => dispath(toggleDev());
 
   const list = (anchor: Anchor) => (
     <div
@@ -123,10 +125,8 @@ export const TemporaryDrawer = () => {
           <ListItemText primary={"Second player"} />
         </ListItem>
         <ListItem button key={"key_dev"} onClick={handleDevMode}>
-          <ListItemIcon>
-            <CodeIcon />
-          </ListItemIcon>
-          <ListItemText primary={"Set DEV"} />
+          <ListItemIcon>{dev ? <ClearIcon /> : <CodeIcon />}</ListItemIcon>
+          <ListItemText primary={"Development mode"} />
         </ListItem>
         <ListItem button key={"key_music"} onClick={handleMusic}>
           <ListItemIcon>
