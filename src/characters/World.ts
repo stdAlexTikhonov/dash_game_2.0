@@ -22,7 +22,8 @@ import N from "../assets/images/N.png";
 import L from "../assets/images/L.png";
 import M from "../assets/images/M.png";
 import { Player } from "./Player";
-import GameObject, { GameObjectType } from "./GameObject";
+import GameObject from "./GameObject";
+import FallingObject from "./FallingObject";
 
 class World {
   viewport_w: number = window.innerWidth;
@@ -56,28 +57,28 @@ class World {
   N_img: HTMLImageElement;
   L_img: HTMLImageElement;
   M_img: HTMLImageElement;
-  MOTHERBOARD: GameObjectType[] = [];
-  WALLS: GameObjectType[] = [];
-  BREAKS: GameObjectType[] = [];
-  ROCKS: GameObjectType[] = [];
-  FOOD: GameObjectType[] = [];
-  EXITS: GameObjectType[] = [];
-  SCISSORS: GameObjectType[] = [];
-  ELECTRONS: GameObjectType[] = [];
-  RS: GameObjectType[] = [];
-  US: GameObjectType[] = [];
-  COMPUTERS: GameObjectType[] = [];
-  BUGS: GameObjectType[] = [];
-  ORANGE_DISKS: GameObjectType[] = [];
-  YELLOW_DISKS: GameObjectType[] = [];
-  RED_DISKS: GameObjectType[] = [];
-  PORTALS_LEFT: GameObjectType[] = [];
-  PORTALS_RIGHT: GameObjectType[] = [];
-  PS: GameObjectType[] = [];
-  WS: GameObjectType[] = [];
-  NS: GameObjectType[] = [];
-  LS: GameObjectType[] = [];
-  MS: GameObjectType[] = [];
+  MOTHERBOARD: GameObject[] = [];
+  WALLS: GameObject[] = [];
+  BREAKS: GameObject[] = [];
+  ROCKS: FallingObject[] = [];
+  FOOD: FallingObject[] = [];
+  EXITS: GameObject[] = [];
+  SCISSORS: GameObject[] = [];
+  ELECTRONS: GameObject[] = [];
+  RS: GameObject[] = [];
+  US: GameObject[] = [];
+  COMPUTERS: GameObject[] = [];
+  BUGS: GameObject[] = [];
+  ORANGE_DISKS: GameObject[] = [];
+  YELLOW_DISKS: GameObject[] = [];
+  RED_DISKS: GameObject[] = [];
+  PORTALS_LEFT: GameObject[] = [];
+  PORTALS_RIGHT: GameObject[] = [];
+  PS: GameObject[] = [];
+  WS: GameObject[] = [];
+  NS: GameObject[] = [];
+  LS: GameObject[] = [];
+  MS: GameObject[] = [];
   multiplayer: boolean = false;
   animation: boolean | undefined = false;
 
@@ -868,7 +869,8 @@ class World {
       this.player2!.setDirection(this.player2!.user_input);
       this.player2.updateState(this.world_map);
     }
-
+    this.FOOD.forEach((food) => food.updateState());
+    this.ROCKS.forEach((rock) => rock.updateState());
     this.world_map = this.updateMap();
     this.counter++;
   }
@@ -885,9 +887,9 @@ class World {
         }
         if (cell === ".") this.MOTHERBOARD.push(new GameObject(y, x));
         if (cell === "#") this.WALLS.push(new GameObject(y, x));
-        if (cell === "O") this.ROCKS.push(new GameObject(y, x));
+        if (cell === "O") this.ROCKS.push(new FallingObject(y, x));
         if (cell === "+") this.BREAKS.push(new GameObject(y, x));
-        if (cell === "*") this.FOOD.push(new GameObject(y, x));
+        if (cell === "*") this.FOOD.push(new FallingObject(y, x));
         if (cell === "E") this.EXITS.push(new GameObject(y, x));
         if (cell === "X") this.SCISSORS.push(new GameObject(y, x));
         if (cell === "Z") this.ELECTRONS.push(new GameObject(y, x));

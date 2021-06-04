@@ -7,8 +7,3 @@ export default class GameObject {
     this.x = x;
   }
 }
-
-export type GameObjectType = {
-  x: number;
-  y: number;
-};
