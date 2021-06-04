@@ -1,6 +1,5 @@
-export class Player {
-  x: number;
-  y: number;
+import GameObject from "./GameObject";
+export class Player extends GameObject {
   dy: number;
   direction: string | null;
   prev_horizontal_state: string = "LEFT";
@@ -8,8 +7,7 @@ export class Player {
   user_input: string | null;
 
   constructor(y: number, x: number) {
-    this.y = y;
-    this.x = x;
+    super(y, x);
     this.dy = 1;
     this.direction = null;
     this.animation = false;
