@@ -69,7 +69,7 @@ class World {
   US: GameObject[] = [];
   COMPUTERS: GameObject[] = [];
   BUGS: GameObject[] = [];
-  ORANGE_DISKS: GameObject[] = [];
+  ORANGE_DISKS: FallingObject[] = [];
   YELLOW_DISKS: GameObject[] = [];
   RED_DISKS: GameObject[] = [];
   PORTALS_LEFT: GameObject[] = [];
@@ -809,10 +809,6 @@ class World {
       copy[R.y][R.x] = "O";
     });
 
-    this.WALLS.forEach((W) => {
-      copy[W.y][W.x] = "#";
-    });
-
     this.FOOD.forEach((F) => {
       copy[F.y][F.x] = "*";
     });
@@ -869,8 +865,29 @@ class World {
       this.player2!.setDirection(this.player2!.user_input);
       this.player2.updateState();
     }
-    this.FOOD.forEach((food) => food.updateState());
-    this.ROCKS.forEach((rock) => rock.updateState());
+
+    this.FOOD.forEach((item) => item.updateState());
+    this.ROCKS.forEach((item) => item.updateState());
+    this.MOTHERBOARD.forEach((item) => item.updateState());
+    this.BREAKS.forEach((item) => item.updateState());
+    this.SCISSORS.forEach((item) => item.updateState());
+    this.ELECTRONS.forEach((item) => item.updateState());
+    this.RS.forEach((item) => item.updateState());
+    this.US.forEach((item) => item.updateState());
+    this.COMPUTERS.forEach((item) => item.updateState());
+    this.BUGS.forEach((item) => item.updateState());
+
+    this.ORANGE_DISKS.forEach((item) => item.updateState());
+    this.YELLOW_DISKS.forEach((item) => item.updateState());
+    this.RED_DISKS.forEach((item) => item.updateState());
+    this.PORTALS_LEFT.forEach((item) => item.updateState());
+    this.PORTALS_RIGHT.forEach((item) => item.updateState());
+    this.PS.forEach((item) => item.updateState());
+    this.WS.forEach((item) => item.updateState());
+    this.NS.forEach((item) => item.updateState());
+    this.LS.forEach((item) => item.updateState());
+    this.MS.forEach((item) => item.updateState());
+
     this.world_map = this.updateMap();
     this.counter++;
   }
@@ -897,7 +914,7 @@ class World {
         if (cell === "U") this.US.push(new GameObject(y, x));
         if (cell === "C") this.COMPUTERS.push(new GameObject(y, x));
         if (cell === "B") this.BUGS.push(new GameObject(y, x));
-        if (cell === "D") this.ORANGE_DISKS.push(new GameObject(y, x));
+        if (cell === "D") this.ORANGE_DISKS.push(new FallingObject(y, x));
         if (cell === "Y") this.YELLOW_DISKS.push(new GameObject(y, x));
         if (cell === "%") this.RED_DISKS.push(new GameObject(y, x));
         if (cell === "<") this.PORTALS_LEFT.push(new GameObject(y, x));
