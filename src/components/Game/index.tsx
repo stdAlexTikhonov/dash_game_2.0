@@ -1,10 +1,9 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { Canvas } from "../Canvas";
 import { Dev } from "../DevMode";
 
 import Box from "@material-ui/core/Box";
 import World from "../../characters/World";
-import Levels from "../../levels";
 import { useAppSelector } from "../../hooks";
 import { getMultiplayer } from "../../store/gameSlice";
 import { context, context2 } from "../Canvas/canvas";
@@ -30,7 +29,6 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    // World.setMap(Levels[0]);
     draw();
 
     return () => {
