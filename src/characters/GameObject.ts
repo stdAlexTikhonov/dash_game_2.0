@@ -6,4 +6,8 @@ export default class GameObject {
     this.y = y;
     this.x = x;
   }
+
+  updateState() {
+    return;
+  }
 }

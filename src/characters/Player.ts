@@ -1,4 +1,5 @@
 import GameObject from "./GameObject";
+import World from "./World";
 export class Player extends GameObject {
   dy: number;
   direction: string | null;
@@ -43,7 +44,8 @@ export class Player extends GameObject {
     this.user_input = dir;
   }
 
-  updateState(world: string[][]) {
+  updateState() {
+    const { world_map: world } = World;
     const maxY = world!.length - 1;
     const maxX = world![0]!.length - 1;
 
