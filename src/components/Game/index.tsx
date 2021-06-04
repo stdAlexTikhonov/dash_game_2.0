@@ -1,17 +1,17 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { Canvas } from "../Canvas";
-import { Dev } from "../DevMode";
+import { Dev } from "../DevelopmentMode";
 
 import Box from "@material-ui/core/Box";
 import World from "../../characters/World";
-import Levels from "../../levels";
 import { useAppSelector } from "../../hooks";
-import { getMultiplayer } from "../../store/gameSlice";
+import { getMultiplayer, getDev } from "../../store/gameSlice";
 import { context, context2 } from "../Canvas/canvas";
 
 export const Game = () => {
   const multiplayer = useAppSelector(getMultiplayer);
   const requestIdRef = useRef(null as null | number);
+  const dev = useAppSelector(getDev);
 
   let frame = 0;
 
@@ -30,11 +30,10 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    // World.setMap(Levels[0]);
-    draw();
+    if (!dev) draw();
 
     return () => {
-      window.cancelAnimationFrame(requestIdRef.current!);
+      if (!dev) window.cancelAnimationFrame(requestIdRef.current!);
     };
   }, []);
 
@@ -47,7 +46,9 @@ export const Game = () => {
     else World.resetMultiplayer();
   }, [multiplayer]);
 
-  return (
+  return dev ? (
+    <Dev />
+  ) : (
     <Box display="flex" flexDirection="row-reverse">
       <Canvas player={1} />
       {multiplayer && <Canvas player={2} />}

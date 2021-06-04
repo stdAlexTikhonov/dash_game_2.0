@@ -1,16 +1,18 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import World from "../../characters/World";
 
 export const Dev = () => {
+  const [, setCounter] = useState(0);
   const classes = useStyles();
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     World.tick();
-  //   }, 100);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      World.tick();
+      setCounter((prev) => prev + 1);
+    }, 150);
 
-  //   return () => clearInterval(interval);
-  // }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <pre className={classes.pre}>

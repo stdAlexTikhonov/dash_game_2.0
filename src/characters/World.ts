@@ -775,8 +775,8 @@ class World {
   }
 
   updateMap() {
-    const copy = Array.from({ length: this.height }, () =>
-      Array.from({ length: this.width }, () => " ")
+    const copy = Array.from({ length: this.world_map.length }, () =>
+      Array.from({ length: this.world_map[0].length }, () => " ")
     );
 
     if (this.player)
@@ -893,6 +893,7 @@ class World {
   }
 
   setMap(world_map: string[][]) {
+    this.resetWorld();
     this.width = this.viewport_w / World.BLOCK_WIDTH;
     this.height = world_map.length;
     this.world_map = world_map;
@@ -926,6 +927,34 @@ class World {
         if (cell === "M") this.MS.push(new GameObject(y, x));
       });
     });
+  }
+
+  resetWorld() {
+    this.world_map = [];
+    this.MOTHERBOARD = [];
+    this.WALLS = [];
+    this.ROCKS = [];
+    this.BREAKS = [];
+    this.FOOD = [];
+    this.EXITS = [];
+    this.SCISSORS = [];
+    this.ELECTRONS = [];
+    this.RS = [];
+    this.US = [];
+    this.COMPUTERS = [];
+    this.BUGS = [];
+    this.ORANGE_DISKS = [];
+    this.YELLOW_DISKS = [];
+    this.RED_DISKS = [];
+    this.PORTALS_LEFT = [];
+    this.PORTALS_RIGHT = [];
+    this.PS = [];
+    this.WS = [];
+    this.NS = [];
+    this.LS = [];
+    this.MS = [];
+    this.player = null;
+    this.player2 = null;
   }
 }
 
