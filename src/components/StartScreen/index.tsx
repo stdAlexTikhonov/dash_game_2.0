@@ -7,7 +7,12 @@ import "./styles.css";
 
 export const StartScreen = () => {
   useEffect(() => {
-    World.setMap(Levels[0]);
+    fetch(Levels[4])
+      .then((r) => r.text())
+      .then((text) => {
+        const arr = text.split("\r\n").map((row) => row.split(""));
+        World.setMap(arr);
+      });
   }, []);
   const classes = useStyles();
   return (

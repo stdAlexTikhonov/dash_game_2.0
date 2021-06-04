@@ -22,11 +22,9 @@ import N from "../assets/images/N.png";
 import L from "../assets/images/L.png";
 import M from "../assets/images/M.png";
 import { Player } from "./Player";
+import GameObject from "./GameObject";
+import FallingObject from "./FallingObject";
 
-type GameObject = {
-  x: number;
-  y: number;
-};
 class World {
   viewport_w: number = window.innerWidth;
   viewport_h: number = window.innerHeight;
@@ -62,8 +60,8 @@ class World {
   MOTHERBOARD: GameObject[] = [];
   WALLS: GameObject[] = [];
   BREAKS: GameObject[] = [];
-  ROCKS: GameObject[] = [];
-  FOOD: GameObject[] = [];
+  ROCKS: FallingObject[] = [];
+  FOOD: FallingObject[] = [];
   EXITS: GameObject[] = [];
   SCISSORS: GameObject[] = [];
   ELECTRONS: GameObject[] = [];
@@ -71,7 +69,7 @@ class World {
   US: GameObject[] = [];
   COMPUTERS: GameObject[] = [];
   BUGS: GameObject[] = [];
-  ORANGE_DISKS: GameObject[] = [];
+  ORANGE_DISKS: FallingObject[] = [];
   YELLOW_DISKS: GameObject[] = [];
   RED_DISKS: GameObject[] = [];
   PORTALS_LEFT: GameObject[] = [];
@@ -811,10 +809,6 @@ class World {
       copy[R.y][R.x] = "O";
     });
 
-    this.WALLS.forEach((W) => {
-      copy[W.y][W.x] = "#";
-    });
-
     this.FOOD.forEach((F) => {
       copy[F.y][F.x] = "*";
     });
@@ -866,11 +860,33 @@ class World {
 
   tick() {
     this.player!.setDirection(this.player!.user_input);
-    this.player!.updateState(this.world_map);
+    this.player!.updateState();
     if (this.player2) {
       this.player2!.setDirection(this.player2!.user_input);
-      this.player2.updateState(this.world_map);
+      this.player2.updateState();
     }
+
+    this.FOOD.forEach((item) => item.updateState());
+    this.ROCKS.forEach((item) => item.updateState());
+    this.MOTHERBOARD.forEach((item) => item.updateState());
+    this.BREAKS.forEach((item) => item.updateState());
+    this.SCISSORS.forEach((item) => item.updateState());
+    this.ELECTRONS.forEach((item) => item.updateState());
+    this.RS.forEach((item) => item.updateState());
+    this.US.forEach((item) => item.updateState());
+    this.COMPUTERS.forEach((item) => item.updateState());
+    this.BUGS.forEach((item) => item.updateState());
+
+    this.ORANGE_DISKS.forEach((item) => item.updateState());
+    this.YELLOW_DISKS.forEach((item) => item.updateState());
+    this.RED_DISKS.forEach((item) => item.updateState());
+    this.PORTALS_LEFT.forEach((item) => item.updateState());
+    this.PORTALS_RIGHT.forEach((item) => item.updateState());
+    this.PS.forEach((item) => item.updateState());
+    this.WS.forEach((item) => item.updateState());
+    this.NS.forEach((item) => item.updateState());
+    this.LS.forEach((item) => item.updateState());
+    this.MS.forEach((item) => item.updateState());
 
     this.world_map = this.updateMap();
     this.counter++;
@@ -886,28 +902,28 @@ class World {
         if (cell === "A") {
           this.player = new Player(y, x);
         }
-        if (cell === ".") this.MOTHERBOARD.push({ x: x, y: y });
-        if (cell === "#") this.WALLS.push({ x: x, y: y });
-        if (cell === "O") this.ROCKS.push({ x: x, y: y });
-        if (cell === "+") this.BREAKS.push({ x: x, y: y });
-        if (cell === "*") this.FOOD.push({ x: x, y: y });
-        if (cell === "E") this.EXITS.push({ x: x, y: y });
-        if (cell === "X") this.SCISSORS.push({ x: x, y: y });
-        if (cell === "Z") this.ELECTRONS.push({ x: x, y: y });
-        if (cell === "R") this.RS.push({ x: x, y: y });
-        if (cell === "U") this.US.push({ x: x, y: y });
-        if (cell === "C") this.COMPUTERS.push({ x: x, y: y });
-        if (cell === "B") this.BUGS.push({ x: x, y: y });
-        if (cell === "D") this.ORANGE_DISKS.push({ x: x, y: y });
-        if (cell === "Y") this.YELLOW_DISKS.push({ x: x, y: y });
-        if (cell === "%") this.RED_DISKS.push({ x: x, y: y });
-        if (cell === "<") this.PORTALS_LEFT.push({ x: x, y: y });
-        if (cell === ">") this.PORTALS_RIGHT.push({ x: x, y: y });
-        if (cell === "P") this.PS.push({ x: x, y: y });
-        if (cell === "W") this.WS.push({ x: x, y: y });
-        if (cell === "N") this.NS.push({ x: x, y: y });
-        if (cell === "L") this.LS.push({ x: x, y: y });
-        if (cell === "M") this.MS.push({ x: x, y: y });
+        if (cell === ".") this.MOTHERBOARD.push(new GameObject(y, x));
+        if (cell === "#") this.WALLS.push(new GameObject(y, x));
+        if (cell === "O") this.ROCKS.push(new FallingObject(y, x));
+        if (cell === "+") this.BREAKS.push(new GameObject(y, x));
+        if (cell === "*") this.FOOD.push(new FallingObject(y, x));
+        if (cell === "E") this.EXITS.push(new GameObject(y, x));
+        if (cell === "X") this.SCISSORS.push(new GameObject(y, x));
+        if (cell === "Z") this.ELECTRONS.push(new GameObject(y, x));
+        if (cell === "R") this.RS.push(new GameObject(y, x));
+        if (cell === "U") this.US.push(new GameObject(y, x));
+        if (cell === "C") this.COMPUTERS.push(new GameObject(y, x));
+        if (cell === "B") this.BUGS.push(new GameObject(y, x));
+        if (cell === "D") this.ORANGE_DISKS.push(new FallingObject(y, x));
+        if (cell === "Y") this.YELLOW_DISKS.push(new GameObject(y, x));
+        if (cell === "%") this.RED_DISKS.push(new GameObject(y, x));
+        if (cell === "<") this.PORTALS_LEFT.push(new GameObject(y, x));
+        if (cell === ">") this.PORTALS_RIGHT.push(new GameObject(y, x));
+        if (cell === "P") this.PS.push(new GameObject(y, x));
+        if (cell === "W") this.WS.push(new GameObject(y, x));
+        if (cell === "N") this.NS.push(new GameObject(y, x));
+        if (cell === "L") this.LS.push(new GameObject(y, x));
+        if (cell === "M") this.MS.push(new GameObject(y, x));
       });
     });
   }

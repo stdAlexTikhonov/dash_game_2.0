@@ -1,6 +1,6 @@
-export class Player {
-  x: number;
-  y: number;
+import GameObject from "./GameObject";
+import World from "./World";
+export class Player extends GameObject {
   dy: number;
   direction: string | null;
   prev_horizontal_state: string = "LEFT";
@@ -8,8 +8,7 @@ export class Player {
   user_input: string | null;
 
   constructor(y: number, x: number) {
-    this.y = y;
-    this.x = x;
+    super(y, x);
     this.dy = 1;
     this.direction = null;
     this.animation = false;
@@ -45,9 +44,11 @@ export class Player {
     this.user_input = dir;
   }
 
-  updateState(world: string[][]) {
+  updateState() {
+    const { world_map: world } = World;
     const maxY = world!.length - 1;
     const maxX = world![0]!.length - 1;
+
     this.animation = false;
 
     if (this.direction === "UP" && this.y > 0)
