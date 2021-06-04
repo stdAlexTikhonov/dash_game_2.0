@@ -5,6 +5,7 @@ interface GameState {
   multiplayer: boolean;
   music: boolean;
   dev: boolean;
+  level: number;
 }
 
 // Define the initial state using that type
@@ -12,6 +13,7 @@ const initialState: GameState = {
   multiplayer: false,
   music: false,
   dev: false,
+  level: 0,
 };
 
 export const gameSlice = createSlice({
@@ -27,6 +29,9 @@ export const gameSlice = createSlice({
     toggleDev: (state) => {
       state.dev = !state.dev;
     },
+    setLevel: (state, action: PayloadAction<number>) => {
+      state.level = action.payload;
+    },
     // incrementByAmount: (state, action: PayloadAction<number>) => {
     //   state.value += action.payload;
     // },
@@ -34,7 +39,8 @@ export const gameSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { toggleMultiplayer, toggleMusic, toggleDev } = gameSlice.actions;
+export const { toggleMultiplayer, toggleMusic, toggleDev, setLevel } =
+  gameSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const getMultiplayer = (state: RootState) => state.game.multiplayer;
@@ -42,5 +48,7 @@ export const getMultiplayer = (state: RootState) => state.game.multiplayer;
 export const getMusic = (state: RootState) => state.game.music;
 
 export const getDev = (state: RootState) => state.game.dev;
+
+export const getLevel = (state: RootState) => state.game.level;
 
 export default gameSlice.reducer;

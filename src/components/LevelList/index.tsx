@@ -1,10 +1,9 @@
-import React from "react";
 import Box from "@material-ui/core/Box";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-
+import { setLevel } from "../../store/gameSlice";
+import { useAppDispatch } from "../../hooks";
 import { useHistory } from "react-router-dom";
-import Levels from "../../levels";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +36,7 @@ const levels = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export const LevelList = () => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   return (
     <Box className={classes.block}>
@@ -45,8 +45,7 @@ export const LevelList = () => {
           key={i}
           className={classes.card}
           onClick={() => {
-            // GameStore.setLevel(i);
-            // GameStore.setLevelMap(Levels[i]);
+            dispatch(setLevel(i));
             history.push("/");
           }}
         >
