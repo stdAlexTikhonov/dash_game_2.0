@@ -30,7 +30,7 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    World.setMap(Levels[1]);
+    // World.setMap(Levels[0]);
     draw();
 
     return () => {
