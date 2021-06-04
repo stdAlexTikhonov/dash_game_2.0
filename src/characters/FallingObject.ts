@@ -11,6 +11,7 @@ export default class FallingObject extends GameObject {
   check_way_down() {
     const { world_map } = World;
     if (world_map[this.y + 1]) {
+      //если элемент впринципе отсутствует на карте
       if (!world_map[this.y + 1][this.x]) return true;
       else return world_map[this.y + 1][this.x] === " ";
     }
