@@ -36,15 +36,12 @@ export class Player extends GameObject {
     "<",
   ];
 
-  setDirection(dir: string | null) {
-    this.direction = dir;
-  }
-
   setUserInput(dir: string | null) {
     this.user_input = dir;
   }
 
   updateState() {
+    this.direction = this.user_input;
     const { world_map: world } = World;
     const maxY = world!.length - 1;
     const maxX = world![0]!.length - 1;
@@ -53,19 +50,19 @@ export class Player extends GameObject {
 
     if (this.direction === "UP" && this.y > 0)
       if (!Player.STOP_OBJECTS.includes(world[this.y - 1][this.x])) {
-        this.setPosition(this.y - 1, this.x);
+        this.y -= 1;
         this.animation = true;
       }
 
     if (this.direction === "DOWN" && this.y < maxY)
       if (!Player.STOP_OBJECTS.includes(world[this.y + 1][this.x])) {
-        this.setPosition(this.y + 1, this.x);
+        this.y += 1;
         this.animation = true;
       }
 
     if (this.direction === "LEFT" && this.x > 0)
       if (!Player.STOP_OBJECTS.includes(world[this.y][this.x - 1])) {
-        this.setPosition(this.y, this.x - 1);
+        this.x -= 1;
         this.prev_horizontal_state = "LEFT";
         this.animation = true;
       }
@@ -73,14 +70,9 @@ export class Player extends GameObject {
     if (this.direction === "RIGHT" && this.x < maxX)
       if (!Player.STOP_OBJECTS.includes(world[this.y][this.x + 1])) {
         this.prev_horizontal_state = "RIGHT";
-        this.setPosition(this.y, this.x + 1);
+        this.x += 1;
         this.animation = true;
       }
-  }
-
-  setPosition(y: number, x: number) {
-    this.x = x;
-    this.y = y;
   }
 
   setState(dy: number) {

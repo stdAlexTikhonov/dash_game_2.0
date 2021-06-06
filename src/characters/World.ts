@@ -859,12 +859,8 @@ class World {
   }
 
   tick() {
-    this.player!.setDirection(this.player!.user_input);
     this.player!.updateState();
-    if (this.player2) {
-      this.player2!.setDirection(this.player2!.user_input);
-      this.player2.updateState();
-    }
+    if (this.player2) this.player2.updateState();
 
     this.FOOD.forEach((item) => item.updateState());
     this.ROCKS.forEach((item) => item.updateState());
