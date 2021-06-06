@@ -79,6 +79,7 @@ class World {
   NS: GameObject[] = [];
   LS: GameObject[] = [];
   MS: GameObject[] = [];
+  FALLING_OBJECTS: FallingObject[] = [];
   multiplayer: boolean = false;
   animation: boolean | undefined = false;
 
@@ -805,12 +806,8 @@ class World {
       copy[B.y][B.x] = "+";
     });
 
-    this.ROCKS.forEach((R) => {
-      copy[R.y][R.x] = "O";
-    });
-
-    this.FOOD.forEach((F) => {
-      copy[F.y][F.x] = "*";
+    this.FALLING_OBJECTS.forEach((F) => {
+      copy[F.y][F.x] = F.char;
     });
 
     this.SCISSORS.forEach((X) => {
@@ -837,7 +834,6 @@ class World {
       copy[B.y][B.x] = "B";
     });
 
-    this.ORANGE_DISKS.forEach((D) => (copy[D.y][D.x] = "D"));
     this.YELLOW_DISKS.forEach((Y) => (copy[Y.y][Y.x] = "Y"));
     this.RED_DISKS.forEach((R) => (copy[R.y][R.x] = "%"));
 
@@ -862,8 +858,8 @@ class World {
     this.player!.updateState();
     if (this.player2) this.player2.updateState();
 
-    this.FOOD.forEach((item) => item.updateState());
-    this.ROCKS.forEach((item) => item.updateState());
+    this.FALLING_OBJECTS.forEach((item) => item.updateState());
+    this.FALLING_OBJECTS.sort((a, b) => b.y - a.y);
     this.MOTHERBOARD.forEach((item) => item.updateState());
     this.BREAKS.forEach((item) => item.updateState());
     this.SCISSORS.forEach((item) => item.updateState());
@@ -873,7 +869,6 @@ class World {
     this.COMPUTERS.forEach((item) => item.updateState());
     this.BUGS.forEach((item) => item.updateState());
 
-    this.ORANGE_DISKS.forEach((item) => item.updateState());
     this.YELLOW_DISKS.forEach((item) => item.updateState());
     this.RED_DISKS.forEach((item) => item.updateState());
     this.PORTALS_LEFT.forEach((item) => item.updateState());
@@ -901,9 +896,11 @@ class World {
         }
         if (cell === ".") this.MOTHERBOARD.push(new GameObject(y, x));
         if (cell === "#") this.WALLS.push(new GameObject(y, x));
-        if (cell === "O") this.ROCKS.push(new FallingObject(y, x));
+        if (cell === "O")
+          this.FALLING_OBJECTS.push(new FallingObject(y, x, "O"));
         if (cell === "+") this.BREAKS.push(new GameObject(y, x));
-        if (cell === "*") this.FOOD.push(new FallingObject(y, x));
+        if (cell === "*")
+          this.FALLING_OBJECTS.push(new FallingObject(y, x, "*"));
         if (cell === "E") this.EXITS.push(new GameObject(y, x));
         if (cell === "X") this.SCISSORS.push(new GameObject(y, x));
         if (cell === "Z") this.ELECTRONS.push(new GameObject(y, x));
@@ -911,7 +908,8 @@ class World {
         if (cell === "U") this.US.push(new GameObject(y, x));
         if (cell === "C") this.COMPUTERS.push(new GameObject(y, x));
         if (cell === "B") this.BUGS.push(new GameObject(y, x));
-        if (cell === "D") this.ORANGE_DISKS.push(new FallingObject(y, x));
+        if (cell === "D")
+          this.FALLING_OBJECTS.push(new FallingObject(y, x, "D"));
         if (cell === "Y") this.YELLOW_DISKS.push(new GameObject(y, x));
         if (cell === "%") this.RED_DISKS.push(new GameObject(y, x));
         if (cell === "<") this.PORTALS_LEFT.push(new GameObject(y, x));
@@ -923,6 +921,8 @@ class World {
         if (cell === "M") this.MS.push(new GameObject(y, x));
       });
     });
+
+    this.FALLING_OBJECTS.sort((a, b) => b.y - a.y);
   }
 
   resetWorld() {

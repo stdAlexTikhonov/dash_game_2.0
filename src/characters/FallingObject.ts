@@ -3,8 +3,8 @@ import World from "./World";
 
 export default class FallingObject extends GameObject {
   falling: boolean;
-  constructor(y: number, x: number) {
-    super(y, x);
+  constructor(y: number, x: number, char: string) {
+    super(y, x, char);
     this.falling = false;
   }
 
