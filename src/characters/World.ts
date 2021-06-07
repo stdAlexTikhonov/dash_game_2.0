@@ -16,6 +16,7 @@ import yellow_disk from "../assets/images/yellow_disk.png";
 import red_disk from "../assets/images/red_disk.png";
 import portal_right from "../assets/images/portal_right.png";
 import portal_left from "../assets/images/portal_left.png";
+import portal_left_right from "../assets/images/portal_left_right.png";
 import P from "../assets/images/P.png";
 import W from "../assets/images/W.png";
 import N from "../assets/images/N.png";
@@ -53,6 +54,7 @@ class World {
   red_disk_img: HTMLImageElement;
   portal_right_img: HTMLImageElement;
   portal_left_img: HTMLImageElement;
+  portal_left_right_img: HTMLImageElement;
   P_img: HTMLImageElement;
   W_img: HTMLImageElement;
   N_img: HTMLImageElement;
@@ -76,6 +78,7 @@ class World {
   RED_DISKS: GameObject[] = [];
   PORTALS_LEFT: GameObject[] = [];
   PORTALS_RIGHT: GameObject[] = [];
+  PORTALS_LEFT_RIGHT: GameObject[] = [];
   PS: GameObject[] = [];
   WS: GameObject[] = [];
   NS: GameObject[] = [];
@@ -106,6 +109,7 @@ class World {
     this.red_disk_img = new Image();
     this.portal_right_img = new Image();
     this.portal_left_img = new Image();
+    this.portal_left_right_img = new Image();
     this.P_img = new Image();
     this.W_img = new Image();
     this.N_img = new Image();
@@ -130,6 +134,7 @@ class World {
     this.red_disk_img.src = red_disk;
     this.portal_right_img.src = portal_right;
     this.portal_left_img.src = portal_left;
+    this.portal_left_right_img.src = portal_left_right;
     this.P_img.src = P;
     this.W_img.src = W;
     this.N_img.src = N;
@@ -449,6 +454,15 @@ class World {
         if (cell === "6")
           context!.drawImage(
             this.Hardware7_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "2")
+          context!.drawImage(
+            this.portal_left_right_img,
             pos_x,
             pos_y,
             World.BLOCK_WIDTH,
@@ -782,6 +796,15 @@ class World {
             World.BLOCK_WIDTH,
             World.BLOCK_WIDTH
           );
+
+        if (cell === "2")
+          context!.drawImage(
+            this.portal_left_right_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
         // }
       });
     });
@@ -869,6 +892,7 @@ class World {
     this.LS.forEach((P) => (copy[P.y][P.x] = "L"));
     this.MS.forEach((P) => (copy[P.y][P.x] = "M"));
     this.HARDWARE7S.forEach((P) => (copy[P.y][P.x] = "6"));
+    this.PORTALS_LEFT_RIGHT.forEach((P) => (copy[P.y][P.x] = "2"));
 
     this.EXITS.forEach((E) => (copy[E.y][E.x] = "E"));
 
@@ -903,6 +927,7 @@ class World {
     this.LS.forEach((item) => item.updateState());
     this.MS.forEach((item) => item.updateState());
     this.HARDWARE7S.forEach((item) => item.updateState());
+    this.PORTALS_LEFT_RIGHT.forEach((item) => item.updateState());
 
     this.world_map = this.updateMap();
     this.counter++;
@@ -945,6 +970,7 @@ class World {
         if (cell === "L") this.LS.push(new GameObject(y, x));
         if (cell === "M") this.MS.push(new GameObject(y, x));
         if (cell === "6") this.HARDWARE7S.push(new GameObject(y, x));
+        if (cell === "2") this.PORTALS_LEFT_RIGHT.push(new GameObject(y, x));
       });
     });
 
@@ -968,6 +994,7 @@ class World {
     this.RED_DISKS = [];
     this.PORTALS_LEFT = [];
     this.PORTALS_RIGHT = [];
+    this.PORTALS_LEFT_RIGHT = [];
     this.PS = [];
     this.WS = [];
     this.NS = [];
