@@ -929,9 +929,7 @@ class World {
     this.world_map = [];
     this.MOTHERBOARD = [];
     this.WALLS = [];
-    this.ROCKS = [];
     this.BREAKS = [];
-    this.FOOD = [];
     this.EXITS = [];
     this.SCISSORS = [];
     this.ELECTRONS = [];
@@ -939,7 +937,7 @@ class World {
     this.US = [];
     this.COMPUTERS = [];
     this.BUGS = [];
-    this.ORANGE_DISKS = [];
+    this.FALLING_OBJECTS = [];
     this.YELLOW_DISKS = [];
     this.RED_DISKS = [];
     this.PORTALS_LEFT = [];
