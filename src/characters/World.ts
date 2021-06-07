@@ -21,6 +21,7 @@ import W from "../assets/images/W.png";
 import N from "../assets/images/N.png";
 import L from "../assets/images/L.png";
 import M from "../assets/images/M.png";
+import Hardware7 from "../assets/images/Hardware7.png";
 import { Player } from "./Player";
 import GameObject from "./GameObject";
 import FallingObject from "./FallingObject";
@@ -57,6 +58,7 @@ class World {
   N_img: HTMLImageElement;
   L_img: HTMLImageElement;
   M_img: HTMLImageElement;
+  Hardware7_img: HTMLImageElement;
   MOTHERBOARD: GameObject[] = [];
   WALLS: GameObject[] = [];
   BREAKS: GameObject[] = [];
@@ -80,6 +82,7 @@ class World {
   LS: GameObject[] = [];
   MS: GameObject[] = [];
   FALLING_OBJECTS: FallingObject[] = [];
+  HARDWARE7S: GameObject[] = [];
   multiplayer: boolean = false;
   animation: boolean | undefined = false;
 
@@ -108,6 +111,7 @@ class World {
     this.N_img = new Image();
     this.L_img = new Image();
     this.M_img = new Image();
+    this.Hardware7_img = new Image();
     this.ground_img.src = ground;
     this.merphy_img.src = merphy;
     this.wall_img.src = wall;
@@ -131,6 +135,7 @@ class World {
     this.N_img.src = N;
     this.L_img.src = L;
     this.M_img.src = M;
+    this.Hardware7_img.src = Hardware7;
     this.animation = false;
   }
 
@@ -435,6 +440,15 @@ class World {
         if (cell === "M")
           context!.drawImage(
             this.M_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "6")
+          context!.drawImage(
+            this.Hardware7_img,
             pos_x,
             pos_y,
             World.BLOCK_WIDTH,
@@ -759,6 +773,15 @@ class World {
             World.BLOCK_WIDTH,
             World.BLOCK_WIDTH
           );
+
+        if (cell === "6")
+          context!.drawImage(
+            this.Hardware7_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
         // }
       });
     });
@@ -845,6 +868,7 @@ class World {
     this.NS.forEach((P) => (copy[P.y][P.x] = "N"));
     this.LS.forEach((P) => (copy[P.y][P.x] = "L"));
     this.MS.forEach((P) => (copy[P.y][P.x] = "M"));
+    this.HARDWARE7S.forEach((P) => (copy[P.y][P.x] = "6"));
 
     this.EXITS.forEach((E) => (copy[E.y][E.x] = "E"));
 
@@ -878,6 +902,7 @@ class World {
     this.NS.forEach((item) => item.updateState());
     this.LS.forEach((item) => item.updateState());
     this.MS.forEach((item) => item.updateState());
+    this.HARDWARE7S.forEach((item) => item.updateState());
 
     this.world_map = this.updateMap();
     this.counter++;
@@ -919,6 +944,7 @@ class World {
         if (cell === "N") this.NS.push(new GameObject(y, x));
         if (cell === "L") this.LS.push(new GameObject(y, x));
         if (cell === "M") this.MS.push(new GameObject(y, x));
+        if (cell === "6") this.HARDWARE7S.push(new GameObject(y, x));
       });
     });
 
@@ -947,6 +973,7 @@ class World {
     this.NS = [];
     this.LS = [];
     this.MS = [];
+    this.HARDWARE7S = [];
     this.player = null;
     this.player2 = null;
   }
