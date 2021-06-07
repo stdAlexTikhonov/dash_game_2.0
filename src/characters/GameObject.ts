@@ -3,7 +3,7 @@ export default class GameObject {
   y: number;
   char: string;
 
-  constructor(y: number, x: number, char?: string = " ") {
+  constructor(y: number, x: number, char: string = " ") {
     this.y = y;
     this.x = x;
     this.char = char;
