@@ -9,6 +9,8 @@ import scissors from "../assets/images/scissors.png";
 import electron from "../assets/images/electron.png";
 import ram2 from "../assets/images/RAM2.png";
 import ram3 from "../assets/images/RAM3.png";
+import ram4 from "../assets/images/RAM_4.png";
+import ram5 from "../assets/images/RAM_5.png";
 import bug from "../assets/images/bug.png";
 import computer from "../assets/images/computer.png";
 import orange_disk from "../assets/images/orange_disk.png";
@@ -47,6 +49,8 @@ class World {
   electron_img: HTMLImageElement;
   ram2_img: HTMLImageElement;
   ram3_img: HTMLImageElement;
+  ram4_img: HTMLImageElement;
+  ram5_img: HTMLImageElement;
   bug_img: HTMLImageElement;
   computer_img: HTMLImageElement;
   orange_disk_img: HTMLImageElement;
@@ -71,6 +75,8 @@ class World {
   ELECTRONS: GameObject[] = [];
   RS: GameObject[] = [];
   US: GameObject[] = [];
+  RAM4S: GameObject[] = [];
+  RAM5S: GameObject[] = [];
   COMPUTERS: GameObject[] = [];
   BUGS: GameObject[] = [];
   ORANGE_DISKS: FallingObject[] = [];
@@ -102,6 +108,8 @@ class World {
     this.electron_img = new Image();
     this.ram2_img = new Image();
     this.ram3_img = new Image();
+    this.ram4_img = new Image();
+    this.ram5_img = new Image();
     this.bug_img = new Image();
     this.computer_img = new Image();
     this.orange_disk_img = new Image();
@@ -127,6 +135,8 @@ class World {
     this.electron_img.src = electron;
     this.ram2_img.src = ram2;
     this.ram3_img.src = ram3;
+    this.ram4_img.src = ram4;
+    this.ram5_img.src = ram5;
     this.bug_img.src = bug;
     this.computer_img.src = computer;
     this.orange_disk_img.src = orange_disk;
@@ -463,6 +473,24 @@ class World {
         if (cell === "2")
           context!.drawImage(
             this.portal_left_right_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "3")
+          context!.drawImage(
+            this.ram4_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "4")
+          context!.drawImage(
+            this.ram5_img,
             pos_x,
             pos_y,
             World.BLOCK_WIDTH,
@@ -805,6 +833,24 @@ class World {
             World.BLOCK_WIDTH,
             World.BLOCK_WIDTH
           );
+
+        if (cell === "3")
+          context!.drawImage(
+            this.ram4_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "4")
+          context!.drawImage(
+            this.ram5_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
         // }
       });
     });
@@ -893,6 +939,8 @@ class World {
     this.MS.forEach((P) => (copy[P.y][P.x] = "M"));
     this.HARDWARE7S.forEach((P) => (copy[P.y][P.x] = "6"));
     this.PORTALS_LEFT_RIGHT.forEach((P) => (copy[P.y][P.x] = "2"));
+    this.RAM4S.forEach((P) => (copy[P.y][P.x] = "3"));
+    this.RAM5S.forEach((P) => (copy[P.y][P.x] = "4"));
 
     this.EXITS.forEach((E) => (copy[E.y][E.x] = "E"));
 
@@ -928,6 +976,8 @@ class World {
     this.MS.forEach((item) => item.updateState());
     this.HARDWARE7S.forEach((item) => item.updateState());
     this.PORTALS_LEFT_RIGHT.forEach((item) => item.updateState());
+    this.RAM4S.forEach((item) => item.updateState());
+    this.RAM5S.forEach((item) => item.updateState());
 
     this.world_map = this.updateMap();
     this.counter++;
@@ -971,6 +1021,8 @@ class World {
         if (cell === "M") this.MS.push(new GameObject(y, x));
         if (cell === "6") this.HARDWARE7S.push(new GameObject(y, x));
         if (cell === "2") this.PORTALS_LEFT_RIGHT.push(new GameObject(y, x));
+        if (cell === "3") this.RAM4S.push(new GameObject(y, x));
+        if (cell === "4") this.RAM5S.push(new GameObject(y, x));
       });
     });
 
@@ -1001,6 +1053,8 @@ class World {
     this.LS = [];
     this.MS = [];
     this.HARDWARE7S = [];
+    this.RAM4S = [];
+    this.RAM5S = [];
     this.player = null;
     this.player2 = null;
   }
