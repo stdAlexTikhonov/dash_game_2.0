@@ -33,7 +33,9 @@ export default class FallingObject extends GameObject {
     const { world_map } = World;
 
     return world_map[this.y + 1]
-      ? ["+", "O", "*"].includes(world_map[this.y + 1][this.x])
+      ? ["+", "O", "*", "R", "U", "3", "4"].includes(
+          world_map[this.y + 1][this.x]
+        )
       : false;
   }
 

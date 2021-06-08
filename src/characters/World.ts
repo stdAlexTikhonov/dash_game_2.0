@@ -22,6 +22,7 @@ import portal_left_right from "../assets/images/portal_left_right.png";
 import portal_up_down from "../assets/images/portal_up_down.png";
 import portal_up from "../assets/images/portal_up.png";
 import portal_down from "../assets/images/portal_down.png";
+import portal_cross from "../assets/images/portal_cross.png";
 import a2 from "../assets/images/a2.png";
 import a3 from "../assets/images/a3.png";
 import a5 from "../assets/images/a5.png";
@@ -69,6 +70,7 @@ class World {
   portal_up_down_img: HTMLImageElement;
   portal_up_img: HTMLImageElement;
   portal_down_img: HTMLImageElement;
+  portal_cross_img: HTMLImageElement;
   a2_img: HTMLImageElement;
   a3_img: HTMLImageElement;
   a5_img: HTMLImageElement;
@@ -102,6 +104,7 @@ class World {
   PORTALS_UP_DOWN: GameObject[] = [];
   PORTALS_UP: GameObject[] = [];
   PORTALS_DOWN: GameObject[] = [];
+  PORTALS_CROSS: GameObject[] = [];
   PS: GameObject[] = [];
   WS: GameObject[] = [];
   NS: GameObject[] = [];
@@ -142,6 +145,7 @@ class World {
     this.portal_up_down_img = new Image();
     this.portal_down_img = new Image();
     this.portal_up_img = new Image();
+    this.portal_cross_img = new Image();
     this.P_img = new Image();
     this.W_img = new Image();
     this.N_img = new Image();
@@ -176,6 +180,7 @@ class World {
     this.portal_up_down_img.src = portal_up_down;
     this.portal_up_img.src = portal_up;
     this.portal_down_img.src = portal_down;
+    this.portal_cross_img.src = portal_cross;
     this.P_img.src = P;
     this.W_img.src = W;
     this.N_img.src = N;
@@ -589,6 +594,15 @@ class World {
         if (cell === "9")
           context!.drawImage(
             this.a3_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "F")
+          context!.drawImage(
+            this.portal_cross_img,
             pos_x,
             pos_y,
             World.BLOCK_WIDTH,
@@ -1012,6 +1026,15 @@ class World {
             World.BLOCK_WIDTH,
             World.BLOCK_WIDTH
           );
+
+        if (cell === "F")
+          context!.drawImage(
+            this.portal_cross_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
         // }
       });
     });
@@ -1103,6 +1126,7 @@ class World {
     this.PORTALS_UP_DOWN.forEach((P) => (copy[P.y][P.x] = "5"));
     this.PORTALS_UP.forEach((P) => (copy[P.y][P.x] = "^"));
     this.PORTALS_DOWN.forEach((P) => (copy[P.y][P.x] = "&"));
+    this.PORTALS_CROSS.forEach((P) => (copy[P.y][P.x] = "F"));
     this.RAM4S.forEach((P) => (copy[P.y][P.x] = "3"));
     this.RAM5S.forEach((P) => (copy[P.y][P.x] = "4"));
     this.A2S.forEach((P) => (copy[P.y][P.x] = "1"));
@@ -1146,6 +1170,7 @@ class World {
     this.PORTALS_UP_DOWN.forEach((item) => item.updateState());
     this.PORTALS_UP.forEach((item) => item.updateState());
     this.PORTALS_DOWN.forEach((item) => item.updateState());
+    this.PORTALS_CROSS.forEach((item) => item.updateState());
     this.RAM4S.forEach((item) => item.updateState());
     this.RAM5S.forEach((item) => item.updateState());
     this.A2S.forEach((item) => item.updateState());
@@ -1203,6 +1228,7 @@ class World {
         if (cell === "7") this.A5S.push(new GameObject(y, x));
         if (cell === "8") this.A6S.push(new GameObject(y, x));
         if (cell === "9") this.A3S.push(new GameObject(y, x));
+        if (cell === "F") this.PORTALS_CROSS.push(new GameObject(y, x));
       });
     });
 
@@ -1230,6 +1256,7 @@ class World {
     this.PORTALS_UP_DOWN = [];
     this.PORTALS_UP = [];
     this.PORTALS_DOWN = [];
+    this.PORTALS_CROSS = [];
     this.PS = [];
     this.WS = [];
     this.NS = [];
