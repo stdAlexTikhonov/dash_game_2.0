@@ -10,6 +10,7 @@ import LEVEL9 from "./level9";
 import LEVEL10 from "./level10";
 import LEVEL11 from "./level11";
 import LEVEL12 from "./level12";
+import TEST from "./test";
 
 const LEVELS = [
   LEVEL1,
@@ -24,6 +25,7 @@ const LEVELS = [
   LEVEL10,
   LEVEL11,
   LEVEL12,
+  TEST,
 ];
 
 export default LEVELS;

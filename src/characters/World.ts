@@ -9,6 +9,8 @@ import scissors from "../assets/images/scissors.png";
 import electron from "../assets/images/electron.png";
 import ram2 from "../assets/images/RAM2.png";
 import ram3 from "../assets/images/RAM3.png";
+import ram4 from "../assets/images/RAM_4.png";
+import ram5 from "../assets/images/RAM_5.png";
 import bug from "../assets/images/bug.png";
 import computer from "../assets/images/computer.png";
 import orange_disk from "../assets/images/orange_disk.png";
@@ -16,11 +18,21 @@ import yellow_disk from "../assets/images/yellow_disk.png";
 import red_disk from "../assets/images/red_disk.png";
 import portal_right from "../assets/images/portal_right.png";
 import portal_left from "../assets/images/portal_left.png";
+import portal_left_right from "../assets/images/portal_left_right.png";
+import portal_up_down from "../assets/images/portal_up_down.png";
+import portal_up from "../assets/images/portal_up.png";
+import portal_down from "../assets/images/portal_down.png";
+import portal_cross from "../assets/images/portal_cross.png";
+import a2 from "../assets/images/a2.png";
+import a3 from "../assets/images/a3.png";
+import a5 from "../assets/images/a5.png";
+import a6 from "../assets/images/a6.png";
 import P from "../assets/images/P.png";
 import W from "../assets/images/W.png";
 import N from "../assets/images/N.png";
 import L from "../assets/images/L.png";
 import M from "../assets/images/M.png";
+import Hardware7 from "../assets/images/Hardware7.png";
 import { Player } from "./Player";
 import GameObject from "./GameObject";
 import FallingObject from "./FallingObject";
@@ -45,6 +57,8 @@ class World {
   electron_img: HTMLImageElement;
   ram2_img: HTMLImageElement;
   ram3_img: HTMLImageElement;
+  ram4_img: HTMLImageElement;
+  ram5_img: HTMLImageElement;
   bug_img: HTMLImageElement;
   computer_img: HTMLImageElement;
   orange_disk_img: HTMLImageElement;
@@ -52,11 +66,21 @@ class World {
   red_disk_img: HTMLImageElement;
   portal_right_img: HTMLImageElement;
   portal_left_img: HTMLImageElement;
+  portal_left_right_img: HTMLImageElement;
+  portal_up_down_img: HTMLImageElement;
+  portal_up_img: HTMLImageElement;
+  portal_down_img: HTMLImageElement;
+  portal_cross_img: HTMLImageElement;
+  a2_img: HTMLImageElement;
+  a3_img: HTMLImageElement;
+  a5_img: HTMLImageElement;
+  a6_img: HTMLImageElement;
   P_img: HTMLImageElement;
   W_img: HTMLImageElement;
   N_img: HTMLImageElement;
   L_img: HTMLImageElement;
   M_img: HTMLImageElement;
+  Hardware7_img: HTMLImageElement;
   MOTHERBOARD: GameObject[] = [];
   WALLS: GameObject[] = [];
   BREAKS: GameObject[] = [];
@@ -67,6 +91,8 @@ class World {
   ELECTRONS: GameObject[] = [];
   RS: GameObject[] = [];
   US: GameObject[] = [];
+  RAM4S: GameObject[] = [];
+  RAM5S: GameObject[] = [];
   COMPUTERS: GameObject[] = [];
   BUGS: GameObject[] = [];
   ORANGE_DISKS: FallingObject[] = [];
@@ -74,11 +100,22 @@ class World {
   RED_DISKS: GameObject[] = [];
   PORTALS_LEFT: GameObject[] = [];
   PORTALS_RIGHT: GameObject[] = [];
+  PORTALS_LEFT_RIGHT: GameObject[] = [];
+  PORTALS_UP_DOWN: GameObject[] = [];
+  PORTALS_UP: GameObject[] = [];
+  PORTALS_DOWN: GameObject[] = [];
+  PORTALS_CROSS: GameObject[] = [];
   PS: GameObject[] = [];
   WS: GameObject[] = [];
   NS: GameObject[] = [];
   LS: GameObject[] = [];
   MS: GameObject[] = [];
+  FALLING_OBJECTS: FallingObject[] = [];
+  HARDWARE7S: GameObject[] = [];
+  A2S: GameObject[] = [];
+  A3S: GameObject[] = [];
+  A5S: GameObject[] = [];
+  A6S: GameObject[] = [];
   multiplayer: boolean = false;
   animation: boolean | undefined = false;
 
@@ -95,6 +132,8 @@ class World {
     this.electron_img = new Image();
     this.ram2_img = new Image();
     this.ram3_img = new Image();
+    this.ram4_img = new Image();
+    this.ram5_img = new Image();
     this.bug_img = new Image();
     this.computer_img = new Image();
     this.orange_disk_img = new Image();
@@ -102,11 +141,21 @@ class World {
     this.red_disk_img = new Image();
     this.portal_right_img = new Image();
     this.portal_left_img = new Image();
+    this.portal_left_right_img = new Image();
+    this.portal_up_down_img = new Image();
+    this.portal_down_img = new Image();
+    this.portal_up_img = new Image();
+    this.portal_cross_img = new Image();
     this.P_img = new Image();
     this.W_img = new Image();
     this.N_img = new Image();
     this.L_img = new Image();
     this.M_img = new Image();
+    this.a2_img = new Image();
+    this.a3_img = new Image();
+    this.a5_img = new Image();
+    this.a6_img = new Image();
+    this.Hardware7_img = new Image();
     this.ground_img.src = ground;
     this.merphy_img.src = merphy;
     this.wall_img.src = wall;
@@ -118,6 +167,8 @@ class World {
     this.electron_img.src = electron;
     this.ram2_img.src = ram2;
     this.ram3_img.src = ram3;
+    this.ram4_img.src = ram4;
+    this.ram5_img.src = ram5;
     this.bug_img.src = bug;
     this.computer_img.src = computer;
     this.orange_disk_img.src = orange_disk;
@@ -125,11 +176,21 @@ class World {
     this.red_disk_img.src = red_disk;
     this.portal_right_img.src = portal_right;
     this.portal_left_img.src = portal_left;
+    this.portal_left_right_img.src = portal_left_right;
+    this.portal_up_down_img.src = portal_up_down;
+    this.portal_up_img.src = portal_up;
+    this.portal_down_img.src = portal_down;
+    this.portal_cross_img.src = portal_cross;
     this.P_img.src = P;
     this.W_img.src = W;
     this.N_img.src = N;
     this.L_img.src = L;
     this.M_img.src = M;
+    this.Hardware7_img.src = Hardware7;
+    this.a2_img.src = a2;
+    this.a3_img.src = a3;
+    this.a5_img.src = a5;
+    this.a6_img.src = a6;
     this.animation = false;
   }
 
@@ -434,6 +495,114 @@ class World {
         if (cell === "M")
           context!.drawImage(
             this.M_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "6")
+          context!.drawImage(
+            this.Hardware7_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "2")
+          context!.drawImage(
+            this.portal_left_right_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "3")
+          context!.drawImage(
+            this.ram4_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "4")
+          context!.drawImage(
+            this.ram5_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "5")
+          context!.drawImage(
+            this.portal_up_down_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "^")
+          context!.drawImage(
+            this.portal_up_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "&")
+          context!.drawImage(
+            this.portal_down_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "1")
+          context!.drawImage(
+            this.a2_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "7")
+          context!.drawImage(
+            this.a5_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "8")
+          context!.drawImage(
+            this.a6_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "9")
+          context!.drawImage(
+            this.a3_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "F")
+          context!.drawImage(
+            this.portal_cross_img,
             pos_x,
             pos_y,
             World.BLOCK_WIDTH,
@@ -758,6 +927,114 @@ class World {
             World.BLOCK_WIDTH,
             World.BLOCK_WIDTH
           );
+
+        if (cell === "6")
+          context!.drawImage(
+            this.Hardware7_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "2")
+          context!.drawImage(
+            this.portal_left_right_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "3")
+          context!.drawImage(
+            this.ram4_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "4")
+          context!.drawImage(
+            this.ram5_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "5")
+          context!.drawImage(
+            this.portal_up_down_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "^")
+          context!.drawImage(
+            this.portal_up_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "&")
+          context!.drawImage(
+            this.portal_down_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "1")
+          context!.drawImage(
+            this.a2_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "7")
+          context!.drawImage(
+            this.a5_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "8")
+          context!.drawImage(
+            this.a6_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "9")
+          context!.drawImage(
+            this.a3_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "F")
+          context!.drawImage(
+            this.portal_cross_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
         // }
       });
     });
@@ -805,12 +1082,8 @@ class World {
       copy[B.y][B.x] = "+";
     });
 
-    this.ROCKS.forEach((R) => {
-      copy[R.y][R.x] = "O";
-    });
-
-    this.FOOD.forEach((F) => {
-      copy[F.y][F.x] = "*";
+    this.FALLING_OBJECTS.forEach((F) => {
+      copy[F.y][F.x] = F.char;
     });
 
     this.SCISSORS.forEach((X) => {
@@ -837,7 +1110,6 @@ class World {
       copy[B.y][B.x] = "B";
     });
 
-    this.ORANGE_DISKS.forEach((D) => (copy[D.y][D.x] = "D"));
     this.YELLOW_DISKS.forEach((Y) => (copy[Y.y][Y.x] = "Y"));
     this.RED_DISKS.forEach((R) => (copy[R.y][R.x] = "%"));
 
@@ -849,7 +1121,18 @@ class World {
     this.NS.forEach((P) => (copy[P.y][P.x] = "N"));
     this.LS.forEach((P) => (copy[P.y][P.x] = "L"));
     this.MS.forEach((P) => (copy[P.y][P.x] = "M"));
-
+    this.HARDWARE7S.forEach((P) => (copy[P.y][P.x] = "6"));
+    this.PORTALS_LEFT_RIGHT.forEach((P) => (copy[P.y][P.x] = "2"));
+    this.PORTALS_UP_DOWN.forEach((P) => (copy[P.y][P.x] = "5"));
+    this.PORTALS_UP.forEach((P) => (copy[P.y][P.x] = "^"));
+    this.PORTALS_DOWN.forEach((P) => (copy[P.y][P.x] = "&"));
+    this.PORTALS_CROSS.forEach((P) => (copy[P.y][P.x] = "F"));
+    this.RAM4S.forEach((P) => (copy[P.y][P.x] = "3"));
+    this.RAM5S.forEach((P) => (copy[P.y][P.x] = "4"));
+    this.A2S.forEach((P) => (copy[P.y][P.x] = "1"));
+    this.A3S.forEach((P) => (copy[P.y][P.x] = "9"));
+    this.A5S.forEach((P) => (copy[P.y][P.x] = "7"));
+    this.A6S.forEach((P) => (copy[P.y][P.x] = "8"));
     this.EXITS.forEach((E) => (copy[E.y][E.x] = "E"));
 
     copy[this.player!.y][this.player!.x] = "A";
@@ -859,15 +1142,11 @@ class World {
   }
 
   tick() {
-    this.player!.setDirection(this.player!.user_input);
     this.player!.updateState();
-    if (this.player2) {
-      this.player2!.setDirection(this.player2!.user_input);
-      this.player2.updateState();
-    }
+    if (this.player2) this.player2.updateState();
 
-    this.FOOD.forEach((item) => item.updateState());
-    this.ROCKS.forEach((item) => item.updateState());
+    this.FALLING_OBJECTS.forEach((item) => item.updateState());
+    this.FALLING_OBJECTS.sort((a, b) => b.y - a.y);
     this.MOTHERBOARD.forEach((item) => item.updateState());
     this.BREAKS.forEach((item) => item.updateState());
     this.SCISSORS.forEach((item) => item.updateState());
@@ -877,7 +1156,6 @@ class World {
     this.COMPUTERS.forEach((item) => item.updateState());
     this.BUGS.forEach((item) => item.updateState());
 
-    this.ORANGE_DISKS.forEach((item) => item.updateState());
     this.YELLOW_DISKS.forEach((item) => item.updateState());
     this.RED_DISKS.forEach((item) => item.updateState());
     this.PORTALS_LEFT.forEach((item) => item.updateState());
@@ -887,7 +1165,18 @@ class World {
     this.NS.forEach((item) => item.updateState());
     this.LS.forEach((item) => item.updateState());
     this.MS.forEach((item) => item.updateState());
-
+    this.HARDWARE7S.forEach((item) => item.updateState());
+    this.PORTALS_LEFT_RIGHT.forEach((item) => item.updateState());
+    this.PORTALS_UP_DOWN.forEach((item) => item.updateState());
+    this.PORTALS_UP.forEach((item) => item.updateState());
+    this.PORTALS_DOWN.forEach((item) => item.updateState());
+    this.PORTALS_CROSS.forEach((item) => item.updateState());
+    this.RAM4S.forEach((item) => item.updateState());
+    this.RAM5S.forEach((item) => item.updateState());
+    this.A2S.forEach((item) => item.updateState());
+    this.A3S.forEach((item) => item.updateState());
+    this.A5S.forEach((item) => item.updateState());
+    this.A6S.forEach((item) => item.updateState());
     this.world_map = this.updateMap();
     this.counter++;
   }
@@ -905,9 +1194,11 @@ class World {
         }
         if (cell === ".") this.MOTHERBOARD.push(new GameObject(y, x));
         if (cell === "#") this.WALLS.push(new GameObject(y, x));
-        if (cell === "O") this.ROCKS.push(new FallingObject(y, x));
+        if (cell === "O")
+          this.FALLING_OBJECTS.push(new FallingObject(y, x, "O"));
         if (cell === "+") this.BREAKS.push(new GameObject(y, x));
-        if (cell === "*") this.FOOD.push(new FallingObject(y, x));
+        if (cell === "*")
+          this.FALLING_OBJECTS.push(new FallingObject(y, x, "*"));
         if (cell === "E") this.EXITS.push(new GameObject(y, x));
         if (cell === "X") this.SCISSORS.push(new GameObject(y, x));
         if (cell === "Z") this.ELECTRONS.push(new GameObject(y, x));
@@ -915,7 +1206,8 @@ class World {
         if (cell === "U") this.US.push(new GameObject(y, x));
         if (cell === "C") this.COMPUTERS.push(new GameObject(y, x));
         if (cell === "B") this.BUGS.push(new GameObject(y, x));
-        if (cell === "D") this.ORANGE_DISKS.push(new FallingObject(y, x));
+        if (cell === "D")
+          this.FALLING_OBJECTS.push(new FallingObject(y, x, "D"));
         if (cell === "Y") this.YELLOW_DISKS.push(new GameObject(y, x));
         if (cell === "%") this.RED_DISKS.push(new GameObject(y, x));
         if (cell === "<") this.PORTALS_LEFT.push(new GameObject(y, x));
@@ -925,17 +1217,29 @@ class World {
         if (cell === "N") this.NS.push(new GameObject(y, x));
         if (cell === "L") this.LS.push(new GameObject(y, x));
         if (cell === "M") this.MS.push(new GameObject(y, x));
+        if (cell === "6") this.HARDWARE7S.push(new GameObject(y, x));
+        if (cell === "2") this.PORTALS_LEFT_RIGHT.push(new GameObject(y, x));
+        if (cell === "3") this.RAM4S.push(new GameObject(y, x));
+        if (cell === "4") this.RAM5S.push(new GameObject(y, x));
+        if (cell === "5") this.PORTALS_UP_DOWN.push(new GameObject(y, x));
+        if (cell === "^") this.PORTALS_UP.push(new GameObject(y, x));
+        if (cell === "&") this.PORTALS_DOWN.push(new GameObject(y, x));
+        if (cell === "1") this.A2S.push(new GameObject(y, x));
+        if (cell === "7") this.A5S.push(new GameObject(y, x));
+        if (cell === "8") this.A6S.push(new GameObject(y, x));
+        if (cell === "9") this.A3S.push(new GameObject(y, x));
+        if (cell === "F") this.PORTALS_CROSS.push(new GameObject(y, x));
       });
     });
+
+    this.FALLING_OBJECTS.sort((a, b) => b.y - a.y);
   }
 
   resetWorld() {
     this.world_map = [];
     this.MOTHERBOARD = [];
     this.WALLS = [];
-    this.ROCKS = [];
     this.BREAKS = [];
-    this.FOOD = [];
     this.EXITS = [];
     this.SCISSORS = [];
     this.ELECTRONS = [];
@@ -943,16 +1247,28 @@ class World {
     this.US = [];
     this.COMPUTERS = [];
     this.BUGS = [];
-    this.ORANGE_DISKS = [];
+    this.FALLING_OBJECTS = [];
     this.YELLOW_DISKS = [];
     this.RED_DISKS = [];
     this.PORTALS_LEFT = [];
     this.PORTALS_RIGHT = [];
+    this.PORTALS_LEFT_RIGHT = [];
+    this.PORTALS_UP_DOWN = [];
+    this.PORTALS_UP = [];
+    this.PORTALS_DOWN = [];
+    this.PORTALS_CROSS = [];
     this.PS = [];
     this.WS = [];
     this.NS = [];
     this.LS = [];
     this.MS = [];
+    this.HARDWARE7S = [];
+    this.RAM4S = [];
+    this.RAM5S = [];
+    this.A2S = [];
+    this.A3S = [];
+    this.A5S = [];
+    this.A6S = [];
     this.player = null;
     this.player2 = null;
   }
