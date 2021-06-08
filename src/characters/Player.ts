@@ -42,6 +42,9 @@ export class Player extends GameObject {
     "6",
     "^",
     "&",
+    "7",
+    "8",
+    "9",
   ];
 
   setUserInput(dir: string | null) {
