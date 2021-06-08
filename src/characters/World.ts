@@ -22,6 +22,7 @@ import portal_left_right from "../assets/images/portal_left_right.png";
 import portal_up_down from "../assets/images/portal_up_down.png";
 import portal_up from "../assets/images/portal_up.png";
 import portal_down from "../assets/images/portal_down.png";
+import a2 from "../assets/images/a2.png";
 import P from "../assets/images/P.png";
 import W from "../assets/images/W.png";
 import N from "../assets/images/N.png";
@@ -65,6 +66,7 @@ class World {
   portal_up_down_img: HTMLImageElement;
   portal_up_img: HTMLImageElement;
   portal_down_img: HTMLImageElement;
+  a2_img: HTMLImageElement;
   P_img: HTMLImageElement;
   W_img: HTMLImageElement;
   N_img: HTMLImageElement;
@@ -101,6 +103,7 @@ class World {
   MS: GameObject[] = [];
   FALLING_OBJECTS: FallingObject[] = [];
   HARDWARE7S: GameObject[] = [];
+  A2S: GameObject[] = [];
   multiplayer: boolean = false;
   animation: boolean | undefined = false;
 
@@ -135,6 +138,7 @@ class World {
     this.N_img = new Image();
     this.L_img = new Image();
     this.M_img = new Image();
+    this.a2_img = new Image();
     this.Hardware7_img = new Image();
     this.ground_img.src = ground;
     this.merphy_img.src = merphy;
@@ -166,6 +170,7 @@ class World {
     this.L_img.src = L;
     this.M_img.src = M;
     this.Hardware7_img.src = Hardware7;
+    this.a2_img.src = a2;
     this.animation = false;
   }
 
@@ -533,6 +538,15 @@ class World {
         if (cell === "&")
           context!.drawImage(
             this.portal_down_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
+
+        if (cell === "1")
+          context!.drawImage(
+            this.a2_img,
             pos_x,
             pos_y,
             World.BLOCK_WIDTH,
@@ -920,6 +934,15 @@ class World {
             World.BLOCK_WIDTH,
             World.BLOCK_WIDTH
           );
+
+        if (cell === "1")
+          context!.drawImage(
+            this.a2_img,
+            pos_x,
+            pos_y,
+            World.BLOCK_WIDTH,
+            World.BLOCK_WIDTH
+          );
         // }
       });
     });
@@ -1013,7 +1036,7 @@ class World {
     this.PORTALS_DOWN.forEach((P) => (copy[P.y][P.x] = "&"));
     this.RAM4S.forEach((P) => (copy[P.y][P.x] = "3"));
     this.RAM5S.forEach((P) => (copy[P.y][P.x] = "4"));
-
+    this.A2S.forEach((P) => (copy[P.y][P.x] = "1"));
     this.EXITS.forEach((E) => (copy[E.y][E.x] = "E"));
 
     copy[this.player!.y][this.player!.x] = "A";
@@ -1053,7 +1076,7 @@ class World {
     this.PORTALS_DOWN.forEach((item) => item.updateState());
     this.RAM4S.forEach((item) => item.updateState());
     this.RAM5S.forEach((item) => item.updateState());
-
+    this.A2S.forEach((item) => item.updateState());
     this.world_map = this.updateMap();
     this.counter++;
   }
@@ -1101,6 +1124,7 @@ class World {
         if (cell === "5") this.PORTALS_UP_DOWN.push(new GameObject(y, x));
         if (cell === "^") this.PORTALS_UP.push(new GameObject(y, x));
         if (cell === "&") this.PORTALS_DOWN.push(new GameObject(y, x));
+        if (cell === "1") this.A2S.push(new GameObject(y, x));
       });
     });
 
@@ -1136,6 +1160,7 @@ class World {
     this.HARDWARE7S = [];
     this.RAM4S = [];
     this.RAM5S = [];
+    this.A2S = [];
     this.player = null;
     this.player2 = null;
   }

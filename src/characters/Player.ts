@@ -34,6 +34,7 @@ export class Player extends GameObject {
     "D",
     ">",
     "<",
+    "1",
     "2",
     "3",
     "4",
