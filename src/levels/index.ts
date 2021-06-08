@@ -10,6 +10,10 @@ import LEVEL9 from "./level9";
 import LEVEL10 from "./level10";
 import LEVEL11 from "./level11";
 import LEVEL12 from "./level12";
+import LEVEL13 from "./level13";
+import LEVEL14 from "./level14";
+import LEVEL15 from "./level15";
+import LEVEL16 from "./level16";
 import TEST from "./test";
 
 const LEVELS = [
@@ -25,6 +29,10 @@ const LEVELS = [
   LEVEL10,
   LEVEL11,
   LEVEL12,
+  LEVEL13,
+  LEVEL14,
+  LEVEL15,
+  LEVEL16,
   TEST,
 ];
 
