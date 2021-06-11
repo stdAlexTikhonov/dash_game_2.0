@@ -48,6 +48,11 @@ import Ram2 from "./Ram2";
 import Ram3 from "./Ram3";
 import Ram4 from "./Ram4";
 import Ram5 from "./Ram5";
+import Bug from "./Bug";
+import Computer from "./Computer";
+import RedDisk from "./RedDisk";
+import YellowDisk from "./YellowDisk";
+import OrangeDisk from "./OrangeDisk";
 
 class World {
   viewport_w: number = window.innerWidth;
@@ -1098,11 +1103,11 @@ class World {
         if (cell === "Z") this.GAME_OBJECTS.push(new Electron(y, x));
         if (cell === "R") this.GAME_OBJECTS.push(new Ram2(y, x));
         if (cell === "U") this.GAME_OBJECTS.push(new Ram3(y, x));
-        if (cell === "C") this.GAME_OBJECTS.push(new GameObject(y, x, "C"));
-        if (cell === "B") this.GAME_OBJECTS.push(new GameObject(y, x, "B"));
-        if (cell === "D") this.GAME_OBJECTS.push(new FallingObject(y, x, "D"));
-        if (cell === "Y") this.GAME_OBJECTS.push(new GameObject(y, x, "Y"));
-        if (cell === "%") this.GAME_OBJECTS.push(new GameObject(y, x, "%"));
+        if (cell === "C") this.GAME_OBJECTS.push(new Computer(y, x));
+        if (cell === "B") this.GAME_OBJECTS.push(new Bug(y, x));
+        if (cell === "D") this.GAME_OBJECTS.push(new OrangeDisk(y, x));
+        if (cell === "Y") this.GAME_OBJECTS.push(new YellowDisk(y, x));
+        if (cell === "%") this.GAME_OBJECTS.push(new RedDisk(y, x));
         if (cell === "<") this.GAME_OBJECTS.push(new GameObject(y, x, "<"));
         if (cell === ">") this.GAME_OBJECTS.push(new GameObject(y, x, ">"));
         if (cell === "P") this.GAME_OBJECTS.push(new GameObject(y, x, "P"));
