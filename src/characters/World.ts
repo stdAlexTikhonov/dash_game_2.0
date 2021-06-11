@@ -36,6 +36,7 @@ import Hardware7 from "../assets/images/Hardware7.png";
 import { Player } from "./Player";
 import GameObject from "./GameObject";
 import FallingObject from "./FallingObject";
+import Motherboard from "./Motherboard";
 
 class World {
   viewport_w: number = window.innerWidth;
@@ -81,41 +82,9 @@ class World {
   L_img: HTMLImageElement;
   M_img: HTMLImageElement;
   Hardware7_img: HTMLImageElement;
-  MOTHERBOARD: GameObject[] = [];
-  WALLS: GameObject[] = [];
-  BREAKS: GameObject[] = [];
-  ROCKS: FallingObject[] = [];
-  FOOD: FallingObject[] = [];
-  EXITS: GameObject[] = [];
-  SCISSORS: GameObject[] = [];
-  ELECTRONS: GameObject[] = [];
-  RS: GameObject[] = [];
-  US: GameObject[] = [];
-  RAM4S: GameObject[] = [];
-  RAM5S: GameObject[] = [];
-  COMPUTERS: GameObject[] = [];
-  BUGS: GameObject[] = [];
-  ORANGE_DISKS: FallingObject[] = [];
-  YELLOW_DISKS: GameObject[] = [];
-  RED_DISKS: GameObject[] = [];
-  PORTALS_LEFT: GameObject[] = [];
-  PORTALS_RIGHT: GameObject[] = [];
-  PORTALS_LEFT_RIGHT: GameObject[] = [];
-  PORTALS_UP_DOWN: GameObject[] = [];
-  PORTALS_UP: GameObject[] = [];
-  PORTALS_DOWN: GameObject[] = [];
-  PORTALS_CROSS: GameObject[] = [];
-  PS: GameObject[] = [];
-  WS: GameObject[] = [];
-  NS: GameObject[] = [];
-  LS: GameObject[] = [];
-  MS: GameObject[] = [];
-  FALLING_OBJECTS: FallingObject[] = [];
-  HARDWARE7S: GameObject[] = [];
-  A2S: GameObject[] = [];
-  A3S: GameObject[] = [];
-  A5S: GameObject[] = [];
-  A6S: GameObject[] = [];
+
+  GAME_OBJECTS: Array<FallingObject | GameObject> = [];
+
   multiplayer: boolean = false;
   animation: boolean | undefined = false;
 
@@ -1057,83 +1026,22 @@ class World {
     );
 
     if (this.player)
-      this.MOTHERBOARD = this.MOTHERBOARD.filter((item) => {
+      this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
         const flag1 = item.x !== this.player!.x;
         const flag2 = item.y !== this.player!.y;
         return flag1 || flag2;
       });
 
     if (this.player2)
-      this.MOTHERBOARD = this.MOTHERBOARD.filter((item) => {
+      this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
         const flag1 = item.x !== this.player2!.x;
         const flag2 = item.y !== this.player2!.y;
         return flag1 || flag2;
       });
 
-    this.MOTHERBOARD.forEach((M) => {
-      copy[M.y][M.x] = ".";
-    });
-
-    this.WALLS.forEach((W) => {
-      copy[W.y][W.x] = "#";
-    });
-
-    this.BREAKS.forEach((B) => {
-      copy[B.y][B.x] = "+";
-    });
-
-    this.FALLING_OBJECTS.forEach((F) => {
+    this.GAME_OBJECTS.forEach((F) => {
       copy[F.y][F.x] = F.char;
     });
-
-    this.SCISSORS.forEach((X) => {
-      copy[X.y][X.x] = "X";
-    });
-
-    this.ELECTRONS.forEach((Z) => {
-      copy[Z.y][Z.x] = "Z";
-    });
-
-    this.RS.forEach((R) => {
-      copy[R.y][R.x] = "R";
-    });
-
-    this.US.forEach((U) => {
-      copy[U.y][U.x] = "U";
-    });
-
-    this.COMPUTERS.forEach((C) => {
-      copy[C.y][C.x] = "C";
-    });
-
-    this.BUGS.forEach((B) => {
-      copy[B.y][B.x] = "B";
-    });
-
-    this.YELLOW_DISKS.forEach((Y) => (copy[Y.y][Y.x] = "Y"));
-    this.RED_DISKS.forEach((R) => (copy[R.y][R.x] = "%"));
-
-    this.PORTALS_LEFT.forEach((P) => (copy[P.y][P.x] = "<"));
-    this.PORTALS_RIGHT.forEach((P) => (copy[P.y][P.x] = ">"));
-
-    this.PS.forEach((P) => (copy[P.y][P.x] = "P"));
-    this.WS.forEach((P) => (copy[P.y][P.x] = "W"));
-    this.NS.forEach((P) => (copy[P.y][P.x] = "N"));
-    this.LS.forEach((P) => (copy[P.y][P.x] = "L"));
-    this.MS.forEach((P) => (copy[P.y][P.x] = "M"));
-    this.HARDWARE7S.forEach((P) => (copy[P.y][P.x] = "6"));
-    this.PORTALS_LEFT_RIGHT.forEach((P) => (copy[P.y][P.x] = "2"));
-    this.PORTALS_UP_DOWN.forEach((P) => (copy[P.y][P.x] = "5"));
-    this.PORTALS_UP.forEach((P) => (copy[P.y][P.x] = "^"));
-    this.PORTALS_DOWN.forEach((P) => (copy[P.y][P.x] = "&"));
-    this.PORTALS_CROSS.forEach((P) => (copy[P.y][P.x] = "F"));
-    this.RAM4S.forEach((P) => (copy[P.y][P.x] = "3"));
-    this.RAM5S.forEach((P) => (copy[P.y][P.x] = "4"));
-    this.A2S.forEach((P) => (copy[P.y][P.x] = "1"));
-    this.A3S.forEach((P) => (copy[P.y][P.x] = "9"));
-    this.A5S.forEach((P) => (copy[P.y][P.x] = "7"));
-    this.A6S.forEach((P) => (copy[P.y][P.x] = "8"));
-    this.EXITS.forEach((E) => (copy[E.y][E.x] = "E"));
 
     copy[this.player!.y][this.player!.x] = "A";
     if (this.player2) copy[this.player2!.y][this.player2!.x] = "H";
@@ -1145,38 +1053,9 @@ class World {
     this.player!.updateState();
     if (this.player2) this.player2.updateState();
 
-    this.FALLING_OBJECTS.forEach((item) => item.updateState());
-    this.FALLING_OBJECTS.sort((a, b) => b.y - a.y);
-    this.MOTHERBOARD.forEach((item) => item.updateState());
-    this.BREAKS.forEach((item) => item.updateState());
-    this.SCISSORS.forEach((item) => item.updateState());
-    this.ELECTRONS.forEach((item) => item.updateState());
-    this.RS.forEach((item) => item.updateState());
-    this.US.forEach((item) => item.updateState());
-    this.COMPUTERS.forEach((item) => item.updateState());
-    this.BUGS.forEach((item) => item.updateState());
+    this.GAME_OBJECTS.forEach((item) => item.updateState());
+    this.GAME_OBJECTS.sort((a, b) => b.y - a.y);
 
-    this.YELLOW_DISKS.forEach((item) => item.updateState());
-    this.RED_DISKS.forEach((item) => item.updateState());
-    this.PORTALS_LEFT.forEach((item) => item.updateState());
-    this.PORTALS_RIGHT.forEach((item) => item.updateState());
-    this.PS.forEach((item) => item.updateState());
-    this.WS.forEach((item) => item.updateState());
-    this.NS.forEach((item) => item.updateState());
-    this.LS.forEach((item) => item.updateState());
-    this.MS.forEach((item) => item.updateState());
-    this.HARDWARE7S.forEach((item) => item.updateState());
-    this.PORTALS_LEFT_RIGHT.forEach((item) => item.updateState());
-    this.PORTALS_UP_DOWN.forEach((item) => item.updateState());
-    this.PORTALS_UP.forEach((item) => item.updateState());
-    this.PORTALS_DOWN.forEach((item) => item.updateState());
-    this.PORTALS_CROSS.forEach((item) => item.updateState());
-    this.RAM4S.forEach((item) => item.updateState());
-    this.RAM5S.forEach((item) => item.updateState());
-    this.A2S.forEach((item) => item.updateState());
-    this.A3S.forEach((item) => item.updateState());
-    this.A5S.forEach((item) => item.updateState());
-    this.A6S.forEach((item) => item.updateState());
     this.world_map = this.updateMap();
     this.counter++;
   }
@@ -1192,83 +1071,51 @@ class World {
         if (cell === "A") {
           this.player = new Player(y, x);
         }
-        if (cell === ".") this.MOTHERBOARD.push(new GameObject(y, x));
-        if (cell === "#") this.WALLS.push(new GameObject(y, x));
-        if (cell === "O")
-          this.FALLING_OBJECTS.push(new FallingObject(y, x, "O"));
-        if (cell === "+") this.BREAKS.push(new GameObject(y, x));
-        if (cell === "*")
-          this.FALLING_OBJECTS.push(new FallingObject(y, x, "*"));
-        if (cell === "E") this.EXITS.push(new GameObject(y, x));
-        if (cell === "X") this.SCISSORS.push(new GameObject(y, x));
-        if (cell === "Z") this.ELECTRONS.push(new GameObject(y, x));
-        if (cell === "R") this.RS.push(new GameObject(y, x));
-        if (cell === "U") this.US.push(new GameObject(y, x));
-        if (cell === "C") this.COMPUTERS.push(new GameObject(y, x));
-        if (cell === "B") this.BUGS.push(new GameObject(y, x));
-        if (cell === "D")
-          this.FALLING_OBJECTS.push(new FallingObject(y, x, "D"));
-        if (cell === "Y") this.YELLOW_DISKS.push(new GameObject(y, x));
-        if (cell === "%") this.RED_DISKS.push(new GameObject(y, x));
-        if (cell === "<") this.PORTALS_LEFT.push(new GameObject(y, x));
-        if (cell === ">") this.PORTALS_RIGHT.push(new GameObject(y, x));
-        if (cell === "P") this.PS.push(new GameObject(y, x));
-        if (cell === "W") this.WS.push(new GameObject(y, x));
-        if (cell === "N") this.NS.push(new GameObject(y, x));
-        if (cell === "L") this.LS.push(new GameObject(y, x));
-        if (cell === "M") this.MS.push(new GameObject(y, x));
-        if (cell === "6") this.HARDWARE7S.push(new GameObject(y, x));
-        if (cell === "2") this.PORTALS_LEFT_RIGHT.push(new GameObject(y, x));
-        if (cell === "3") this.RAM4S.push(new GameObject(y, x));
-        if (cell === "4") this.RAM5S.push(new GameObject(y, x));
-        if (cell === "5") this.PORTALS_UP_DOWN.push(new GameObject(y, x));
-        if (cell === "^") this.PORTALS_UP.push(new GameObject(y, x));
-        if (cell === "&") this.PORTALS_DOWN.push(new GameObject(y, x));
-        if (cell === "1") this.A2S.push(new GameObject(y, x));
-        if (cell === "7") this.A5S.push(new GameObject(y, x));
-        if (cell === "8") this.A6S.push(new GameObject(y, x));
-        if (cell === "9") this.A3S.push(new GameObject(y, x));
-        if (cell === "F") this.PORTALS_CROSS.push(new GameObject(y, x));
+        if (cell === ".") this.GAME_OBJECTS.push(new GameObject(y, x, "."));
+        if (cell === "#") this.GAME_OBJECTS.push(new GameObject(y, x, "#"));
+        if (cell === "O") this.GAME_OBJECTS.push(new FallingObject(y, x, "O"));
+        if (cell === "+") this.GAME_OBJECTS.push(new GameObject(y, x, "+"));
+        if (cell === "*") this.GAME_OBJECTS.push(new FallingObject(y, x, "*"));
+        if (cell === "E") this.GAME_OBJECTS.push(new GameObject(y, x, "E"));
+        if (cell === "X") this.GAME_OBJECTS.push(new GameObject(y, x, "X"));
+        if (cell === "Z") this.GAME_OBJECTS.push(new GameObject(y, x, "Z"));
+        if (cell === "R") this.GAME_OBJECTS.push(new GameObject(y, x, "R"));
+        if (cell === "U") this.GAME_OBJECTS.push(new GameObject(y, x, "U"));
+        if (cell === "C") this.GAME_OBJECTS.push(new GameObject(y, x, "C"));
+        if (cell === "B") this.GAME_OBJECTS.push(new GameObject(y, x, "B"));
+        if (cell === "D") this.GAME_OBJECTS.push(new FallingObject(y, x, "D"));
+        if (cell === "Y") this.GAME_OBJECTS.push(new GameObject(y, x, "Y"));
+        if (cell === "%") this.GAME_OBJECTS.push(new GameObject(y, x, "%"));
+        if (cell === "<") this.GAME_OBJECTS.push(new GameObject(y, x, "<"));
+        if (cell === ">") this.GAME_OBJECTS.push(new GameObject(y, x, ">"));
+        if (cell === "P") this.GAME_OBJECTS.push(new GameObject(y, x, "P"));
+        if (cell === "W") this.GAME_OBJECTS.push(new GameObject(y, x, "W"));
+        if (cell === "N") this.GAME_OBJECTS.push(new GameObject(y, x, "N"));
+        if (cell === "L") this.GAME_OBJECTS.push(new GameObject(y, x, "L"));
+        if (cell === "M") this.GAME_OBJECTS.push(new GameObject(y, x, "M"));
+        if (cell === "6") this.GAME_OBJECTS.push(new GameObject(y, x, "6"));
+        if (cell === "2") this.GAME_OBJECTS.push(new GameObject(y, x, "2"));
+        if (cell === "3") this.GAME_OBJECTS.push(new GameObject(y, x, "3"));
+        if (cell === "4") this.GAME_OBJECTS.push(new GameObject(y, x, "4"));
+        if (cell === "5") this.GAME_OBJECTS.push(new GameObject(y, x, "5"));
+        if (cell === "^") this.GAME_OBJECTS.push(new GameObject(y, x, "^"));
+        if (cell === "&") this.GAME_OBJECTS.push(new GameObject(y, x, "&"));
+        if (cell === "1") this.GAME_OBJECTS.push(new GameObject(y, x, "1"));
+        if (cell === "7") this.GAME_OBJECTS.push(new GameObject(y, x, "7"));
+        if (cell === "8") this.GAME_OBJECTS.push(new GameObject(y, x, "8"));
+        if (cell === "9") this.GAME_OBJECTS.push(new GameObject(y, x, "9"));
+        if (cell === "F") this.GAME_OBJECTS.push(new GameObject(y, x, "F"));
       });
     });
 
-    this.FALLING_OBJECTS.sort((a, b) => b.y - a.y);
+    this.GAME_OBJECTS.sort((a, b) => b.y - a.y);
   }
 
   resetWorld() {
     this.world_map = [];
-    this.MOTHERBOARD = [];
-    this.WALLS = [];
-    this.BREAKS = [];
-    this.EXITS = [];
-    this.SCISSORS = [];
-    this.ELECTRONS = [];
-    this.RS = [];
-    this.US = [];
-    this.COMPUTERS = [];
-    this.BUGS = [];
-    this.FALLING_OBJECTS = [];
-    this.YELLOW_DISKS = [];
-    this.RED_DISKS = [];
-    this.PORTALS_LEFT = [];
-    this.PORTALS_RIGHT = [];
-    this.PORTALS_LEFT_RIGHT = [];
-    this.PORTALS_UP_DOWN = [];
-    this.PORTALS_UP = [];
-    this.PORTALS_DOWN = [];
-    this.PORTALS_CROSS = [];
-    this.PS = [];
-    this.WS = [];
-    this.NS = [];
-    this.LS = [];
-    this.MS = [];
-    this.HARDWARE7S = [];
-    this.RAM4S = [];
-    this.RAM5S = [];
-    this.A2S = [];
-    this.A3S = [];
-    this.A5S = [];
-    this.A6S = [];
+
+    this.GAME_OBJECTS = [];
+
     this.player = null;
     this.player2 = null;
   }
