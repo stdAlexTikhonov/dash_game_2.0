@@ -9,6 +9,12 @@ export default class GameObject {
     this.char = char;
   }
 
+  draw(
+    context: CanvasRenderingContext2D,
+    viewport_start_x: number,
+    viewport_start_y: number
+  ) {}
+
   updateState() {
     return;
   }

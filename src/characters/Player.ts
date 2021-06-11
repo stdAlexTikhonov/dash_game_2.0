@@ -1,11 +1,15 @@
 import GameObject from "./GameObject";
 import World from "./World";
+import merphy from "../assets/images/merphy.png";
+
+const BLOCK_WIDTH = 32;
 export class Player extends GameObject {
   dy: number;
   direction: string | null;
   prev_horizontal_state: string = "LEFT";
   animation: boolean = false;
   user_input: string | null;
+  img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
     super(y, x);
@@ -13,6 +17,7 @@ export class Player extends GameObject {
     this.direction = null;
     this.animation = false;
     this.user_input = null;
+    this.img.src = merphy;
   }
 
   static STOP_OBJECTS = [
@@ -85,6 +90,24 @@ export class Player extends GameObject {
         this.x += 1;
         this.animation = true;
       }
+  }
+
+  draw(
+    context: CanvasRenderingContext2D,
+    viewport_start_y: number,
+    viewport_start_x: number
+  ) {
+    context!.drawImage(
+      this.img,
+      0,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH,
+      (this.x - viewport_start_x) * BLOCK_WIDTH,
+      (this.y - viewport_start_y) * BLOCK_WIDTH,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH
+    );
   }
 
   setState(dy: number) {

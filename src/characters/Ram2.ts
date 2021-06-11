@@ -1,14 +1,14 @@
 import GameObject from "./GameObject";
-import ground from "../assets/images/ground.png";
+import ram2 from "../assets/images/RAM2.png";
 
 const BLOCK_WIDTH = 32;
 
-export default class Motherboard extends GameObject {
+export default class Ram2 extends GameObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
-    super(y, x, ".");
-    this.img.src = ground;
+    super(y, x, "R");
+    this.img.src = ram2;
   }
 
   draw(

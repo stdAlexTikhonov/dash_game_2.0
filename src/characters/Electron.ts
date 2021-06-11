@@ -1,14 +1,15 @@
 import GameObject from "./GameObject";
-import ground from "../assets/images/ground.png";
+import electron from "../assets/images/electron.png";
+console.log(electron);
 
 const BLOCK_WIDTH = 32;
 
-export default class Motherboard extends GameObject {
+export default class Electron extends GameObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
-    super(y, x, ".");
-    this.img.src = ground;
+    super(y, x, "Z");
+    this.img.src = electron;
   }
 
   draw(
@@ -18,6 +19,10 @@ export default class Motherboard extends GameObject {
   ) {
     context!.drawImage(
       this.img,
+      0,
+      0,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH,
       (this.x - viewport_start_x) * BLOCK_WIDTH,
       (this.y - viewport_start_y) * BLOCK_WIDTH,
       BLOCK_WIDTH,

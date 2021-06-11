@@ -1,14 +1,14 @@
 import GameObject from "./GameObject";
-import ground from "../assets/images/ground.png";
+import scissors from "../assets/images/scissors.png";
 
 const BLOCK_WIDTH = 32;
 
-export default class Motherboard extends GameObject {
+export default class Scissors extends GameObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
-    super(y, x, ".");
-    this.img.src = ground;
+    super(y, x, "X");
+    this.img.src = scissors;
   }
 
   draw(
@@ -18,6 +18,10 @@ export default class Motherboard extends GameObject {
   ) {
     context!.drawImage(
       this.img,
+      0,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH,
       (this.x - viewport_start_x) * BLOCK_WIDTH,
       (this.y - viewport_start_y) * BLOCK_WIDTH,
       BLOCK_WIDTH,
