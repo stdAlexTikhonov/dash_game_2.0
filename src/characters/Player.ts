@@ -95,12 +95,14 @@ export class Player extends GameObject {
   draw(
     context: CanvasRenderingContext2D,
     viewport_start_y: number,
-    viewport_start_x: number
+    viewport_start_x: number,
+    value: number
   ) {
+    const state3 = World.counter % 3;
     context!.drawImage(
       this.img,
-      0,
-      BLOCK_WIDTH,
+      state3 * BLOCK_WIDTH,
+      this.dy * BLOCK_WIDTH,
       BLOCK_WIDTH,
       BLOCK_WIDTH,
       (this.x - viewport_start_x) * BLOCK_WIDTH,

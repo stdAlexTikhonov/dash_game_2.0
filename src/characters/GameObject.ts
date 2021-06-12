@@ -12,7 +12,8 @@ export default class GameObject {
   draw(
     context: CanvasRenderingContext2D,
     viewport_start_x: number,
-    viewport_start_y: number
+    viewport_start_y: number,
+    value: number
   ) {}
 
   updateState() {

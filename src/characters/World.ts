@@ -608,10 +608,6 @@ class World {
   }
 
   draw(context: CanvasRenderingContext2D, value: number) {
-    const state8 = this.counter % 8;
-    const state6 = this.counter % 6;
-    const state3 = this.counter % 3;
-
     context.fillStyle = "black";
 
     context.fillRect(0, 0, this.viewport_w, this.viewport_h);
@@ -622,10 +618,10 @@ class World {
     const viewport_end_y = viewport_start_y + this.height;
 
     this.GAME_OBJECTS.forEach((elem) =>
-      elem.draw(context, viewport_start_y, viewport_start_x)
+      elem.draw(context, viewport_start_y, viewport_start_x, value)
     );
 
-    this.player?.draw(context, viewport_start_y, viewport_start_x);
+    this.player?.draw(context, viewport_start_y, viewport_start_x, value);
 
     // this.world_map.forEach((row, y) => {
     //   const draw_view_y_flag = y >= viewport_start_y - 1 && y <= viewport_end_y;
