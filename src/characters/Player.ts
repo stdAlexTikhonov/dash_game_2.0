@@ -1,6 +1,7 @@
 import GameObject from "./GameObject";
 import World from "./World";
 import merphy from "../assets/images/merphy.png";
+import { getPosition, getPlayerPosition } from "../utils/helpers";
 
 const BLOCK_WIDTH = 32;
 export class Player extends GameObject {
@@ -95,8 +96,7 @@ export class Player extends GameObject {
   draw(
     context: CanvasRenderingContext2D,
     viewport_start_y: number,
-    viewport_start_x: number,
-    value: number
+    viewport_start_x: number
   ) {
     const state3 = World.counter % 3;
     context!.drawImage(
@@ -107,6 +107,43 @@ export class Player extends GameObject {
       BLOCK_WIDTH,
       (this.x - viewport_start_x) * BLOCK_WIDTH,
       (this.y - viewport_start_y) * BLOCK_WIDTH,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH
+    );
+  }
+
+  draw_as_second(
+    context: CanvasRenderingContext2D,
+    direction: string,
+    animation: boolean,
+    viewport_start_y: number,
+    viewport_start_x: number,
+    value: number
+  ) {
+    const { pos_y, pos_x } = getPosition(
+      direction,
+      animation,
+      (this.x - viewport_start_x) * BLOCK_WIDTH,
+      (this.y - viewport_start_y) * BLOCK_WIDTH,
+      value
+    );
+
+    const { pos_y: pos_y_plus, pos_x: pos_x_plus } = getPlayerPosition(
+      this.direction,
+      this.animation,
+      pos_x,
+      pos_y,
+      value
+    );
+    const state3 = World.counter % 3;
+    context!.drawImage(
+      this.img,
+      state3 * BLOCK_WIDTH,
+      this.dy * BLOCK_WIDTH,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH,
+      pos_x_plus,
+      pos_y_plus,
       BLOCK_WIDTH,
       BLOCK_WIDTH
     );

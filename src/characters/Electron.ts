@@ -15,6 +15,8 @@ export default class Electron extends GameObject {
 
   draw(
     context: CanvasRenderingContext2D,
+    direction: string,
+    animation: boolean,
     viewport_start_y: number,
     viewport_start_x: number,
     value: number
@@ -22,8 +24,8 @@ export default class Electron extends GameObject {
     const state6 = World.counter % 6;
 
     const { pos_y, pos_x } = getPosition(
-      World.player!.direction,
-      World.player!.animation,
+      direction,
+      animation,
       (this.x - viewport_start_x) * BLOCK_WIDTH,
       (this.y - viewport_start_y) * BLOCK_WIDTH,
       value
