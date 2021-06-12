@@ -1,16 +1,16 @@
 import GameObject from "./GameObject";
-import ground from "../assets/images/ground.png";
-import World from "./World";
+import electron from "../assets/images/electron.png";
 import { getPosition } from "../utils/helpers";
+import World from "./World";
 
 const BLOCK_WIDTH = 32;
 
-export default class Motherboard extends GameObject {
+export default class Electron extends GameObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
-    super(y, x, ".");
-    this.img.src = ground;
+    super(y, x, "Z");
+    this.img.src = electron;
   }
 
   draw(
@@ -21,6 +21,8 @@ export default class Motherboard extends GameObject {
     viewport_start_x: number,
     value: number
   ) {
+    const state6 = World.counter % 6;
+
     const { pos_y, pos_x } = getPosition(
       direction,
       animation,
@@ -29,6 +31,16 @@ export default class Motherboard extends GameObject {
       value
     );
 
-    context!.drawImage(this.img, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
+    context!.drawImage(
+      this.img,
+      state6 * BLOCK_WIDTH,
+      0,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH,
+      pos_x,
+      pos_y,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH
+    );
   }
 }

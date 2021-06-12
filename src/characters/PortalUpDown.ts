@@ -1,16 +1,16 @@
+import portal_up_down from "../assets/images/portal_up_down.png";
 import GameObject from "./GameObject";
-import ground from "../assets/images/ground.png";
-import World from "./World";
 import { getPosition } from "../utils/helpers";
+import World from "./World";
 
 const BLOCK_WIDTH = 32;
 
-export default class Motherboard extends GameObject {
+export default class PortalUpDown extends GameObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
-    super(y, x, ".");
-    this.img.src = ground;
+    super(y, x, "5");
+    this.img.src = portal_up_down;
   }
 
   draw(

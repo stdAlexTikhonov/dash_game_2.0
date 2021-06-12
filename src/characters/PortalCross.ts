@@ -1,16 +1,16 @@
+import portal_cross from "../assets/images/portal_cross.png";
 import GameObject from "./GameObject";
-import ground from "../assets/images/ground.png";
-import World from "./World";
 import { getPosition } from "../utils/helpers";
+import World from "./World";
 
 const BLOCK_WIDTH = 32;
 
-export default class Motherboard extends GameObject {
+export default class PortalCross extends GameObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
-    super(y, x, ".");
-    this.img.src = ground;
+    super(y, x, "F");
+    this.img.src = portal_cross;
   }
 
   draw(
@@ -28,7 +28,6 @@ export default class Motherboard extends GameObject {
       (this.y - viewport_start_y) * BLOCK_WIDTH,
       value
     );
-
     context!.drawImage(this.img, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
   }
 }

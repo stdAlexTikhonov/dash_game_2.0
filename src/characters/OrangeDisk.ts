@@ -1,16 +1,16 @@
-import GameObject from "./GameObject";
-import ground from "../assets/images/ground.png";
-import World from "./World";
+import FallingObject from "./FallingObject";
+import orange_disk from "../assets/images/orange_disk.png";
 import { getPosition } from "../utils/helpers";
+import World from "./World";
 
 const BLOCK_WIDTH = 32;
 
-export default class Motherboard extends GameObject {
+export default class Infotron extends FallingObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
-    super(y, x, ".");
-    this.img.src = ground;
+    super(y, x, "D");
+    this.img.src = orange_disk;
   }
 
   draw(

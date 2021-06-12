@@ -1,16 +1,16 @@
 import GameObject from "./GameObject";
-import ground from "../assets/images/ground.png";
-import World from "./World";
+import ram5 from "../assets/images/RAM_5.png";
 import { getPosition } from "../utils/helpers";
+import World from "./World";
 
 const BLOCK_WIDTH = 32;
 
-export default class Motherboard extends GameObject {
+export default class Ram5 extends GameObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
-    super(y, x, ".");
-    this.img.src = ground;
+    super(y, x, "4");
+    this.img.src = ram5;
   }
 
   draw(

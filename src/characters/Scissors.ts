@@ -1,16 +1,16 @@
 import GameObject from "./GameObject";
-import ground from "../assets/images/ground.png";
-import World from "./World";
+import scissors from "../assets/images/scissors.png";
 import { getPosition } from "../utils/helpers";
+import World from "./World";
 
 const BLOCK_WIDTH = 32;
 
-export default class Motherboard extends GameObject {
+export default class Scissors extends GameObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
-    super(y, x, ".");
-    this.img.src = ground;
+    super(y, x, "X");
+    this.img.src = scissors;
   }
 
   draw(
@@ -29,6 +29,17 @@ export default class Motherboard extends GameObject {
       value
     );
 
-    context!.drawImage(this.img, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
+    const state8 = World.counter % 8;
+    context!.drawImage(
+      this.img,
+      state8 * BLOCK_WIDTH,
+      0,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH,
+      pos_x,
+      pos_y,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH
+    );
   }
 }
