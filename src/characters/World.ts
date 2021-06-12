@@ -33,6 +33,7 @@ import N from "../assets/images/N.png";
 import L from "../assets/images/L.png";
 import M from "../assets/images/M.png";
 import Hardware7 from "../assets/images/Hardware7.png";
+
 import { Player } from "./Player";
 import GameObject from "./GameObject";
 import FallingObject from "./FallingObject";
@@ -60,6 +61,7 @@ import PortalDown from "./PortalDown";
 import PortalCross from "./PortalCross";
 import PortalUpDown from "./PortalUpDown";
 import PortalLeftRight from "./PortalLeftRight";
+import Part from "./Part";
 
 class World {
   viewport_w: number = window.innerWidth;
@@ -1117,22 +1119,22 @@ class World {
         if (cell === "%") this.GAME_OBJECTS.push(new RedDisk(y, x));
         if (cell === "<") this.GAME_OBJECTS.push(new PortalLeft(y, x));
         if (cell === ">") this.GAME_OBJECTS.push(new PortalRight(y, x));
-        if (cell === "P") this.GAME_OBJECTS.push(new GameObject(y, x, "P"));
-        if (cell === "W") this.GAME_OBJECTS.push(new GameObject(y, x, "W"));
-        if (cell === "N") this.GAME_OBJECTS.push(new GameObject(y, x, "N"));
-        if (cell === "L") this.GAME_OBJECTS.push(new GameObject(y, x, "L"));
-        if (cell === "M") this.GAME_OBJECTS.push(new GameObject(y, x, "M"));
-        if (cell === "6") this.GAME_OBJECTS.push(new GameObject(y, x, "6"));
+        if (cell === "P") this.GAME_OBJECTS.push(new Part(y, x, "P"));
+        if (cell === "W") this.GAME_OBJECTS.push(new Part(y, x, "W"));
+        if (cell === "N") this.GAME_OBJECTS.push(new Part(y, x, "N"));
+        if (cell === "L") this.GAME_OBJECTS.push(new Part(y, x, "L"));
+        if (cell === "M") this.GAME_OBJECTS.push(new Part(y, x, "M"));
+        if (cell === "6") this.GAME_OBJECTS.push(new Part(y, x, "6"));
         if (cell === "2") this.GAME_OBJECTS.push(new PortalLeftRight(y, x));
         if (cell === "3") this.GAME_OBJECTS.push(new Ram4(y, x));
         if (cell === "4") this.GAME_OBJECTS.push(new Ram5(y, x));
         if (cell === "5") this.GAME_OBJECTS.push(new PortalUpDown(y, x));
         if (cell === "^") this.GAME_OBJECTS.push(new PortalUp(y, x));
         if (cell === "&") this.GAME_OBJECTS.push(new PortalDown(y, x));
-        if (cell === "1") this.GAME_OBJECTS.push(new GameObject(y, x, "1"));
-        if (cell === "7") this.GAME_OBJECTS.push(new GameObject(y, x, "7"));
-        if (cell === "8") this.GAME_OBJECTS.push(new GameObject(y, x, "8"));
-        if (cell === "9") this.GAME_OBJECTS.push(new GameObject(y, x, "9"));
+        if (cell === "1") this.GAME_OBJECTS.push(new Part(y, x, "1"));
+        if (cell === "7") this.GAME_OBJECTS.push(new Part(y, x, "7"));
+        if (cell === "8") this.GAME_OBJECTS.push(new Part(y, x, "8"));
+        if (cell === "9") this.GAME_OBJECTS.push(new Part(y, x, "9"));
         if (cell === "F") this.GAME_OBJECTS.push(new PortalCross(y, x));
       });
     });
