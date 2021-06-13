@@ -74,7 +74,14 @@ class World {
       viewport_start_x,
       value
     );
-    this.player2?.draw(context, viewport_start_y, viewport_start_x);
+    this.player2?.draw(
+      context,
+      "LEFT",
+      false,
+      viewport_start_y,
+      viewport_start_x,
+      0
+    );
   }
 
   draw(context: CanvasRenderingContext2D, value: number) {
@@ -104,12 +111,19 @@ class World {
         value
       );
 
-    this.player?.draw(context, viewport_start_y, viewport_start_x);
+    this.player?.draw(
+      context,
+      "LEFT",
+      false,
+      viewport_start_y,
+      viewport_start_x,
+      0
+    );
   }
 
   setMultiplayer() {
     this.multiplayer = true;
-    this.player2 = new Player(this.player!.y, this.player!.x);
+    this.player2 = new Player(this.player!.y, this.player!.x, "H");
   }
 
   resetMultiplayer() {
@@ -167,7 +181,7 @@ class World {
     world_map.forEach((row, y) => {
       row.forEach((cell, x) => {
         if (cell === "A") {
-          this.player = new Player(y, x);
+          this.player = new Player(y, x, "A");
         }
         if (cell === ".") this.GAME_OBJECTS.push(new Motherboard(y, x));
         if (cell === "#") this.GAME_OBJECTS.push(new Wall(y, x));
