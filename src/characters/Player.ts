@@ -6,14 +6,15 @@ import { getPosition, getPlayerPosition } from "../utils/helpers";
 const BLOCK_WIDTH = 32;
 export class Player extends GameObject {
   dy: number;
+
   direction: string | null;
   prev_horizontal_state: string = "LEFT";
   animation: boolean = false;
   user_input: string | null;
   img: HTMLImageElement = new Image();
 
-  constructor(y: number, x: number) {
-    super(y, x);
+  constructor(y: number, x: number, char: string) {
+    super(y, x, char);
     this.dy = 1;
     this.direction = null;
     this.animation = false;
@@ -95,8 +96,11 @@ export class Player extends GameObject {
 
   draw(
     context: CanvasRenderingContext2D,
+    direction: string,
+    animation: boolean,
     viewport_start_y: number,
-    viewport_start_x: number
+    viewport_start_x: number,
+    value: number
   ) {
     const state3 = World.counter % 3;
     context!.drawImage(
