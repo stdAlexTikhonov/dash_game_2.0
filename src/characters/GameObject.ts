@@ -6,7 +6,7 @@ export default class GameObject {
   char: string;
   img: HTMLImageElement = new Image();
 
-  constructor(y: number, x: number, char: string = " ") {
+  constructor(y: number, x: number, char: string) {
     this.y = y;
     this.x = x;
     this.char = char;
