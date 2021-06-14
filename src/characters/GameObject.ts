@@ -5,6 +5,9 @@ export default class GameObject {
   y: number;
   char: string;
   img: HTMLImageElement = new Image();
+  pos_y: number = 0;
+  pos_x_left: number = 0;
+  pos_x_right: number = 0;
 
   constructor(y: number, x: number, char: string) {
     this.y = y;
@@ -28,7 +31,13 @@ export default class GameObject {
       value
     );
 
-    context!.drawImage(this.img, pos_x, pos_y, BLOCK_WIDTH, BLOCK_WIDTH);
+    context!.drawImage(
+      this.img,
+      pos_x + this.pos_x_left + this.pos_x_right,
+      pos_y + this.pos_y,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH
+    );
   }
 
   updateState() {
