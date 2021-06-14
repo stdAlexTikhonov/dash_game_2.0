@@ -30,7 +30,12 @@ export default class FallingObject extends GameObject {
       ? world_map[this.y][this.x - 1] === " " &&
           world_map[this.y + 1][this.x - 1] === " " &&
           !["O", "*"].includes(world_map[this.y - 1][this.x - 1]) &&
-          !["O", "*"].includes(world_map[this.y][this.x - 2])
+          !(
+            ["O", "*"].includes(world_map[this.y][this.x - 2]) &&
+            ["+", "O", "*", "R", "U", "3", "4"].includes(
+              world_map[this.y + 1][this.x - 2]
+            )
+          )
       : world_map[this.y][this.x - 1] === " " &&
           world_map[this.y + 1][this.x - 1] === " ";
   }
@@ -72,7 +77,9 @@ export default class FallingObject extends GameObject {
     animation: boolean,
     viewport_start_y: number,
     viewport_start_x: number,
-    value: number
+    value: number,
+    state: number = 0,
+    dy: number = 0
   ) {
     this.pos_y = this.falling ? (BLOCK_WIDTH / 6) * value - BLOCK_WIDTH : 0;
     this.pos_x_left = this.left
@@ -86,7 +93,9 @@ export default class FallingObject extends GameObject {
       animation,
       viewport_start_y,
       viewport_start_x,
-      value
+      value,
+      state,
+      dy
     );
   }
 }

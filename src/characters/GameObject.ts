@@ -21,7 +21,9 @@ export default class GameObject {
     animation: boolean,
     viewport_start_y: number,
     viewport_start_x: number,
-    value: number
+    value: number,
+    state: number = 0,
+    dy: number = 0
   ) {
     const { pos_y, pos_x } = getPosition(
       direction,
@@ -33,6 +35,10 @@ export default class GameObject {
 
     context!.drawImage(
       this.img,
+      state * BLOCK_WIDTH,
+      dy,
+      BLOCK_WIDTH,
+      BLOCK_WIDTH,
       pos_x + this.pos_x_left + this.pos_x_right,
       pos_y + this.pos_y,
       BLOCK_WIDTH,
