@@ -29,7 +29,8 @@ export default class FallingObject extends GameObject {
     return world_map[this.y - 1]
       ? world_map[this.y][this.x - 1] === " " &&
           world_map[this.y + 1][this.x - 1] === " " &&
-          !["O", "*"].includes(world_map[this.y - 1][this.x - 1])
+          !["O", "*"].includes(world_map[this.y - 1][this.x - 1]) &&
+          !["O", "*"].includes(world_map[this.y][this.x - 2])
       : world_map[this.y][this.x - 1] === " " &&
           world_map[this.y + 1][this.x - 1] === " ";
   }
