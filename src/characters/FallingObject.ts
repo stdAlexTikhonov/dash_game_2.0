@@ -66,8 +66,6 @@ export default class FallingObject extends GameObject {
       this.falling = false;
     } else {
       this.falling = false;
-      this.left = false;
-      this.right = false;
     }
   }
 
