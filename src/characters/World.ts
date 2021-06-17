@@ -137,10 +137,21 @@ class World {
       Array.from({ length: this.world_map[0].length }, () => " ")
     );
 
+    this.GAME_OBJECTS.forEach((item) => {
+      if (
+        item.x === this.player!.x &&
+        item.y === this.player!.y &&
+        ["*", "."].includes(item.char)
+      ) {
+        item.collect();
+      }
+    });
+
     if (this.player)
       this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
         const flag1 = item.x !== this.player!.x;
         const flag2 = item.y !== this.player!.y;
+
         return flag1 || flag2;
       });
 
@@ -148,6 +159,7 @@ class World {
       this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
         const flag1 = item.x !== this.player2!.x;
         const flag2 = item.y !== this.player2!.y;
+
         return flag1 || flag2;
       });
 

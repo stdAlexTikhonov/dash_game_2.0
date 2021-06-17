@@ -1,14 +1,24 @@
 import FallingObject from "./FallingObject";
 import food from "../assets/images/food.png";
 import { BLOCK_WIDTH } from "../utils/constansts";
+import infotron_sound from "../assets/audio/Infotron.mp3";
 
 export default class Infotron extends FallingObject {
   img: HTMLImageElement = new Image();
   state: number = 0;
+  static quantity: number = 0;
+  static collect_audio: HTMLMediaElement = new Audio(infotron_sound);
 
   constructor(y: number, x: number) {
     super(y, x, "*");
     this.img.src = food;
+    Infotron.quantity += 1;
+  }
+
+  collect() {
+    Infotron.quantity -= 1;
+    Infotron.collect_audio.currentTime = 0;
+    Infotron.collect_audio.play();
   }
 
   draw(

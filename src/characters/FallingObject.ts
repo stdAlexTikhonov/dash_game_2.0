@@ -1,11 +1,14 @@
 import GameObject from "./GameObject";
 import World from "./World";
 import { BLOCK_WIDTH } from "../utils/constansts";
+import fall from "../assets/audio/fall.mp3";
 
 export default class FallingObject extends GameObject {
   falling: boolean = false;
   left: boolean = false;
   right: boolean = false;
+  static audio: HTMLMediaElement = new Audio(fall);
+  ready_to_play: boolean = false;
 
   check_way_down() {
     const { world_map } = World;
@@ -55,17 +58,32 @@ export default class FallingObject extends GameObject {
       this.falling = true;
       this.right = false;
       this.left = false;
+      this.ready_to_play = true;
       this.y += 1;
     } else if (this.move_possible() && this.check_way_left()) {
       this.x -= 1;
       this.left = true;
       this.falling = false;
+      if (this.ready_to_play) {
+        FallingObject.audio.currentTime = 0;
+        FallingObject.audio.play();
+      }
     } else if (this.move_possible() && this.check_way_right()) {
       this.x += 1;
       this.right = true;
       this.falling = false;
+      if (this.ready_to_play) {
+        FallingObject.audio.currentTime = 0;
+        FallingObject.audio.play();
+      }
     } else {
       this.falling = false;
+
+      if (this.ready_to_play) {
+        FallingObject.audio.currentTime = 0;
+        FallingObject.audio.play();
+      }
+      this.ready_to_play = false;
     }
   }
 
