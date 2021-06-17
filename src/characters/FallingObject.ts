@@ -7,7 +7,7 @@ export default class FallingObject extends GameObject {
   falling: boolean = false;
   left: boolean = false;
   right: boolean = false;
-  audio: HTMLMediaElement = new Audio(fall);
+  static audio: HTMLMediaElement = new Audio(fall);
   ready_to_play: boolean = false;
 
   check_way_down() {
@@ -64,15 +64,25 @@ export default class FallingObject extends GameObject {
       this.x -= 1;
       this.left = true;
       this.falling = false;
-      this.audio.play();
+      if (this.ready_to_play) {
+        FallingObject.audio.currentTime = 0;
+        FallingObject.audio.play();
+      }
     } else if (this.move_possible() && this.check_way_right()) {
       this.x += 1;
       this.right = true;
       this.falling = false;
-      this.audio.play();
+      if (this.ready_to_play) {
+        FallingObject.audio.currentTime = 0;
+        FallingObject.audio.play();
+      }
     } else {
       this.falling = false;
-      if (this.ready_to_play) this.audio.play();
+
+      if (this.ready_to_play) {
+        FallingObject.audio.currentTime = 0;
+        FallingObject.audio.play();
+      }
       this.ready_to_play = false;
     }
   }
