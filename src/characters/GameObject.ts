@@ -8,6 +8,8 @@ export default class GameObject {
   pos_y: number = 0;
   pos_x_left: number = 0;
   pos_x_right: number = 0;
+  pos_y_up: number = 0;
+  pos_y_down: number = 0;
 
   constructor(y: number, x: number, char: string) {
     this.y = y;
@@ -40,7 +42,7 @@ export default class GameObject {
       BLOCK_WIDTH,
       BLOCK_WIDTH,
       pos_x + this.pos_x_left + this.pos_x_right,
-      pos_y + this.pos_y,
+      pos_y + this.pos_y_up + this.pos_y_down,
       BLOCK_WIDTH,
       BLOCK_WIDTH
     );

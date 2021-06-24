@@ -6,7 +6,7 @@ import { getPosition, getPlayerPosition } from "../utils/helpers";
 const BLOCK_WIDTH = 32;
 export class Player extends GameObject {
   dy: number;
-
+  move: boolean = false;
   direction: string | null;
   prev_horizontal_state: string = "LEFT";
   animation: boolean = false;
@@ -55,8 +55,42 @@ export class Player extends GameObject {
     "F",
   ];
 
+  static MOVABLE_OBJECTS = ["O"];
+
   setUserInput(dir: string | null) {
     this.user_input = dir;
+  }
+
+  check_movable_left() {
+    const { GAME_OBJECTS } = World;
+    const elem = GAME_OBJECTS.find(
+      (item) => item.x === this.x - 1 && item.y === this.y
+    );
+    return elem ? elem.movable_left : false;
+  }
+
+  check_movable_right() {
+    const { GAME_OBJECTS } = World;
+    const elem = GAME_OBJECTS.find(
+      (item) => item.x === this.x + 1 && item.y === this.y
+    );
+    return elem ? elem.movable_right : false;
+  }
+
+  check_movable_up() {
+    const { GAME_OBJECTS } = World;
+    const elem = GAME_OBJECTS.find(
+      (item) => item.x === this.x && item.y === this.y - 1
+    );
+    return elem ? elem.movable_up : false;
+  }
+
+  check_movable_down() {
+    const { GAME_OBJECTS } = World;
+    const elem = GAME_OBJECTS.find(
+      (item) => item.x === this.x && item.y === this.y + 1
+    );
+    return elem ? elem.movable_down : false;
   }
 
   updateState() {
@@ -67,31 +101,60 @@ export class Player extends GameObject {
 
     this.animation = false;
 
-    if (this.direction === "UP" && this.y > 0)
+    if (this.move) {
+      this.move = false;
+      this.direction = null;
+    }
+
+    if (this.direction === "UP" && this.y > 0) {
       if (!Player.STOP_OBJECTS.includes(world[this.y - 1][this.x])) {
         this.y -= 1;
         this.animation = true;
+      } else if (this.check_movable_up()) {
+        this.y -= 1;
+        this.prev_horizontal_state = "UP";
+        this.animation = true;
+        this.move = true;
       }
+    }
 
-    if (this.direction === "DOWN" && this.y < maxY)
+    if (this.direction === "DOWN" && this.y < maxY) {
       if (!Player.STOP_OBJECTS.includes(world[this.y + 1][this.x])) {
         this.y += 1;
         this.animation = true;
+      } else if (this.check_movable_down()) {
+        this.y += 1;
+        this.prev_horizontal_state = "DOWN";
+        this.animation = true;
+        this.move = true;
       }
+    }
 
-    if (this.direction === "LEFT" && this.x > 0)
+    if (this.direction === "LEFT" && this.x > 0) {
       if (!Player.STOP_OBJECTS.includes(world[this.y][this.x - 1])) {
         this.x -= 1;
         this.prev_horizontal_state = "LEFT";
         this.animation = true;
+      } else if (this.check_movable_left()) {
+        this.x -= 1;
+        this.prev_horizontal_state = "LEFT";
+        this.animation = true;
+        this.move = true;
       }
+    }
 
-    if (this.direction === "RIGHT" && this.x < maxX)
+    if (this.direction === "RIGHT" && this.x < maxX) {
       if (!Player.STOP_OBJECTS.includes(world[this.y][this.x + 1])) {
         this.prev_horizontal_state = "RIGHT";
         this.x += 1;
         this.animation = true;
+      } else if (this.check_movable_right()) {
+        this.x += 1;
+        this.prev_horizontal_state = "RIGHT";
+        this.animation = true;
+        this.move = true;
       }
+    }
   }
 
   draw(

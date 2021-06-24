@@ -1,7 +1,7 @@
-import FallingObject from "./FallingObject";
+import MovableFallingObject from "./MovableFallingObject";
 import orange_disk from "../assets/images/orange_disk.png";
 
-export default class Infotron extends FallingObject {
+export default class Infotron extends MovableFallingObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {

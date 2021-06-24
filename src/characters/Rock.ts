@@ -1,8 +1,8 @@
-import FallingObject from "./FallingObject";
 import rock from "../assets/images/rock.png";
 import { BLOCK_WIDTH } from "../utils/constansts";
+import MovableFallingObject from "./MovableFallingObject";
 
-export default class Rock extends FallingObject {
+export default class Rock extends MovableFallingObject {
   img: HTMLImageElement = new Image();
   state: number = 0;
 
