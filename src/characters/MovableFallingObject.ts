@@ -1,6 +1,7 @@
 import FallingObject from "./FallingObject";
 import World from "./World";
 import move from "../assets/audio/move.mp3";
+import { BLOCK_WIDTH } from "../utils/constansts";
 
 export default class MovableFallingObject extends FallingObject {
   movable_left: boolean = false;
@@ -95,5 +96,37 @@ export default class MovableFallingObject extends FallingObject {
       this.movable_up = false;
       this.movable_down = false;
     }
+  }
+
+  draw(
+    context: CanvasRenderingContext2D,
+    direction: string,
+    animation: boolean,
+    viewport_start_y: number,
+    viewport_start_x: number,
+    value: number,
+    state: number = 0,
+    dy: number = 0
+  ) {
+    this.pos_x_left =
+      this.movable_left && World.player!.move
+        ? -((BLOCK_WIDTH / 6) * value - BLOCK_WIDTH)
+        : this.pos_x_left;
+
+    this.pos_x_right =
+      this.movable_right && World.player!.move
+        ? (BLOCK_WIDTH / 6) * value - BLOCK_WIDTH
+        : this.pos_x_right;
+
+    super.draw(
+      context,
+      direction,
+      animation,
+      viewport_start_y,
+      viewport_start_x,
+      value,
+      state,
+      dy
+    );
   }
 }

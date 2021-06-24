@@ -102,8 +102,10 @@ export default class FallingObject extends GameObject {
       : 0;
     this.pos_x_left = this.left
       ? -((BLOCK_WIDTH / 6) * value - BLOCK_WIDTH)
-      : 0;
-    this.pos_x_right = this.right ? (BLOCK_WIDTH / 6) * value - BLOCK_WIDTH : 0;
+      : this.pos_x_left;
+    this.pos_x_right = this.right
+      ? (BLOCK_WIDTH / 6) * value - BLOCK_WIDTH
+      : this.pos_x_right;
 
     super.draw(
       context,
