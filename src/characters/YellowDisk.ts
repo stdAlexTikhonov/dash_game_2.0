@@ -1,6 +1,6 @@
-import GameObject from "./GameObject";
+import MovableObject from "./MovableObject";
 import yellow_disk from "../assets/images/yellow_disk.png";
-export default class Infotron extends GameObject {
+export default class Infotron extends MovableObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
