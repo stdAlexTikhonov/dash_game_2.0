@@ -108,6 +108,26 @@ export default class MovableObject extends GameObject {
     state: number = 0,
     dy: number = 0
   ) {
+    this.pos_y_up =
+      this.movable_up && World.player!.move
+        ? -((BLOCK_WIDTH / 6) * value - BLOCK_WIDTH)
+        : 0;
+
+    this.pos_y_down =
+      this.movable_down && World.player!.move
+        ? (BLOCK_WIDTH / 6) * value - BLOCK_WIDTH
+        : 0;
+
+    this.pos_x_left =
+      this.movable_left && World.player!.move
+        ? -((BLOCK_WIDTH / 6) * value - BLOCK_WIDTH)
+        : 0;
+
+    this.pos_x_right =
+      this.movable_right && World.player!.move
+        ? (BLOCK_WIDTH / 6) * value - BLOCK_WIDTH
+        : 0;
+
     super.draw(
       context,
       direction,
