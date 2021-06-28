@@ -1,11 +1,10 @@
-import GameObject from "./GameObject";
+import Predator from "./Predator";
 import scissors from "../assets/images/scissors.png";
-import { getPosition } from "../utils/helpers";
+import { getPosition, getPlayerPosition } from "../utils/helpers";
+import { DIRS, BLOCK_WIDTH } from "../utils/constansts";
 import World from "./World";
 
-const BLOCK_WIDTH = 32;
-
-export default class Scissors extends GameObject {
+export default class Scissors extends Predator {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
@@ -29,15 +28,23 @@ export default class Scissors extends GameObject {
       value
     );
 
+    const { pos_y: pos_y_plus, pos_x: pos_x_plus } = getPlayerPosition(
+      this.dir,
+      this.animation,
+      pos_x,
+      pos_y,
+      value
+    );
+
     const state8 = World.counter % 8;
     context!.drawImage(
       this.img,
       state8 * BLOCK_WIDTH,
-      0,
+      DIRS.indexOf(this.dir) * BLOCK_WIDTH,
       BLOCK_WIDTH,
       BLOCK_WIDTH,
-      pos_x,
-      pos_y,
+      pos_x_plus,
+      pos_y_plus,
       BLOCK_WIDTH,
       BLOCK_WIDTH
     );
