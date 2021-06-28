@@ -12,6 +12,7 @@ export class Player extends GameObject {
   animation: boolean = false;
   user_input: string | null;
   img: HTMLImageElement = new Image();
+  input_timeout: any = 0;
 
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
@@ -59,6 +60,10 @@ export class Player extends GameObject {
 
   setUserInput(dir: string | null) {
     this.user_input = dir;
+  }
+
+  setDirection(dir: string) {
+    this.direction = dir;
   }
 
   check_movable_left() {
