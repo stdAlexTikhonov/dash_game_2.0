@@ -72,3 +72,12 @@ document.onkeyup = (e: { code: string }) => {
       break;
   }
 };
+
+// window.addEventListener("gamepadconnected", (event) => {
+//   console.log("Gamapad connected: ");
+//   console.log(event.gamepad);
+// });
+
+// window.addEventListener("gamepaddisconnected", (event) => {
+//   console.log("Gamapad disconnected");
+// });

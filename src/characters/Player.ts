@@ -99,6 +99,26 @@ export class Player extends GameObject {
   }
 
   updateState() {
+    // const gamepods = window.navigator.getGamepads();
+    // if (gamepods[0]) {
+    //   const horizontalDir = gamepods[0]?.axes[0];
+    //   const verticalDir = gamepods[0]?.axes[1];
+    //   const verticalAbs = Math.abs(verticalDir);
+    //   const horizontalAbs = Math.abs(horizontalDir);
+    //   if (verticalAbs > 0.3 || horizontalAbs > 0.3) {
+    //     if (verticalAbs > horizontalAbs) {
+    //       this.direction = verticalDir > 0 ? "DOWN" : "UP";
+    //       this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
+    //     } else {
+    //       this.direction = horizontalDir > 0 ? "RIGHT" : "LEFT";
+    //       this.dy = horizontalDir > 0 ? 2 : 0;
+    //     }
+    //   } else {
+    //     this.direction = null;
+    //     this.dy = 1;
+    //   }
+    // }
+
     this.direction = this.user_input;
     const { world_map: world } = World;
     const maxY = world!.length - 1;
