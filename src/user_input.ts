@@ -5,26 +5,28 @@ document.onkeydown = (e: { code: string }) => {
     case "ArrowUp":
       clearTimeout(World.player!.input_timeout);
       World.player?.setUserInput("UP");
-      if (World.player?.prev_horizontal_state === "LEFT")
-        World.player?.setState(0);
-      else World.player?.setState(2);
+      if (!World.player?.move_state)
+        if (World.player?.prev_horizontal_state === "LEFT")
+          World.player?.setState(0);
+        else World.player?.setState(2);
       break;
     case "ArrowDown":
       clearTimeout(World.player!.input_timeout);
       World.player?.setUserInput("DOWN");
-      if (World.player?.prev_horizontal_state === "LEFT")
-        World.player?.setState(0);
-      else World.player?.setState(2);
+      if (!World.player?.move_state)
+        if (World.player?.prev_horizontal_state === "LEFT")
+          World.player?.setState(0);
+        else World.player?.setState(2);
       break;
     case "ArrowRight":
       clearTimeout(World.player!.input_timeout);
       World.player?.setUserInput("RIGHT");
-      World.player?.setState(2);
+      if (!World.player?.move_state) World.player?.setState(2);
       break;
     case "ArrowLeft":
       clearTimeout(World.player!.input_timeout);
       World.player?.setUserInput("LEFT");
-      World.player?.setState(0);
+      if (!World.player?.move_state) World.player?.setState(0);
       break;
     case "KeyW":
       clearTimeout(World.player2!.input_timeout);
