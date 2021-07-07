@@ -9,6 +9,7 @@ export default class FallingObject extends GameObject {
   right: boolean = false;
   static audio: HTMLMediaElement = new Audio(fall);
   ready_to_play: boolean = false;
+  fallen: boolean = false;
 
   check_way_down() {
     const { world_map } = World;
@@ -67,6 +68,7 @@ export default class FallingObject extends GameObject {
       if (this.ready_to_play) {
         FallingObject.audio.currentTime = 0;
         FallingObject.audio.play();
+        this.fallen = true;
       }
     } else if (this.move_possible() && this.check_way_right()) {
       this.x += 1;
@@ -75,6 +77,7 @@ export default class FallingObject extends GameObject {
       if (this.ready_to_play) {
         FallingObject.audio.currentTime = 0;
         FallingObject.audio.play();
+        this.fallen = true;
       }
     } else {
       this.falling = false;
@@ -82,6 +85,7 @@ export default class FallingObject extends GameObject {
       if (this.ready_to_play) {
         FallingObject.audio.currentTime = 0;
         FallingObject.audio.play();
+        this.fallen = true;
       }
       this.ready_to_play = false;
     }

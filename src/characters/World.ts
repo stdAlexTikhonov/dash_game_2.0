@@ -23,6 +23,7 @@ import PortalDown from "./PortalDown";
 import PortalCross from "./PortalCross";
 import PortalUpDown from "./PortalUpDown";
 import PortalLeftRight from "./PortalLeftRight";
+import Explosion from "./Explosion";
 import Part from "./Part";
 
 class World {
@@ -147,13 +148,14 @@ class World {
       }
     });
 
-    if (this.player)
-      this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
-        const flag1 = item.x !== this.player!.x;
-        const flag2 = item.y !== this.player!.y;
+    if (this.player) {
+    }
+    this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
+      const flag1 = item.x !== this.player!.x;
+      const flag2 = item.y !== this.player!.y;
 
-        return flag1 || flag2;
-      });
+      return flag1 || flag2;
+    });
 
     if (this.player2)
       this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
@@ -162,6 +164,10 @@ class World {
 
         return flag1 || flag2;
       });
+
+    this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
+      return !item.finished;
+    });
 
     this.GAME_OBJECTS.forEach((F) => {
       copy[F.y][F.x] = F.char;
@@ -229,6 +235,7 @@ class World {
         if (cell === "8") this.GAME_OBJECTS.push(new Part(y, x, "8"));
         if (cell === "9") this.GAME_OBJECTS.push(new Part(y, x, "9"));
         if (cell === "F") this.GAME_OBJECTS.push(new PortalCross(y, x));
+        if (cell === "J") this.GAME_OBJECTS.push(new Explosion(y, x));
       });
     });
 
