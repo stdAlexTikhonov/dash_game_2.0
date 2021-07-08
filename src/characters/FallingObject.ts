@@ -54,6 +54,14 @@ export default class FallingObject extends GameObject {
       : false;
   }
 
+  detonate_under() {
+    const under_object = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x && item.y === this.y + 1
+    );
+
+    if (under_object && under_object.detonate) under_object.detonate();
+  }
+
   updateState() {
     if (this.check_way_down()) {
       this.falling = true;
@@ -86,6 +94,7 @@ export default class FallingObject extends GameObject {
         FallingObject.audio.currentTime = 0;
         FallingObject.audio.play();
         this.fallen = true;
+        this.detonate_under();
       }
       this.ready_to_play = false;
     }
