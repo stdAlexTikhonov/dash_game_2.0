@@ -53,6 +53,7 @@ export default class OrangeDisk extends GameObject {
   explode() {
     this.finished = true;
     this.detonate_around();
+    World.GAME_OBJECTS.push(new Explosion(this.y, this.x));
     World.GAME_OBJECTS.push(new Explosion(this.y, this.x - 1));
     World.GAME_OBJECTS.push(new Explosion(this.y, this.x + 1));
     World.GAME_OBJECTS.push(new Explosion(this.y + 1, this.x));
