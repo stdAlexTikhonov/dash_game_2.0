@@ -7,15 +7,10 @@ import Explosion from "./Explosion";
 
 export default class Scissors extends Predator {
   img: HTMLImageElement = new Image();
-  detonated: boolean = false;
 
   constructor(y: number, x: number) {
     super(y, x, "X");
     this.img.src = scissors;
-  }
-
-  detonate() {
-    this.detonated = true;
   }
 
   detonate_around() {

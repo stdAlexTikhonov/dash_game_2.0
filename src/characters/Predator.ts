@@ -9,6 +9,7 @@ export default class Predator extends GameObject {
   dir: string | null = "DOWN";
   prev_dir: string | null = null;
   animation: boolean = false;
+  detonated: boolean = false;
 
   looking_around() {
     const { world_map } = World;
@@ -32,6 +33,10 @@ export default class Predator extends GameObject {
 
     this.dir_down =
       world_map[this.y + 1] && world_map[this.y + 1][this.x] === " ";
+  }
+
+  detonate() {
+    this.detonated = true;
   }
 
   check_dir() {
@@ -72,6 +77,15 @@ export default class Predator extends GameObject {
     }
   }
 
+  check_fallen_rock() {
+    if (
+      World.world_map[this.y - 2] &&
+      World.world_map[this.y - 2][this.x] === "O"
+    ) {
+      this.detonate();
+    }
+  }
+
   updateState() {
     const { world_map } = World;
 
@@ -95,6 +109,7 @@ export default class Predator extends GameObject {
           break;
         case "UP":
           if (world_map[this.y - 1] && world_map[this.y - 1][this.x] === " ") {
+            this.check_fallen_rock();
             this.animation = true;
             this.y -= 1;
           }
