@@ -1,6 +1,6 @@
-import Bomb from "./Bomb";
+import GameObject from "./GameObject";
 import red_disk from "../assets/images/red_disk.png";
-export default class RedDisc extends Bomb {
+export default class RedDisc extends GameObject {
   img: HTMLImageElement = new Image();
 
   constructor(y: number, x: number) {
