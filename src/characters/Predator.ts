@@ -81,28 +81,28 @@ export default class Predator extends GameObject {
     const down_object = World.GAME_OBJECTS.find(
       (item) => item.y === this.y + 1 && item.x === this.x
     );
-    return !down_object;
+    return this.y < World.world_map.length - 1 ? !down_object : false;
   }
 
   check_right() {
     const right_object = World.GAME_OBJECTS.find(
       (item) => item.y === this.y && item.x === this.x + 1
     );
-    return !right_object;
+    return this.x < World.world_map[0].length - 1 ? !right_object : false;
   }
 
   check_left() {
     const left_object = World.GAME_OBJECTS.find(
       (item) => item.y === this.y && item.x === this.x - 1
     );
-    return !left_object;
+    return this.x > 0 ? !left_object : false;
   }
 
   check_up() {
     const up_object = World.GAME_OBJECTS.find(
       (item) => item.y === this.y - 1 && item.x === this.x
     );
-    return !up_object;
+    return this.y > 0 ? !up_object : false;
   }
 
   updateState() {
