@@ -77,18 +77,35 @@ export default class Predator extends GameObject {
     }
   }
 
-  check_fallen_rock() {
-    const falling_object = World.GAME_OBJECTS.find(
-      (item) => item.x === this.x && item.y === this.y - 2
+  check_down() {
+    const down_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y + 1 && item.x === this.x
     );
-    if (falling_object && falling_object.falling) {
-      this.detonate();
-    }
+    return !down_object;
+  }
+
+  check_right() {
+    const right_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y && item.x === this.x + 1
+    );
+    return !right_object;
+  }
+
+  check_left() {
+    const left_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y && item.x === this.x - 1
+    );
+    return !left_object;
+  }
+
+  check_up() {
+    const up_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y - 1 && item.x === this.x
+    );
+    return !up_object;
   }
 
   updateState() {
-    const { world_map } = World;
-
     this.looking_around();
 
     this.check_dir();
@@ -96,26 +113,25 @@ export default class Predator extends GameObject {
     if (this.dir === this.prev_dir) {
       switch (this.dir) {
         case "DOWN":
-          if (world_map[this.y + 1] && world_map[this.y + 1][this.x] === " ") {
+          if (this.check_down()) {
             this.animation = true;
             this.y += 1;
           }
           break;
         case "RIGHT":
-          if (world_map[this.y][this.x + 1] === " ") {
+          if (this.check_right()) {
             this.animation = true;
             this.x += 1;
           }
           break;
         case "UP":
-          if (world_map[this.y - 1] && world_map[this.y - 1][this.x] === " ") {
-            this.check_fallen_rock();
+          if (this.check_up()) {
             this.animation = true;
             this.y -= 1;
           }
           break;
         case "LEFT":
-          if (world_map[this.y][this.x - 1] === " ") {
+          if (this.check_left()) {
             this.animation = true;
             this.x -= 1;
           }
