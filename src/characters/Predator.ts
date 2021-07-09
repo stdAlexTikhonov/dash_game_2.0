@@ -78,10 +78,10 @@ export default class Predator extends GameObject {
   }
 
   check_fallen_rock() {
-    if (
-      World.world_map[this.y - 2] &&
-      World.world_map[this.y - 2][this.x] === "O"
-    ) {
+    const falling_object = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x && item.y === this.y - 2
+    );
+    if (falling_object && falling_object.falling) {
       this.detonate();
     }
   }
