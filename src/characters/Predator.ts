@@ -9,29 +9,17 @@ export default class Predator extends GameObject {
   dir: string | null = "DOWN";
   prev_dir: string | null = null;
   animation: boolean = false;
+  detonated: boolean = false;
 
   looking_around() {
-    const { world_map } = World;
+    this.dir_left = this.check_left();
+    this.dir_right = this.check_right();
+    this.dir_up = this.check_up();
+    this.dir_down = this.check_down();
+  }
 
-    if (world_map[this.y - 1]) {
-      this.dir_left =
-        world_map[this.y][this.x - 1] === " " &&
-        !"*O".includes(world_map[this.y - 1][this.x - 1]);
-
-      this.dir_right =
-        world_map[this.y][this.x + 1] === " " &&
-        !"*O".includes(world_map[this.y - 1][this.x + 1]);
-
-      this.dir_up =
-        world_map[this.y - 1] && world_map[this.y - 1][this.x] === " ";
-    } else {
-      this.dir_left = world_map[this.y][this.x - 1] === " ";
-      this.dir_right = world_map[this.y][this.x + 1] === " ";
-      this.dir_up = false;
-    }
-
-    this.dir_down =
-      world_map[this.y + 1] && world_map[this.y + 1][this.x] === " ";
+  detonate() {
+    this.detonated = true;
   }
 
   check_dir() {
@@ -72,9 +60,35 @@ export default class Predator extends GameObject {
     }
   }
 
-  updateState() {
-    const { world_map } = World;
+  check_down() {
+    const down_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y + 1 && item.x === this.x
+    );
+    return this.y < World.world_map.length - 1 ? !down_object : false;
+  }
 
+  check_right() {
+    const right_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y && item.x === this.x + 1
+    );
+    return this.x < World.world_map[0].length - 1 ? !right_object : false;
+  }
+
+  check_left() {
+    const left_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y && item.x === this.x - 1
+    );
+    return this.x > 0 ? !left_object : false;
+  }
+
+  check_up() {
+    const up_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y - 1 && item.x === this.x
+    );
+    return this.y > 0 ? !up_object : false;
+  }
+
+  updateState() {
     this.looking_around();
 
     this.check_dir();
@@ -82,25 +96,25 @@ export default class Predator extends GameObject {
     if (this.dir === this.prev_dir) {
       switch (this.dir) {
         case "DOWN":
-          if (world_map[this.y + 1] && world_map[this.y + 1][this.x] === " ") {
+          if (this.check_down()) {
             this.animation = true;
             this.y += 1;
           }
           break;
         case "RIGHT":
-          if (world_map[this.y][this.x + 1] === " ") {
+          if (this.check_right()) {
             this.animation = true;
             this.x += 1;
           }
           break;
         case "UP":
-          if (world_map[this.y - 1] && world_map[this.y - 1][this.x] === " ") {
+          if (this.check_up()) {
             this.animation = true;
             this.y -= 1;
           }
           break;
         case "LEFT":
-          if (world_map[this.y][this.x - 1] === " ") {
+          if (this.check_left()) {
             this.animation = true;
             this.x -= 1;
           }
