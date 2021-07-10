@@ -12,27 +12,10 @@ export default class Predator extends GameObject {
   detonated: boolean = false;
 
   looking_around() {
-    const { world_map } = World;
-
-    if (world_map[this.y - 1]) {
-      this.dir_left =
-        world_map[this.y][this.x - 1] === " " &&
-        !"*O".includes(world_map[this.y - 1][this.x - 1]);
-
-      this.dir_right =
-        world_map[this.y][this.x + 1] === " " &&
-        !"*O".includes(world_map[this.y - 1][this.x + 1]);
-
-      this.dir_up =
-        world_map[this.y - 1] && world_map[this.y - 1][this.x] === " ";
-    } else {
-      this.dir_left = world_map[this.y][this.x - 1] === " ";
-      this.dir_right = world_map[this.y][this.x + 1] === " ";
-      this.dir_up = false;
-    }
-
-    this.dir_down =
-      world_map[this.y + 1] && world_map[this.y + 1][this.x] === " ";
+    this.dir_left = this.check_left();
+    this.dir_right = this.check_right();
+    this.dir_up = this.check_up();
+    this.dir_down = this.check_down();
   }
 
   detonate() {
