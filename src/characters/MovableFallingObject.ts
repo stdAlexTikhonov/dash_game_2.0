@@ -16,7 +16,7 @@ export default class MovableFallingObject extends FallingObject {
     this.vertical = vertical;
   }
 
-  check_left() {
+  check_move_left() {
     const { world_map } = World;
     return (
       world_map[this.y][this.x - 1] === " " &&
@@ -24,7 +24,7 @@ export default class MovableFallingObject extends FallingObject {
     );
   }
 
-  check_right() {
+  check_move_right() {
     const { world_map } = World;
     return (
       world_map[this.y][this.x + 1] === " " &&
@@ -32,7 +32,7 @@ export default class MovableFallingObject extends FallingObject {
     );
   }
 
-  check_up() {
+  check_move_up() {
     const { world_map } = World;
     return (
       world_map[this.y - 1][this.x] === " " &&
@@ -40,7 +40,7 @@ export default class MovableFallingObject extends FallingObject {
     );
   }
 
-  check_down() {
+  check_move_down() {
     const { world_map } = World;
     return (
       world_map[this.y + 1][this.x] === " " &&
@@ -56,14 +56,14 @@ export default class MovableFallingObject extends FallingObject {
   updateState() {
     super.updateState();
 
-    if (this.check_left() && World.player!.direction === "LEFT") {
+    if (this.check_move_left() && World.player!.direction === "LEFT") {
       this.movable_left = true;
 
       if (this.x === World.player!.x) {
         this.x -= 1;
         this.play_sound();
       }
-    } else if (this.check_right() && World.player!.direction === "RIGHT") {
+    } else if (this.check_move_right() && World.player!.direction === "RIGHT") {
       this.movable_right = true;
 
       if (this.x === World.player!.x) {
@@ -72,7 +72,7 @@ export default class MovableFallingObject extends FallingObject {
       }
     } else if (
       this.vertical &&
-      this.check_up() &&
+      this.check_move_up() &&
       World.player!.direction === "UP"
     ) {
       this.movable_up = true;
@@ -82,7 +82,7 @@ export default class MovableFallingObject extends FallingObject {
       }
     } else if (
       this.vertical &&
-      this.check_down() &&
+      this.check_move_down() &&
       World.player!.direction === "DOWN"
     ) {
       this.movable_down = true;
