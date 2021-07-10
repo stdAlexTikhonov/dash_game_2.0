@@ -148,8 +148,6 @@ class World {
       }
     });
 
-    if (this.player) {
-    }
     this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
       const flag1 = item.x !== this.player!.x;
       const flag2 = item.y !== this.player!.y;
