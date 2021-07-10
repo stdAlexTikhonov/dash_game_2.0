@@ -4,12 +4,15 @@ import { Dev } from "../DevelopmentMode";
 
 import Box from "@material-ui/core/Box";
 import World from "../../characters/World";
-import { useAppSelector } from "../../hooks";
+import { useAppSelector, useAppDispatch } from "../../hooks";
 import { getMultiplayer, getDev } from "../../store/gameSlice";
+import { getPlayer, setFirstRender } from "../../store/playerSlice";
 import { context, context2 } from "../Canvas/canvas";
 
 export const Game = () => {
+  const dispatch = useAppDispatch();
   const multiplayer = useAppSelector(getMultiplayer);
+  const is_player_ready = useAppSelector(getPlayer);
   const requestIdRef = useRef(null as null | number);
   const dev = useAppSelector(getDev);
 
@@ -30,12 +33,13 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    if (!dev) draw();
+    dispatch(setFirstRender());
+    if (is_player_ready && !dev) draw();
 
     return () => {
       if (!dev) window.cancelAnimationFrame(requestIdRef.current!);
     };
-  }, []);
+  }, [is_player_ready]);
 
   useEffect(() => {
     World.viewport_w = multiplayer ? window.innerWidth / 2 : window.innerWidth;

@@ -4,12 +4,15 @@ import { useStyles } from "./styles";
 import World from "../../characters/World";
 import Levels from "../../levels";
 import { getLevel } from "../../store/gameSlice";
-import { useAppSelector } from "../../hooks";
+import { resetFirstRender } from "../../store/playerSlice";
+import { useAppSelector, useAppDispatch } from "../../hooks";
 import "./styles.css";
 
 export const StartScreen = () => {
+  const dispatch = useAppDispatch();
   const level = useAppSelector(getLevel);
   useEffect(() => {
+    dispatch(resetFirstRender());
     fetch(Levels[level])
       .then((r) => r.text())
       .then((text) => {

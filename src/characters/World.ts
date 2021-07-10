@@ -25,6 +25,8 @@ import PortalUpDown from "./PortalUpDown";
 import PortalLeftRight from "./PortalLeftRight";
 import Explosion from "./Explosion";
 import Part from "./Part";
+import { store } from "../store/store";
+import { setPlayerReady, getPlayer } from "../store/playerSlice";
 
 class World {
   viewport_w: number = window.innerWidth;
@@ -88,6 +90,7 @@ class World {
   draw(context: CanvasRenderingContext2D, value: number) {
     context.fillStyle = "black";
     context.fillRect(0, 0, this.viewport_w, this.viewport_h);
+
     const viewport_start_x = this.player!.x - Math.floor(this.width / 2);
     const viewport_start_y = this.player!.y - Math.floor(this.height / 2);
 
@@ -198,6 +201,8 @@ class World {
       row.forEach((cell, x) => {
         if (cell === "A") {
           this.player = new Player(y, x, "A");
+          this.GAME_OBJECTS.push(new Player(y, x, "A"));
+          store.dispatch(setPlayerReady());
         }
         if (cell === ".") this.GAME_OBJECTS.push(new Motherboard(y, x));
         if (cell === "#") this.GAME_OBJECTS.push(new Wall(y, x));
