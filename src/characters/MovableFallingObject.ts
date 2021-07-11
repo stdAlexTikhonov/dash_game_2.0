@@ -8,13 +8,7 @@ export default class MovableFallingObject extends FallingObject {
   movable_right: boolean = false;
   movable_up: boolean = false;
   movable_down: boolean = false;
-  vertical: boolean = false;
   static move_sound: HTMLMediaElement = new Audio(move);
-
-  constructor(y: number, x: number, char: string, vertical: boolean = false) {
-    super(y, x, char);
-    this.vertical = vertical;
-  }
 
   check_move_left() {
     const { world_map } = World;
@@ -29,22 +23,6 @@ export default class MovableFallingObject extends FallingObject {
     return (
       world_map[this.y][this.x + 1] === " " &&
       world_map[this.y][this.x - 1] === "A"
-    );
-  }
-
-  check_move_up() {
-    const { world_map } = World;
-    return (
-      world_map[this.y - 1][this.x] === " " &&
-      world_map[this.y + 1][this.x] === "A"
-    );
-  }
-
-  check_move_down() {
-    const { world_map } = World;
-    return (
-      world_map[this.y + 1][this.x] === " " &&
-      world_map[this.y - 1][this.x] === "A"
     );
   }
 
@@ -68,26 +46,6 @@ export default class MovableFallingObject extends FallingObject {
 
       if (this.x === World.player!.x) {
         this.x += 1;
-        this.play_sound();
-      }
-    } else if (
-      this.vertical &&
-      this.check_move_up() &&
-      World.player!.direction === "UP"
-    ) {
-      this.movable_up = true;
-      if (this.y === World.player!.y) {
-        this.y -= 1;
-        this.play_sound();
-      }
-    } else if (
-      this.vertical &&
-      this.check_move_down() &&
-      World.player!.direction === "DOWN"
-    ) {
-      this.movable_down = true;
-      if (this.y === World.player!.y) {
-        this.y += 1;
         this.play_sound();
       }
     } else {
