@@ -1,10 +1,13 @@
 import World from "./characters/World";
+import { store } from "./store/store";
+import { setUserInput } from "./store/playerSlice";
 
 document.onkeydown = (e: { code: string }) => {
   switch (e.code) {
     case "ArrowUp":
       clearTimeout(World.player!.input_timeout);
       World.player?.setUserInput("UP");
+      store.dispatch(setUserInput("UP"));
       if (!World.player?.move_state)
         if (World.player?.prev_horizontal_state === "LEFT")
           World.player?.setState(0);
@@ -13,6 +16,7 @@ document.onkeydown = (e: { code: string }) => {
     case "ArrowDown":
       clearTimeout(World.player!.input_timeout);
       World.player?.setUserInput("DOWN");
+      store.dispatch(setUserInput("DOWN"));
       if (!World.player?.move_state)
         if (World.player?.prev_horizontal_state === "LEFT")
           World.player?.setState(0);
@@ -21,11 +25,13 @@ document.onkeydown = (e: { code: string }) => {
     case "ArrowRight":
       clearTimeout(World.player!.input_timeout);
       World.player?.setUserInput("RIGHT");
+      store.dispatch(setUserInput("RIGHT"));
       if (!World.player?.move_state) World.player?.setState(2);
       break;
     case "ArrowLeft":
       clearTimeout(World.player!.input_timeout);
       World.player?.setUserInput("LEFT");
+      store.dispatch(setUserInput("LEFT"));
       if (!World.player?.move_state) World.player?.setState(0);
       break;
     case "KeyW":
@@ -68,6 +74,7 @@ document.onkeyup = (e: { code: string }) => {
       break;
     default:
       World.player!.input_timeout = setTimeout(() => {
+        store.dispatch(setUserInput(null));
         World.player?.setUserInput(null);
         World.player?.setState(1);
       }, 50);
