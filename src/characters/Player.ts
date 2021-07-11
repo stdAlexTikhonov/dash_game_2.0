@@ -2,6 +2,8 @@ import GameObject from "./GameObject";
 import World from "./World";
 import merphy from "../assets/images/merphy.png";
 import { getPosition, getPlayerPosition } from "../utils/helpers";
+import { store } from "../store/store";
+import { getUserInput } from "../store/playerSlice";
 
 const BLOCK_WIDTH = 32;
 export class Player extends GameObject {
@@ -10,7 +12,6 @@ export class Player extends GameObject {
   direction: string | null;
   prev_horizontal_state: string = "LEFT";
   animation: boolean = false;
-  user_input: string | null;
   img: HTMLImageElement = new Image();
   input_timeout: any = 0;
   move_state: boolean = false;
@@ -20,7 +21,6 @@ export class Player extends GameObject {
     this.dy = 1;
     this.direction = null;
     this.animation = false;
-    this.user_input = null;
     this.img.src = merphy;
   }
 
@@ -58,10 +58,6 @@ export class Player extends GameObject {
   ];
 
   static MOVABLE_OBJECTS = ["O"];
-
-  setUserInput(dir: string | null) {
-    this.user_input = dir;
-  }
 
   setDirection(dir: string) {
     this.direction = dir;
@@ -119,8 +115,10 @@ export class Player extends GameObject {
     //     this.dy = 1;
     //   }
     // }
+    const state = store.getState();
+    const user_input = getUserInput(state);
 
-    this.direction = this.user_input;
+    this.direction = user_input;
     const { world_map: world } = World;
     const maxY = world!.length - 1;
     const maxX = world![0]!.length - 1;

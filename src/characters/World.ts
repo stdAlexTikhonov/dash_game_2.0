@@ -26,7 +26,7 @@ import PortalLeftRight from "./PortalLeftRight";
 import Explosion from "./Explosion";
 import Part from "./Part";
 import { store } from "../store/store";
-import { setPlayerReady, getPlayer } from "../store/playerSlice";
+import { setPlayerReady } from "../store/playerSlice";
 
 class World {
   viewport_w: number = window.innerWidth;
