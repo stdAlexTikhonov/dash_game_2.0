@@ -3,10 +3,6 @@ import World from "./World";
 import Explosion from "./Explosion";
 
 export default class MovableFallingBomb extends MovableFallingObject {
-  constructor(y: number, x: number, char: string) {
-    super(y, x, char, true);
-  }
-
   detonated: boolean = false;
 
   detonate() {

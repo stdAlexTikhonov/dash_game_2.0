@@ -12,6 +12,7 @@ export default class Motherboard extends GameObject {
   }
 
   collect() {
+    this.finished = true;
     Motherboard.ground_sound.currentTime = 0;
     Motherboard.ground_sound.play();
   }

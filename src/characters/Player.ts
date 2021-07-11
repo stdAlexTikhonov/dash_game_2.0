@@ -2,6 +2,8 @@ import GameObject from "./GameObject";
 import World from "./World";
 import merphy from "../assets/images/merphy.png";
 import { getPosition, getPlayerPosition } from "../utils/helpers";
+import { store } from "../store/store";
+import { getUserInput } from "../store/playerSlice";
 
 const BLOCK_WIDTH = 32;
 export class Player extends GameObject {
@@ -10,17 +12,14 @@ export class Player extends GameObject {
   direction: string | null;
   prev_horizontal_state: string = "LEFT";
   animation: boolean = false;
-  user_input: string | null;
   img: HTMLImageElement = new Image();
   input_timeout: any = 0;
-  move_state: boolean = false;
 
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
     this.dy = 1;
     this.direction = null;
     this.animation = false;
-    this.user_input = null;
     this.img.src = merphy;
   }
 
@@ -57,46 +56,8 @@ export class Player extends GameObject {
     "F",
   ];
 
-  static MOVABLE_OBJECTS = ["O"];
-
-  setUserInput(dir: string | null) {
-    this.user_input = dir;
-  }
-
   setDirection(dir: string) {
     this.direction = dir;
-  }
-
-  check_movable_left() {
-    const { GAME_OBJECTS } = World;
-    const elem = GAME_OBJECTS.find(
-      (item) => item.x === this.x - 1 && item.y === this.y
-    );
-    return elem ? elem.movable_left : false;
-  }
-
-  check_movable_right() {
-    const { GAME_OBJECTS } = World;
-    const elem = GAME_OBJECTS.find(
-      (item) => item.x === this.x + 1 && item.y === this.y
-    );
-    return elem ? elem.movable_right : false;
-  }
-
-  check_movable_up() {
-    const { GAME_OBJECTS } = World;
-    const elem = GAME_OBJECTS.find(
-      (item) => item.x === this.x && item.y === this.y - 1
-    );
-    return elem ? elem.movable_up : false;
-  }
-
-  check_movable_down() {
-    const { GAME_OBJECTS } = World;
-    const elem = GAME_OBJECTS.find(
-      (item) => item.x === this.x && item.y === this.y + 1
-    );
-    return elem ? elem.movable_down : false;
   }
 
   updateState() {
@@ -119,31 +80,20 @@ export class Player extends GameObject {
     //     this.dy = 1;
     //   }
     // }
+    const state = store.getState();
+    const user_input = getUserInput(state);
 
-    this.direction = this.user_input;
+    this.direction = user_input;
     const { world_map: world } = World;
     const maxY = world!.length - 1;
     const maxX = world![0]!.length - 1;
 
     this.animation = false;
 
-    if (this.move) {
-      this.move = false;
-      this.direction = null;
-    }
-
     if (this.direction === "UP" && this.y > 0) {
       if (!Player.STOP_OBJECTS.includes(world[this.y - 1][this.x])) {
         this.y -= 1;
         this.animation = true;
-        this.move_state = false;
-      } else if (this.check_movable_up()) {
-        this.y -= 1;
-        this.prev_horizontal_state = "UP";
-        this.animation = true;
-        this.move = true;
-        this.move_state = true;
-        this.dy = 5;
       }
     }
 
@@ -151,14 +101,6 @@ export class Player extends GameObject {
       if (!Player.STOP_OBJECTS.includes(world[this.y + 1][this.x])) {
         this.y += 1;
         this.animation = true;
-        this.move_state = false;
-      } else if (this.check_movable_down()) {
-        this.y += 1;
-        this.prev_horizontal_state = "DOWN";
-        this.animation = true;
-        this.move = true;
-        this.move_state = true;
-        this.dy = 3;
       }
     }
 
@@ -167,14 +109,6 @@ export class Player extends GameObject {
         this.x -= 1;
         this.prev_horizontal_state = "LEFT";
         this.animation = true;
-        this.move_state = false;
-      } else if (this.check_movable_left()) {
-        this.x -= 1;
-        this.prev_horizontal_state = "LEFT";
-        this.animation = true;
-        this.move = true;
-        this.move_state = true;
-        this.dy = 5;
       }
     }
 
@@ -183,14 +117,6 @@ export class Player extends GameObject {
         this.prev_horizontal_state = "RIGHT";
         this.x += 1;
         this.animation = true;
-        this.move_state = false;
-      } else if (this.check_movable_right()) {
-        this.x += 1;
-        this.prev_horizontal_state = "RIGHT";
-        this.animation = true;
-        this.move = true;
-        this.move_state = true;
-        this.dy = 3;
       }
     }
   }
@@ -206,7 +132,7 @@ export class Player extends GameObject {
     const state3 = World.counter % 3;
     context!.drawImage(
       this.img,
-      this.move_state ? 0 : state3 * BLOCK_WIDTH,
+      state3 * BLOCK_WIDTH,
       this.dy * BLOCK_WIDTH,
       BLOCK_WIDTH,
       BLOCK_WIDTH,

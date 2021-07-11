@@ -8,6 +8,10 @@ export default class RedDisc extends GameObject {
     this.img.src = red_disk;
   }
 
+  collect() {
+    this.finished = true;
+  }
+
   updateState() {
     super.updateState();
   }

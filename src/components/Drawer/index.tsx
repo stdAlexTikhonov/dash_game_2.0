@@ -27,6 +27,7 @@ import {
   getDev,
   toggleDev,
 } from "../../store/gameSlice";
+import { togglePlayerReady, getRender } from "../../store/playerSlice";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 
 const useStyles = makeStyles({
@@ -44,6 +45,7 @@ export const TemporaryDrawer = () => {
   const history = useHistory();
   const dispath = useAppDispatch();
   const multiplayer = useAppSelector(getMultiplayer);
+  const is_rendered = useAppSelector(getRender);
   const music = useAppSelector(getMusic);
   const dev = useAppSelector(getDev);
   const classes = useStyles();
@@ -64,7 +66,7 @@ export const TemporaryDrawer = () => {
       ) {
         return;
       }
-
+      if (is_rendered) dispath(togglePlayerReady());
       setState({ ...state, [anchor]: open });
     };
 
