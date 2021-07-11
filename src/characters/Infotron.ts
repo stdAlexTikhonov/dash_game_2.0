@@ -19,6 +19,7 @@ export default class Infotron extends FallingObject {
     Infotron.quantity -= 1;
     Infotron.collect_audio.currentTime = 0;
     Infotron.collect_audio.play();
+    this.finished = true;
   }
 
   draw(

@@ -145,17 +145,10 @@ class World {
       if (
         item.x === this.player!.x &&
         item.y === this.player!.y &&
-        ["*", "."].includes(item.char)
+        ["*", ".", "%"].includes(item.char)
       ) {
         item.collect();
       }
-    });
-
-    this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
-      const flag1 = item.x !== this.player!.x;
-      const flag2 = item.y !== this.player!.y;
-
-      return flag1 || flag2;
     });
 
     if (this.player2)
@@ -201,7 +194,6 @@ class World {
       row.forEach((cell, x) => {
         if (cell === "A") {
           this.player = new Player(y, x, "A");
-          this.GAME_OBJECTS.push(new Player(y, x, "A"));
           store.dispatch(setPlayerReady());
         }
         if (cell === ".") this.GAME_OBJECTS.push(new Motherboard(y, x));
