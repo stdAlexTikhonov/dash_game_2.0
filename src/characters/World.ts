@@ -91,38 +91,40 @@ class World {
     context.fillStyle = "black";
     context.fillRect(0, 0, this.viewport_w, this.viewport_h);
 
-    const viewport_start_x = this.player!.x - Math.floor(this.width / 2);
-    const viewport_start_y = this.player!.y - Math.floor(this.height / 2);
+    const player = this.GAME_OBJECTS.find((item) => item.char === "A");
+
+    const viewport_start_x = player.x - Math.floor(this.width / 2);
+    const viewport_start_y = player.y - Math.floor(this.height / 2);
 
     this.GAME_OBJECTS.forEach((elem) =>
       elem.draw(
         context,
-        this.player!.direction || "",
-        this.player!.animation,
+        player.direction || "",
+        player.animation,
         viewport_start_y,
         viewport_start_x,
         value
       )
     );
 
-    this.player2 &&
-      this.player2?.draw_as_second(
-        context,
-        this.player!.direction || "",
-        this.player!.animation,
-        viewport_start_y,
-        viewport_start_x,
-        value
-      );
+    // this.player2 &&
+    //   this.player2?.draw_as_second(
+    //     context,
+    //     this.player!.direction || "",
+    //     this.player!.animation,
+    //     viewport_start_y,
+    //     viewport_start_x,
+    //     value
+    //   );
 
-    this.player?.draw(
-      context,
-      "LEFT",
-      false,
-      viewport_start_y,
-      viewport_start_x,
-      0
-    );
+    // this.player?.draw(
+    //   context,
+    //   "LEFT",
+    //   false,
+    //   viewport_start_y,
+    //   viewport_start_x,
+    //   0
+    // );
   }
 
   setMultiplayer() {
@@ -141,23 +143,25 @@ class World {
       Array.from({ length: this.world_map[0].length }, () => " ")
     );
 
+    const player = this.GAME_OBJECTS.find((item) => item.char === "A");
+
     this.GAME_OBJECTS.forEach((item) => {
       if (
-        item.x === this.player!.x &&
-        item.y === this.player!.y &&
+        item.x === player.x &&
+        item.y === player.y &&
         ["*", ".", "%"].includes(item.char)
       ) {
         item.collect();
       }
     });
 
-    if (this.player2)
-      this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
-        const flag1 = item.x !== this.player2!.x;
-        const flag2 = item.y !== this.player2!.y;
+    // if (this.player2)
+    //   this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
+    //     const flag1 = item.x !== this.player2!.x;
+    //     const flag2 = item.y !== this.player2!.y;
 
-        return flag1 || flag2;
-      });
+    //     return flag1 || flag2;
+    //   });
 
     this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
       return !item.finished;
@@ -167,7 +171,7 @@ class World {
       copy[F.y][F.x] = F.char;
     });
 
-    copy[this.player!.y][this.player!.x] = "A";
+    copy[player.y][player.x] = "A";
     if (this.player2) copy[this.player2!.y][this.player2!.x] = "H";
 
     return copy;
@@ -194,6 +198,7 @@ class World {
       row.forEach((cell, x) => {
         if (cell === "A") {
           this.player = new Player(y, x, "A");
+          this.GAME_OBJECTS.push(new Player(y, x, "A"));
           store.dispatch(setPlayerReady());
         }
         if (cell === ".") this.GAME_OBJECTS.push(new Motherboard(y, x));

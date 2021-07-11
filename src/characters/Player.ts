@@ -14,7 +14,6 @@ export class Player extends GameObject {
   animation: boolean = false;
   img: HTMLImageElement = new Image();
   input_timeout: any = 0;
-  move_state: boolean = false;
 
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
@@ -57,42 +56,8 @@ export class Player extends GameObject {
     "F",
   ];
 
-  static MOVABLE_OBJECTS = ["O"];
-
   setDirection(dir: string) {
     this.direction = dir;
-  }
-
-  check_movable_left() {
-    const { GAME_OBJECTS } = World;
-    const elem = GAME_OBJECTS.find(
-      (item) => item.x === this.x - 1 && item.y === this.y
-    );
-    return elem ? elem.movable_left : false;
-  }
-
-  check_movable_right() {
-    const { GAME_OBJECTS } = World;
-    const elem = GAME_OBJECTS.find(
-      (item) => item.x === this.x + 1 && item.y === this.y
-    );
-    return elem ? elem.movable_right : false;
-  }
-
-  check_movable_up() {
-    const { GAME_OBJECTS } = World;
-    const elem = GAME_OBJECTS.find(
-      (item) => item.x === this.x && item.y === this.y - 1
-    );
-    return elem ? elem.movable_up : false;
-  }
-
-  check_movable_down() {
-    const { GAME_OBJECTS } = World;
-    const elem = GAME_OBJECTS.find(
-      (item) => item.x === this.x && item.y === this.y + 1
-    );
-    return elem ? elem.movable_down : false;
   }
 
   updateState() {
@@ -125,23 +90,10 @@ export class Player extends GameObject {
 
     this.animation = false;
 
-    if (this.move) {
-      this.move = false;
-      this.direction = null;
-    }
-
     if (this.direction === "UP" && this.y > 0) {
       if (!Player.STOP_OBJECTS.includes(world[this.y - 1][this.x])) {
         this.y -= 1;
         this.animation = true;
-        this.move_state = false;
-      } else if (this.check_movable_up()) {
-        this.y -= 1;
-        this.prev_horizontal_state = "UP";
-        this.animation = true;
-        this.move = true;
-        this.move_state = true;
-        this.dy = 5;
       }
     }
 
@@ -149,14 +101,6 @@ export class Player extends GameObject {
       if (!Player.STOP_OBJECTS.includes(world[this.y + 1][this.x])) {
         this.y += 1;
         this.animation = true;
-        this.move_state = false;
-      } else if (this.check_movable_down()) {
-        this.y += 1;
-        this.prev_horizontal_state = "DOWN";
-        this.animation = true;
-        this.move = true;
-        this.move_state = true;
-        this.dy = 3;
       }
     }
 
@@ -165,14 +109,6 @@ export class Player extends GameObject {
         this.x -= 1;
         this.prev_horizontal_state = "LEFT";
         this.animation = true;
-        this.move_state = false;
-      } else if (this.check_movable_left()) {
-        this.x -= 1;
-        this.prev_horizontal_state = "LEFT";
-        this.animation = true;
-        this.move = true;
-        this.move_state = true;
-        this.dy = 5;
       }
     }
 
@@ -181,14 +117,6 @@ export class Player extends GameObject {
         this.prev_horizontal_state = "RIGHT";
         this.x += 1;
         this.animation = true;
-        this.move_state = false;
-      } else if (this.check_movable_right()) {
-        this.x += 1;
-        this.prev_horizontal_state = "RIGHT";
-        this.animation = true;
-        this.move = true;
-        this.move_state = true;
-        this.dy = 3;
       }
     }
   }
@@ -204,7 +132,7 @@ export class Player extends GameObject {
     const state3 = World.counter % 3;
     context!.drawImage(
       this.img,
-      this.move_state ? 0 : state3 * BLOCK_WIDTH,
+      state3 * BLOCK_WIDTH,
       this.dy * BLOCK_WIDTH,
       BLOCK_WIDTH,
       BLOCK_WIDTH,
