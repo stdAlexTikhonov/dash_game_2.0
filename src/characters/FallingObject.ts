@@ -12,45 +12,48 @@ export default class FallingObject extends GameObject {
   fallen: boolean = false;
 
   check_way_down() {
-    const { world_map } = World;
-    return world_map[this.y + 1]
-      ? world_map[this.y + 1][this.x] === " "
-      : false;
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y + 1 && item.x === this.x
+    );
+
+    return this.y < World.world_map.length - 1 ? !obj : false;
   }
 
   check_way_right() {
-    const { world_map } = World;
-    return world_map[this.y - 1]
-      ? world_map[this.y][this.x + 1] === " " &&
-          world_map[this.y + 1][this.x + 1] === " " &&
-          !["O", "*"].includes(world_map[this.y - 1][this.x + 1])
-      : world_map[this.y][this.x + 1] === " " &&
-          world_map[this.y + 1][this.x + 1] === " ";
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x + 1 && [this.y, this.y + 1].includes(item.y)
+    );
+
+    const top_obj = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x + 1 && item.y === this.y - 1
+    );
+
+    if (top_obj && (top_obj.falling || top_obj.direction === "DOWN"))
+      return false;
+    else return this.x < World.world_map[0].length - 1 ? !obj : false;
   }
 
   check_way_left() {
-    const { world_map } = World;
-    return world_map[this.y - 1]
-      ? world_map[this.y][this.x - 1] === " " &&
-          world_map[this.y + 1][this.x - 1] === " " &&
-          !["O", "*"].includes(world_map[this.y - 1][this.x - 1]) &&
-          !(
-            ["O", "*"].includes(world_map[this.y][this.x - 2]) &&
-            ["+", "O", "*", "R", "U", "3", "4"].includes(
-              world_map[this.y + 1][this.x - 2]
-            )
-          )
-      : world_map[this.y][this.x - 1] === " " &&
-          world_map[this.y + 1][this.x - 1] === " ";
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x - 1 && [this.y, this.y + 1].includes(item.y)
+    );
+
+    const top_obj = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x - 1 && item.y === this.y - 1
+    );
+
+    if (top_obj && (top_obj.falling || top_obj.direction === "DOWN"))
+      return false;
+    else return this.x > 0 ? !obj : false;
   }
 
   move_possible() {
-    const { world_map } = World;
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y + 1 && item.x === this.x
+    );
 
-    return world_map[this.y + 1]
-      ? ["+", "O", "*", "R", "U", "3", "4"].includes(
-          world_map[this.y + 1][this.x]
-        )
+    return this.y < World.world_map.length - 1
+      ? ["+", "O", "*", "R", "U", "3", "4"].includes(obj.char)
       : false;
   }
 
