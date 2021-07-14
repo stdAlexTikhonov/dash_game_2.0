@@ -1,7 +1,7 @@
-import GameObject from "./GameObject";
+import Bomb from "./Bomb";
 import World from "./World";
 
-export default class Predator extends GameObject {
+export default class Predator extends Bomb {
   dir_down: boolean = true;
   dir_left: boolean = false;
   dir_up: boolean = false;
@@ -9,17 +9,12 @@ export default class Predator extends GameObject {
   dir: string | null = "DOWN";
   prev_dir: string | null = null;
   animation: boolean = false;
-  detonated: boolean = false;
 
   looking_around() {
     this.dir_left = this.check_left();
     this.dir_right = this.check_right();
     this.dir_up = this.check_up();
     this.dir_down = this.check_down();
-  }
-
-  detonate() {
-    this.detonated = true;
   }
 
   check_dir() {

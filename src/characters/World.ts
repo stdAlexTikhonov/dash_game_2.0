@@ -34,6 +34,8 @@ class World {
   width: number = 0;
   height: number = 0;
   counter: number;
+  last_player_x: number = 0;
+  last_player_y: number = 0;
 
   player: Player | null = null;
   player2: Player | null = null;
@@ -93,14 +95,16 @@ class World {
 
     const player = this.GAME_OBJECTS.find((item) => item.char === "A");
 
-    const viewport_start_x = player.x - Math.floor(this.width / 2);
-    const viewport_start_y = player.y - Math.floor(this.height / 2);
+    const viewport_start_x =
+      (player ? player.x : this.last_player_x) - Math.floor(this.width / 2);
+    const viewport_start_y =
+      (player ? player.y : this.last_player_y) - Math.floor(this.height / 2);
 
     this.GAME_OBJECTS.forEach((elem) =>
       elem.draw(
         context,
-        player.direction || "",
-        player.animation,
+        player ? player.direction : "",
+        player ? player.animation : false,
         viewport_start_y,
         viewport_start_x,
         value
@@ -141,15 +145,20 @@ class World {
   updateMap() {
     const player = this.GAME_OBJECTS.find((item) => item.char === "A");
 
-    this.GAME_OBJECTS.forEach((item) => {
-      if (
-        item.x === player.x &&
-        item.y === player.y &&
-        ["*", ".", "%"].includes(item.char)
-      ) {
-        item.collect();
-      }
-    });
+    if (player && player.finished) {
+      this.last_player_x = player.x;
+      this.last_player_y = player.y;
+    }
+    if (player)
+      this.GAME_OBJECTS.forEach((item) => {
+        if (
+          item.x === player.x &&
+          item.y === player.y &&
+          ["*", ".", "%"].includes(item.char)
+        ) {
+          item.collect();
+        }
+      });
 
     this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
       return !item.finished;
