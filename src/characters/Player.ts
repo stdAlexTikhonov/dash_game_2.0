@@ -1,4 +1,5 @@
 import GameObject from "./GameObject";
+import EmptyBlock from "./EmptyBlock";
 import World from "./World";
 import merphy from "../assets/images/merphy.png";
 import { getPosition, getPlayerPosition } from "../utils/helpers";
@@ -92,6 +93,7 @@ export class Player extends GameObject {
 
     if (this.direction === "UP" && this.y > 0) {
       if (!Player.STOP_OBJECTS.includes(world[this.y - 1][this.x])) {
+        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y -= 1;
         this.animation = true;
       }
@@ -99,6 +101,7 @@ export class Player extends GameObject {
 
     if (this.direction === "DOWN" && this.y < maxY) {
       if (!Player.STOP_OBJECTS.includes(world[this.y + 1][this.x])) {
+        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y += 1;
         this.animation = true;
       }
@@ -106,6 +109,7 @@ export class Player extends GameObject {
 
     if (this.direction === "LEFT" && this.x > 0) {
       if (!Player.STOP_OBJECTS.includes(world[this.y][this.x - 1])) {
+        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.x -= 1;
         this.prev_horizontal_state = "LEFT";
         this.animation = true;
@@ -114,6 +118,7 @@ export class Player extends GameObject {
 
     if (this.direction === "RIGHT" && this.x < maxX) {
       if (!Player.STOP_OBJECTS.includes(world[this.y][this.x + 1])) {
+        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.prev_horizontal_state = "RIGHT";
         this.x += 1;
         this.animation = true;

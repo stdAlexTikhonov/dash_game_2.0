@@ -1,4 +1,5 @@
 import GameObject from "./GameObject";
+import EmptyBlock from "./EmptyBlock";
 import World from "./World";
 import { BLOCK_WIDTH } from "../utils/constansts";
 import fall from "../assets/audio/fall.mp3";
@@ -71,6 +72,7 @@ export default class FallingObject extends GameObject {
       this.right = false;
       this.left = false;
       this.ready_to_play = true;
+      World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
       this.y += 1;
     } else if (this.move_possible() && this.check_way_left()) {
       this.x -= 1;
