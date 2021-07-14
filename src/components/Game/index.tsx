@@ -43,9 +43,6 @@ export const Game = () => {
 
   useEffect(() => {
     World.viewport_w = multiplayer ? window.innerWidth / 2 : window.innerWidth;
-    World.width = multiplayer
-      ? window.innerWidth / 32 / 2
-      : window.innerWidth / 32;
     if (multiplayer) World.setMultiplayer();
     else World.resetMultiplayer();
   }, [multiplayer]);
