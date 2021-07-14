@@ -16,8 +16,8 @@ export const Dev = () => {
 
   return (
     <pre className={classes.pre}>
-      {World.world_map &&
-        World.world_map.map((item) => item.join(" ")).join("\n\r")}
+      {/* {World.world_map &&
+        World.world_map.map((item) => item.join(" ")).join("\n\r")} */}
     </pre>
   );
 };

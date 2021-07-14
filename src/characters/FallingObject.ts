@@ -16,8 +16,7 @@ export default class FallingObject extends GameObject {
     const obj = World.GAME_OBJECTS.find(
       (item) => item.y === this.y + 1 && item.x === this.x
     );
-
-    return this.y < World.world_map.length - 1 ? !obj : false;
+    return this.y < World.height - 1 ? !obj : false;
   }
 
   check_way_right() {
@@ -31,7 +30,7 @@ export default class FallingObject extends GameObject {
 
     if (top_obj && (top_obj.falling || top_obj.direction === "DOWN"))
       return false;
-    else return this.x < World.world_map[0].length - 1 ? !obj : false;
+    else return this.x < World.width - 1 ? !obj : false;
   }
 
   check_way_left() {
@@ -53,7 +52,7 @@ export default class FallingObject extends GameObject {
       (item) => item.y === this.y + 1 && item.x === this.x
     );
 
-    return this.y < World.world_map.length - 1
+    return this.y < World.height - 1
       ? ["+", "O", "*", "R", "U", "3", "4"].includes(obj.char)
       : false;
   }

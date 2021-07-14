@@ -190,7 +190,7 @@ class World {
 
   setMap(world_map: string[][]) {
     this.resetWorld();
-    this.width = this.viewport_w / World.BLOCK_WIDTH;
+    this.width = world_map[0].length;
     this.height = world_map.length;
     this.world_map = world_map;
 
