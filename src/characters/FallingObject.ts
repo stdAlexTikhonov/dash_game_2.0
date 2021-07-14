@@ -28,8 +28,7 @@ export default class FallingObject extends GameObject {
       (item) => item.x === this.x + 1 && item.y === this.y - 1
     );
 
-    if (top_obj && (top_obj.falling || top_obj.direction === "DOWN"))
-      return false;
+    if (top_obj && ["O", "*"].includes(top_obj.char)) return false;
     else return this.x < World.width - 1 ? !obj : false;
   }
 
@@ -42,8 +41,7 @@ export default class FallingObject extends GameObject {
       (item) => item.x === this.x - 1 && item.y === this.y - 1
     );
 
-    if (top_obj && (top_obj.falling || top_obj.direction === "DOWN"))
-      return false;
+    if (top_obj && ["O", "*"].includes(top_obj.char)) return false;
     else return this.x > 0 ? !obj : false;
   }
 
