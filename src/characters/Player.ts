@@ -1,4 +1,4 @@
-import GameObject from "./GameObject";
+import Bomb from "./Bomb";
 import EmptyBlock from "./EmptyBlock";
 import World from "./World";
 import merphy from "../assets/images/merphy.png";
@@ -7,7 +7,7 @@ import { store } from "../store/store";
 import { getUserInput } from "../store/playerSlice";
 
 const BLOCK_WIDTH = 32;
-export class Player extends GameObject {
+export class Player extends Bomb {
   dy: number;
   move: boolean = false;
   direction: string | null;
@@ -113,6 +113,7 @@ export class Player extends GameObject {
     //     this.dy = 1;
     //   }
     // }
+    super.updateState();
     const state = store.getState();
     const user_input = getUserInput(state);
 

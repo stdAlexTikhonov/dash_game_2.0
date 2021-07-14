@@ -2,7 +2,7 @@ import GameObject from "./GameObject";
 import Explosion from "./Explosion";
 import World from "./World";
 
-export default class OrangeDisk extends GameObject {
+export default class Bomb extends GameObject {
   detonated: boolean = false;
 
   detonate() {
