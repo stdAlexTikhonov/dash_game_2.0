@@ -34,7 +34,7 @@ class World {
   width: number = 0;
   height: number = 0;
   counter: number;
-  world_map: string[][] = [];
+
   player: Player | null = null;
   player2: Player | null = null;
   GAME_OBJECTS: Array<any> = [];
@@ -134,15 +134,11 @@ class World {
 
   resetMultiplayer() {
     this.multiplayer = false;
-    if (this.player2) this.world_map[this.player2!.y][this.player2!.x] = " ";
+    // if (this.player2) this.world_map[this.player2!.y][this.player2!.x] = " ";
     this.player2 = null;
   }
 
   updateMap() {
-    const copy = Array.from({ length: this.world_map.length }, () =>
-      Array.from({ length: this.world_map[0].length }, () => " ")
-    );
-
     const player = this.GAME_OBJECTS.find((item) => item.char === "A");
 
     this.GAME_OBJECTS.forEach((item) => {
@@ -155,26 +151,9 @@ class World {
       }
     });
 
-    // if (this.player2)
-    //   this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
-    //     const flag1 = item.x !== this.player2!.x;
-    //     const flag2 = item.y !== this.player2!.y;
-
-    //     return flag1 || flag2;
-    //   });
-
     this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
       return !item.finished;
     });
-
-    this.GAME_OBJECTS.forEach((F) => {
-      copy[F.y][F.x] = F.char;
-    });
-
-    copy[player.y][player.x] = "A";
-    if (this.player2) copy[this.player2!.y][this.player2!.x] = "H";
-
-    return copy;
   }
 
   tick() {
@@ -183,8 +162,7 @@ class World {
 
     this.GAME_OBJECTS.forEach((item) => item.updateState());
     this.GAME_OBJECTS.sort((a, b) => b.y - a.y);
-
-    this.world_map = this.updateMap();
+    this.updateMap();
     this.counter++;
   }
 
@@ -192,7 +170,6 @@ class World {
     this.resetWorld();
     this.width = world_map[0].length;
     this.height = world_map.length;
-    this.world_map = world_map;
 
     world_map.forEach((row, y) => {
       row.forEach((cell, x) => {
@@ -243,7 +220,6 @@ class World {
   }
 
   resetWorld() {
-    this.world_map = [];
     this.GAME_OBJECTS = [];
     this.player = null;
     this.player2 = null;
