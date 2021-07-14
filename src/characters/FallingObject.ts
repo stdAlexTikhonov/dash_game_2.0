@@ -75,6 +75,7 @@ export default class FallingObject extends GameObject {
       World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
       this.y += 1;
     } else if (this.move_possible() && this.check_way_left()) {
+      World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
       this.x -= 1;
       this.left = true;
       this.falling = false;
@@ -84,6 +85,7 @@ export default class FallingObject extends GameObject {
         this.fallen = true;
       }
     } else if (this.move_possible() && this.check_way_right()) {
+      World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
       this.x += 1;
       this.right = true;
       this.falling = false;
