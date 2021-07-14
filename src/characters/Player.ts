@@ -1,4 +1,5 @@
 import GameObject from "./GameObject";
+import EmptyBlock from "./EmptyBlock";
 import World from "./World";
 import merphy from "../assets/images/merphy.png";
 import { getPosition, getPlayerPosition } from "../utils/helpers";
@@ -60,6 +61,38 @@ export class Player extends GameObject {
     this.direction = dir;
   }
 
+  find_left() {
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y && item.x === this.x - 1
+    );
+
+    return obj ? obj.char : " ";
+  }
+
+  find_right() {
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y && item.x === this.x + 1
+    );
+
+    return obj ? obj.char : " ";
+  }
+
+  find_up() {
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y - 1 && item.x === this.x
+    );
+
+    return obj ? obj.char : " ";
+  }
+
+  find_down() {
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y + 1 && item.x === this.x
+    );
+
+    return obj ? obj.char : " ";
+  }
+
   updateState() {
     // const gamepods = window.navigator.getGamepads();
     // if (gamepods[0]) {
@@ -84,28 +117,31 @@ export class Player extends GameObject {
     const user_input = getUserInput(state);
 
     this.direction = user_input;
-    const { world_map: world } = World;
-    const maxY = world!.length - 1;
-    const maxX = world![0]!.length - 1;
+
+    const maxY = World.height - 1;
+    const maxX = World.width - 1;
 
     this.animation = false;
 
     if (this.direction === "UP" && this.y > 0) {
-      if (!Player.STOP_OBJECTS.includes(world[this.y - 1][this.x])) {
+      if (!Player.STOP_OBJECTS.includes(this.find_up())) {
+        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y -= 1;
         this.animation = true;
       }
     }
 
     if (this.direction === "DOWN" && this.y < maxY) {
-      if (!Player.STOP_OBJECTS.includes(world[this.y + 1][this.x])) {
+      if (!Player.STOP_OBJECTS.includes(this.find_down())) {
+        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y += 1;
         this.animation = true;
       }
     }
 
     if (this.direction === "LEFT" && this.x > 0) {
-      if (!Player.STOP_OBJECTS.includes(world[this.y][this.x - 1])) {
+      if (!Player.STOP_OBJECTS.includes(this.find_left())) {
+        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.x -= 1;
         this.prev_horizontal_state = "LEFT";
         this.animation = true;
@@ -113,7 +149,8 @@ export class Player extends GameObject {
     }
 
     if (this.direction === "RIGHT" && this.x < maxX) {
-      if (!Player.STOP_OBJECTS.includes(world[this.y][this.x + 1])) {
+      if (!Player.STOP_OBJECTS.includes(this.find_right())) {
+        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.prev_horizontal_state = "RIGHT";
         this.x += 1;
         this.animation = true;

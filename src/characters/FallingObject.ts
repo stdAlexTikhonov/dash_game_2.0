@@ -1,4 +1,5 @@
 import GameObject from "./GameObject";
+import EmptyBlock from "./EmptyBlock";
 import World from "./World";
 import { BLOCK_WIDTH } from "../utils/constansts";
 import fall from "../assets/audio/fall.mp3";
@@ -12,45 +13,47 @@ export default class FallingObject extends GameObject {
   fallen: boolean = false;
 
   check_way_down() {
-    const { world_map } = World;
-    return world_map[this.y + 1]
-      ? world_map[this.y + 1][this.x] === " "
-      : false;
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y + 1 && item.x === this.x
+    );
+    return this.y < World.height - 1 ? !obj : false;
   }
 
   check_way_right() {
-    const { world_map } = World;
-    return world_map[this.y - 1]
-      ? world_map[this.y][this.x + 1] === " " &&
-          world_map[this.y + 1][this.x + 1] === " " &&
-          !["O", "*"].includes(world_map[this.y - 1][this.x + 1])
-      : world_map[this.y][this.x + 1] === " " &&
-          world_map[this.y + 1][this.x + 1] === " ";
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x + 1 && [this.y, this.y + 1].includes(item.y)
+    );
+
+    const top_obj = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x + 1 && item.y === this.y - 1
+    );
+
+    if (top_obj && (top_obj.falling || top_obj.direction === "DOWN"))
+      return false;
+    else return this.x < World.width - 1 ? !obj : false;
   }
 
   check_way_left() {
-    const { world_map } = World;
-    return world_map[this.y - 1]
-      ? world_map[this.y][this.x - 1] === " " &&
-          world_map[this.y + 1][this.x - 1] === " " &&
-          !["O", "*"].includes(world_map[this.y - 1][this.x - 1]) &&
-          !(
-            ["O", "*"].includes(world_map[this.y][this.x - 2]) &&
-            ["+", "O", "*", "R", "U", "3", "4"].includes(
-              world_map[this.y + 1][this.x - 2]
-            )
-          )
-      : world_map[this.y][this.x - 1] === " " &&
-          world_map[this.y + 1][this.x - 1] === " ";
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x - 1 && [this.y, this.y + 1].includes(item.y)
+    );
+
+    const top_obj = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x - 1 && item.y === this.y - 1
+    );
+
+    if (top_obj && (top_obj.falling || top_obj.direction === "DOWN"))
+      return false;
+    else return this.x > 0 ? !obj : false;
   }
 
   move_possible() {
-    const { world_map } = World;
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y + 1 && item.x === this.x
+    );
 
-    return world_map[this.y + 1]
-      ? ["+", "O", "*", "R", "U", "3", "4"].includes(
-          world_map[this.y + 1][this.x]
-        )
+    return this.y < World.height - 1
+      ? ["+", "O", "*", "R", "U", "3", "4"].includes(obj.char)
       : false;
   }
 
@@ -68,8 +71,10 @@ export default class FallingObject extends GameObject {
       this.right = false;
       this.left = false;
       this.ready_to_play = true;
+      World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
       this.y += 1;
     } else if (this.move_possible() && this.check_way_left()) {
+      World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
       this.x -= 1;
       this.left = true;
       this.falling = false;
@@ -79,6 +84,7 @@ export default class FallingObject extends GameObject {
         this.fallen = true;
       }
     } else if (this.move_possible() && this.check_way_right()) {
+      World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
       this.x += 1;
       this.right = true;
       this.falling = false;
