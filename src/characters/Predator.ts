@@ -6,15 +6,31 @@ export default class Predator extends Bomb {
   dir_left: boolean = false;
   dir_up: boolean = false;
   dir_right: boolean = false;
+  left_player: boolean = false;
+  right_player: boolean = false;
+  up_player: boolean = false;
+  down_player: boolean = false;
   dir: string | null = "DOWN";
   prev_dir: string | null = null;
   animation: boolean = false;
 
   looking_around() {
-    this.dir_left = this.check_left();
-    this.dir_right = this.check_right();
-    this.dir_up = this.check_up();
-    this.dir_down = this.check_down();
+    const left_object = this.check_left();
+    const right_object = this.check_right();
+    const up_object = this.check_up();
+    const down_object = this.check_down();
+
+    this.left_player = left_object && left_object.char === "A";
+    this.right_player = right_object && right_object.char === "A";
+    this.up_player = up_object && up_object.char === "A";
+    this.down_player = down_object && down_object.char === "A";
+
+    this.dir_left = this.x > 0 ? !left_object || this.left_player : false;
+    this.dir_right =
+      this.x < World.width - 1 ? !right_object || this.right_player : false;
+    this.dir_up = this.y > 0 ? !up_object || this.up_player : false;
+    this.dir_down =
+      this.y < World.height - 1 ? !down_object || this.down_player : false;
   }
 
   check_dir() {
@@ -56,60 +72,27 @@ export default class Predator extends Bomb {
   }
 
   check_down() {
-    const down_object = World.GAME_OBJECTS.find(
+    return World.GAME_OBJECTS.find(
       (item) => item.y === this.y + 1 && item.x === this.x
     );
-
-    return this.y < World.height - 1 ? !down_object : false;
   }
 
   check_right() {
-    const right_object = World.GAME_OBJECTS.find(
+    return World.GAME_OBJECTS.find(
       (item) => item.y === this.y && item.x === this.x + 1
     );
-    return this.x < World.width - 1 ? !right_object : false;
   }
 
   check_left() {
-    const left_object = World.GAME_OBJECTS.find(
+    return World.GAME_OBJECTS.find(
       (item) => item.y === this.y && item.x === this.x - 1
     );
-    return this.x > 0 ? !left_object : false;
   }
 
   check_up() {
-    const up_object = World.GAME_OBJECTS.find(
+    return World.GAME_OBJECTS.find(
       (item) => item.y === this.y - 1 && item.x === this.x
     );
-    return this.y > 0 ? !up_object : false;
-  }
-
-  check_down_player() {
-    const down_object = World.GAME_OBJECTS.find(
-      (item) => item.y === this.y + 1 && item.x === this.x
-    );
-    if (down_object && down_object.char === "A") down_object.detonate();
-  }
-
-  check_right_player() {
-    const right_object = World.GAME_OBJECTS.find(
-      (item) => item.y === this.y && item.x === this.x + 1
-    );
-    if (right_object && right_object.char === "A") right_object.detonate();
-  }
-
-  check_left_player() {
-    const left_object = World.GAME_OBJECTS.find(
-      (item) => item.y === this.y && item.x === this.x - 1
-    );
-    if (left_object && left_object.char === "A") left_object.detonate();
-  }
-
-  check_up_player() {
-    const up_object = World.GAME_OBJECTS.find(
-      (item) => item.y === this.y - 1 && item.x === this.x
-    );
-    if (up_object && up_object.char === "A") up_object.detonate();
   }
 
   updateState() {
@@ -118,32 +101,36 @@ export default class Predator extends Bomb {
     if (this.dir === this.prev_dir) {
       switch (this.dir) {
         case "DOWN":
-          if (this.dir_down) {
+          if (this.dir_down && this.down_player) this.detonate();
+          else if (this.dir_down) {
             this.animation = true;
             this.y += 1;
           }
-          this.check_down_player();
+
           break;
         case "RIGHT":
-          if (this.dir_right) {
+          if (this.dir_right && this.right_player) this.detonate();
+          else if (this.dir_right) {
             this.animation = true;
             this.x += 1;
           }
-          this.check_right_player();
+
           break;
         case "UP":
-          if (this.dir_up) {
+          if (this.dir_up && this.up_player) this.detonate();
+          else if (this.dir_up) {
             this.animation = true;
             this.y -= 1;
           }
-          this.check_up_player();
+
           break;
         case "LEFT":
-          if (this.dir_left) {
+          if (this.dir_left && this.left_player) this.detonate();
+          else if (this.dir_left) {
             this.animation = true;
             this.x -= 1;
           }
-          this.check_left_player();
+
           break;
       }
     }
