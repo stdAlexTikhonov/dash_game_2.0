@@ -59,6 +59,7 @@ export default class Predator extends Bomb {
     const down_object = World.GAME_OBJECTS.find(
       (item) => item.y === this.y + 1 && item.x === this.x
     );
+
     return this.y < World.height - 1 ? !down_object : false;
   }
 
@@ -83,11 +84,37 @@ export default class Predator extends Bomb {
     return this.y > 0 ? !up_object : false;
   }
 
+  check_down_player() {
+    const down_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y + 1 && item.x === this.x
+    );
+    if (down_object && down_object.char === "A") down_object.detonate();
+  }
+
+  check_right_player() {
+    const right_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y && item.x === this.x + 1
+    );
+    if (right_object && right_object.char === "A") right_object.detonate();
+  }
+
+  check_left_player() {
+    const left_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y && item.x === this.x - 1
+    );
+    if (left_object && left_object.char === "A") left_object.detonate();
+  }
+
+  check_up_player() {
+    const up_object = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y - 1 && item.x === this.x
+    );
+    if (up_object && up_object.char === "A") up_object.detonate();
+  }
+
   updateState() {
     this.looking_around();
-
     this.check_dir();
-
     if (this.dir === this.prev_dir) {
       switch (this.dir) {
         case "DOWN":
@@ -95,24 +122,28 @@ export default class Predator extends Bomb {
             this.animation = true;
             this.y += 1;
           }
+          this.check_down_player();
           break;
         case "RIGHT":
           if (this.check_right()) {
             this.animation = true;
             this.x += 1;
           }
+          this.check_right_player();
           break;
         case "UP":
           if (this.check_up()) {
             this.animation = true;
             this.y -= 1;
           }
+          this.check_up_player();
           break;
         case "LEFT":
           if (this.check_left()) {
             this.animation = true;
             this.x -= 1;
           }
+          this.check_left_player();
           break;
       }
     }
