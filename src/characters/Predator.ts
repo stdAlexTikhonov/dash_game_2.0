@@ -118,28 +118,28 @@ export default class Predator extends Bomb {
     if (this.dir === this.prev_dir) {
       switch (this.dir) {
         case "DOWN":
-          if (this.check_down()) {
+          if (this.dir_down) {
             this.animation = true;
             this.y += 1;
           }
           this.check_down_player();
           break;
         case "RIGHT":
-          if (this.check_right()) {
+          if (this.dir_right) {
             this.animation = true;
             this.x += 1;
           }
           this.check_right_player();
           break;
         case "UP":
-          if (this.check_up()) {
+          if (this.dir_up) {
             this.animation = true;
             this.y -= 1;
           }
           this.check_up_player();
           break;
         case "LEFT":
-          if (this.check_left()) {
+          if (this.dir_left) {
             this.animation = true;
             this.x -= 1;
           }
