@@ -12,7 +12,11 @@ export default class Bomb extends GameObject {
   detonate_around() {
     const exclude: { y: number; x: number }[] = [];
     World.GAME_OBJECTS.forEach((item) => {
-      if (item.x === this.x - 1 && item.y === this.y) {
+      if (item.x === this.x && item.y === this.y) {
+        if (item.detonate) item.detonate();
+        else if (item.char !== "#") item.finished = true;
+        else exclude.push({ y: item.y, x: this.x - 1 });
+      } else if (item.x === this.x - 1 && item.y === this.y) {
         if (item.detonate) item.detonate();
         else if (item.char !== "#") item.finished = true;
         else exclude.push({ y: item.y, x: this.x - 1 });
