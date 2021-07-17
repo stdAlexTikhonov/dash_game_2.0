@@ -70,7 +70,7 @@ export class Player extends Bomb {
       (item) => item.y === this.y && item.x === this.x - 1
     );
 
-    return obj ? obj.char : " ";
+    return obj;
   }
 
   find_right() {
@@ -78,7 +78,7 @@ export class Player extends Bomb {
       (item) => item.y === this.y && item.x === this.x + 1
     );
 
-    return obj ? obj.char : " ";
+    return obj;
   }
 
   find_up() {
@@ -86,7 +86,7 @@ export class Player extends Bomb {
       (item) => item.y === this.y - 1 && item.x === this.x
     );
 
-    return obj ? obj.char : " ";
+    return obj;
   }
 
   find_down() {
@@ -94,14 +94,25 @@ export class Player extends Bomb {
       (item) => item.y === this.y + 1 && item.x === this.x
     );
 
-    return obj ? obj.char : " ";
+    return obj;
+  }
+
+  move_possible(char: string) {
+    return !Player.STOP_OBJECTS.includes(char);
   }
 
   look_around() {
-    this.dir_up = !Player.STOP_OBJECTS.includes(this.find_up());
-    this.dir_down = !Player.STOP_OBJECTS.includes(this.find_down());
-    this.dir_left = !Player.STOP_OBJECTS.includes(this.find_left());
-    this.dir_right = !Player.STOP_OBJECTS.includes(this.find_right());
+    const up_object = this.find_up();
+    const down_object = this.find_down();
+    const left_object = this.find_left();
+    const right_object = this.find_right();
+
+    this.dir_up = up_object ? this.move_possible(up_object.char) : true;
+    this.dir_down = down_object ? this.move_possible(down_object.char) : true;
+    this.dir_left = left_object ? this.move_possible(left_object.char) : true;
+    this.dir_right = right_object
+      ? this.move_possible(right_object.char)
+      : true;
   }
 
   updateState() {
