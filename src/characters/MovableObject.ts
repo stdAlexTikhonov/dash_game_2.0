@@ -19,6 +19,11 @@ export default class MovableObject extends GameObject {
   movable_left: boolean = false;
   movable_right: boolean = false;
 
+  move_right: boolean = false;
+  move_left: boolean = false;
+  move_up: boolean = false;
+  move_down: boolean = false;
+
   vertical: boolean = false;
   static move_sound: HTMLMediaElement = new Audio(move);
 
@@ -60,6 +65,11 @@ export default class MovableObject extends GameObject {
     this.movable_down = this.empty_down && this.player_up;
     this.movable_left = this.empty_left && this.player_right;
     this.movable_right = this.empty_right && this.player_left;
+
+    this.move_right = this.player_left && left_object.movable_right;
+    this.move_left = this.player_right && right_object.movable_left;
+    this.move_up = this.player_down && down_object.movable_up;
+    this.move_down = this.player_up && up_object.movable_down;
   }
 
   check_up() {
@@ -89,10 +99,11 @@ export default class MovableObject extends GameObject {
   updateState() {
     super.updateState();
     this.look_around();
-    if (this.movable_right) this.x += 1;
-    if (this.movable_left) this.x -= 1;
-    if (this.movable_up) this.y -= 1;
-    if (this.movable_down) this.y += 1;
+
+    if (this.move_right) this.x += 1;
+    if (this.move_left) this.x -= 1;
+    if (this.move_up) this.y -= 1;
+    if (this.move_down) this.y += 1;
   }
 
   draw(
@@ -105,19 +116,19 @@ export default class MovableObject extends GameObject {
     state: number = 0,
     dy: number = 0
   ) {
-    this.pos_y_up = this.movable_up
+    this.pos_y_up = this.move_up
       ? -((BLOCK_WIDTH / 6) * value - BLOCK_WIDTH)
       : 0;
 
-    this.pos_y_down = this.movable_down
+    this.pos_y_down = this.move_down
       ? (BLOCK_WIDTH / 6) * value - BLOCK_WIDTH
       : 0;
 
-    this.pos_x_left = this.movable_left
+    this.pos_x_left = this.move_left
       ? -((BLOCK_WIDTH / 6) * value - BLOCK_WIDTH)
       : 0;
 
-    this.pos_x_right = this.movable_right
+    this.pos_x_right = this.move_right
       ? (BLOCK_WIDTH / 6) * value - BLOCK_WIDTH
       : 0;
 

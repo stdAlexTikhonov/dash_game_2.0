@@ -19,6 +19,15 @@ export class Player extends Bomb {
   dir_down: boolean = false;
   dir_right: boolean = false;
   dir_left: boolean = false;
+  movable_up: boolean = false;
+  movable_down: boolean = false;
+  movable_right: boolean = false;
+  movable_left: boolean = false;
+
+  move_right: boolean = false;
+  move_left: boolean = false;
+  move_up: boolean = false;
+  move_down: boolean = false;
 
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
@@ -113,6 +122,11 @@ export class Player extends Bomb {
     this.dir_right = right_object
       ? this.move_possible(right_object.char)
       : true;
+
+    this.movable_down = down_object && down_object.movable_down;
+    this.movable_left = left_object && left_object.movable_left;
+    this.movable_right = right_object && right_object.movable_right;
+    this.movable_up = up_object && up_object.movable_up;
   }
 
   updateState() {
