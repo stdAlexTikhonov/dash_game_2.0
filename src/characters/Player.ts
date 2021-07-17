@@ -15,6 +15,10 @@ export class Player extends Bomb {
   animation: boolean = false;
   img: HTMLImageElement = new Image();
   input_timeout: any = 0;
+  dir_up: boolean = false;
+  dir_down: boolean = false;
+  dir_right: boolean = false;
+  dir_left: boolean = false;
 
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
@@ -93,6 +97,13 @@ export class Player extends Bomb {
     return obj ? obj.char : " ";
   }
 
+  look_around() {
+    this.dir_up = !Player.STOP_OBJECTS.includes(this.find_up());
+    this.dir_down = !Player.STOP_OBJECTS.includes(this.find_down());
+    this.dir_left = !Player.STOP_OBJECTS.includes(this.find_left());
+    this.dir_right = !Player.STOP_OBJECTS.includes(this.find_right());
+  }
+
   updateState() {
     // const gamepods = window.navigator.getGamepads();
     // if (gamepods[0]) {
@@ -114,6 +125,7 @@ export class Player extends Bomb {
     //   }
     // }
     super.updateState();
+    this.look_around();
     const state = store.getState();
     const user_input = getUserInput(state);
 
@@ -125,7 +137,7 @@ export class Player extends Bomb {
     this.animation = false;
 
     if (this.direction === "UP" && this.y > 0) {
-      if (!Player.STOP_OBJECTS.includes(this.find_up())) {
+      if (this.dir_up) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y -= 1;
         this.animation = true;
@@ -133,7 +145,7 @@ export class Player extends Bomb {
     }
 
     if (this.direction === "DOWN" && this.y < maxY) {
-      if (!Player.STOP_OBJECTS.includes(this.find_down())) {
+      if (this.dir_down) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y += 1;
         this.animation = true;
@@ -141,7 +153,7 @@ export class Player extends Bomb {
     }
 
     if (this.direction === "LEFT" && this.x > 0) {
-      if (!Player.STOP_OBJECTS.includes(this.find_left())) {
+      if (this.dir_left) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.x -= 1;
         this.prev_horizontal_state = "LEFT";
@@ -150,7 +162,7 @@ export class Player extends Bomb {
     }
 
     if (this.direction === "RIGHT" && this.x < maxX) {
-      if (!Player.STOP_OBJECTS.includes(this.find_right())) {
+      if (this.dir_right) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.prev_horizontal_state = "RIGHT";
         this.x += 1;
