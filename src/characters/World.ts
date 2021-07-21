@@ -166,11 +166,10 @@ class World {
   }
 
   tick() {
-    this.player!.updateState();
     if (this.player2) this.player2.updateState();
-
-    this.GAME_OBJECTS.forEach((item) => item.updateState());
     this.GAME_OBJECTS.sort((a, b) => b.y - a.y);
+    this.GAME_OBJECTS.forEach((item) => item.updateState());
+
     this.updateMap();
     this.counter++;
   }
