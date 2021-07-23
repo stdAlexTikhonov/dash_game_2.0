@@ -99,11 +99,6 @@ export default class MovableObject extends GameObject {
   updateState() {
     super.updateState();
     this.look_around();
-
-    if (this.move_right) this.x += 1;
-    if (this.move_left) this.x -= 1;
-    if (this.move_up) this.y -= 1;
-    if (this.move_down) this.y += 1;
   }
 
   draw(
