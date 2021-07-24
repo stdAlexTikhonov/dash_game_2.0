@@ -65,11 +65,6 @@ export default class MovableObject extends GameObject {
     this.movable_down = this.empty_down && this.player_up;
     this.movable_left = this.empty_left && this.player_right;
     this.movable_right = this.empty_right && this.player_left;
-
-    this.move_right = this.player_left && left_object.movable_right;
-    this.move_left = this.player_right && right_object.movable_left;
-    this.move_up = this.player_down && down_object.movable_up;
-    this.move_down = this.player_up && up_object.movable_down;
   }
 
   check_up() {

@@ -5,6 +5,7 @@ import merphy from "../assets/images/merphy.png";
 import { getPosition, getPlayerPosition } from "../utils/helpers";
 import { store } from "../store/store";
 import { getUserInput } from "../store/playerSlice";
+import MovableObject from "./MovableObject";
 
 const BLOCK_WIDTH = 32;
 export class Player extends Bomb {
@@ -128,10 +129,24 @@ export class Player extends Bomb {
     this.movable_right = right_object && right_object.movable_right;
     this.movable_up = up_object && up_object.movable_up;
 
-    if (this.movable_down) down_object.y += 1;
-    if (this.movable_left) left_object.x -= 1;
-    if (this.movable_right) right_object.x += 1;
-    if (this.movable_up) up_object.y -= 1;
+    return {
+      up_object,
+      down_object,
+      left_object,
+      right_object,
+    };
+  }
+
+  move_action(
+    up_object: MovableObject,
+    down_object: MovableObject,
+    left_object: MovableObject,
+    right_object: MovableObject
+  ) {
+    if (this.movable_down && this.move) down_object.y += 1;
+    if (this.movable_left && this.move) left_object.x -= 1;
+    if (this.movable_right && this.move) right_object.x += 1;
+    if (this.movable_up && this.move) up_object.y -= 1;
   }
 
   updateState() {
@@ -155,23 +170,30 @@ export class Player extends Bomb {
     //   }
     // }
     super.updateState();
-    this.look_around();
+    const { up_object, down_object, left_object, right_object } =
+      this.look_around();
     const state = store.getState();
     const user_input = getUserInput(state);
 
-    this.move = this.direction === user_input;
+    this.move = false;
     this.direction = user_input;
 
     const maxY = World.height - 1;
     const maxX = World.width - 1;
 
     this.animation = false;
+    if (up_object) up_object.move_up = false;
+    if (down_object) down_object.move_down = false;
+    if (right_object) right_object.move_right = false;
+    if (left_object) left_object.move_left = false;
 
     if (this.direction === "UP" && this.y > 0) {
       if (this.dir_up || this.movable_up) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y -= 1;
         this.animation = true;
+        this.move = this.movable_up;
+        if (up_object) up_object.move_up = true;
       }
     }
 
@@ -180,6 +202,8 @@ export class Player extends Bomb {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y += 1;
         this.animation = true;
+        this.move = this.movable_down;
+        if (down_object) down_object.move_down = true;
       }
     }
 
@@ -189,6 +213,8 @@ export class Player extends Bomb {
         this.x -= 1;
         this.prev_horizontal_state = "LEFT";
         this.animation = true;
+        this.move = this.movable_left;
+        if (left_object) left_object.move_left = true;
       }
     }
 
@@ -198,8 +224,12 @@ export class Player extends Bomb {
         this.prev_horizontal_state = "RIGHT";
         this.x += 1;
         this.animation = true;
+        this.move = this.movable_right;
+        if (right_object) right_object.move_right = true;
       }
     }
+
+    this.move_action(up_object, down_object, left_object, right_object);
   }
 
   draw(
