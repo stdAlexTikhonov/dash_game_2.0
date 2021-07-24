@@ -30,6 +30,8 @@ export class Player extends Bomb {
   move_up: boolean = false;
   move_down: boolean = false;
 
+  moved: boolean = false;
+
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
     this.dy = 1;
@@ -170,12 +172,12 @@ export class Player extends Bomb {
     //   }
     // }
     super.updateState();
+
     const { up_object, down_object, left_object, right_object } =
       this.look_around();
     const state = store.getState();
     const user_input = getUserInput(state);
 
-    this.move = false;
     this.direction = user_input;
 
     const maxY = World.height - 1;
@@ -188,7 +190,9 @@ export class Player extends Bomb {
     if (left_object) left_object.move_left = false;
 
     if (this.direction === "UP" && this.y > 0) {
-      if (this.dir_up || this.movable_up) {
+      if (this.move) {
+        this.move = false;
+      } else if (this.dir_up || this.movable_up) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y -= 1;
         this.animation = true;
@@ -198,7 +202,9 @@ export class Player extends Bomb {
     }
 
     if (this.direction === "DOWN" && this.y < maxY) {
-      if (this.dir_down || this.movable_down) {
+      if (this.move) {
+        this.move = false;
+      } else if (this.dir_down || this.movable_down) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y += 1;
         this.animation = true;
@@ -208,7 +214,9 @@ export class Player extends Bomb {
     }
 
     if (this.direction === "LEFT" && this.x > 0) {
-      if (this.dir_left || this.movable_left) {
+      if (this.move) {
+        this.move = false;
+      } else if (this.dir_left || this.movable_left) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.x -= 1;
         this.prev_horizontal_state = "LEFT";
@@ -219,7 +227,9 @@ export class Player extends Bomb {
     }
 
     if (this.direction === "RIGHT" && this.x < maxX) {
-      if (this.dir_right || this.movable_right) {
+      if (this.move) {
+        this.move = false;
+      } else if (this.dir_right || this.movable_right) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.prev_horizontal_state = "RIGHT";
         this.x += 1;
@@ -229,7 +239,8 @@ export class Player extends Bomb {
       }
     }
 
-    this.move_action(up_object, down_object, left_object, right_object);
+    if (this.direction !== null)
+      this.move_action(up_object, down_object, left_object, right_object);
   }
 
   draw(
