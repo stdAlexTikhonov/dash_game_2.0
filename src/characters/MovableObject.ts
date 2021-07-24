@@ -94,6 +94,8 @@ export default class MovableObject extends GameObject {
   updateState() {
     super.updateState();
     this.look_around();
+    if (this.move_down || this.move_up || this.move_left || this.move_right)
+      this.play_sound();
   }
 
   draw(
