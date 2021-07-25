@@ -2,7 +2,6 @@ import FallingObject from "./FallingObject";
 import World from "./World";
 import move from "../assets/audio/move.mp3";
 import { BLOCK_WIDTH } from "../utils/constansts";
-import { Player } from "./Player";
 
 export default class MovableFallingObject extends FallingObject {
   movable_left: boolean = false;
