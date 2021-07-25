@@ -24,11 +24,7 @@ export class Player extends Bomb {
   movable_down: boolean = false;
   movable_right: boolean = false;
   movable_left: boolean = false;
-
-  move_right: boolean = false;
-  move_left: boolean = false;
-  move_up: boolean = false;
-  move_down: boolean = false;
+  move_state: boolean = false;
 
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
@@ -187,7 +183,10 @@ export class Player extends Bomb {
     if (right_object) right_object.move_right = false;
     if (left_object) left_object.move_left = false;
 
-    if (this.direction === null) this.dy = 1;
+    if (this.direction === null) {
+      this.dy = 1;
+      this.move_state = false;
+    }
 
     if (this.direction === "UP" && this.y > 0) {
       if (this.move) {
@@ -199,6 +198,8 @@ export class Player extends Bomb {
         this.move = this.movable_up;
         if (up_object) up_object.move_up = true;
         this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
+        this.move_state = this.movable_up;
+        this.dy = this.move_state ? 5 : this.dy;
       }
     }
 
@@ -212,6 +213,8 @@ export class Player extends Bomb {
         this.move = this.movable_down;
         if (down_object) down_object.move_down = true;
         this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
+        this.move_state = this.movable_down;
+        this.dy = this.move_state ? 3 : this.dy;
       }
     }
 
@@ -225,7 +228,8 @@ export class Player extends Bomb {
         this.animation = true;
         this.move = this.movable_left;
         if (left_object) left_object.move_left = true;
-        this.dy = 0;
+        this.move_state = this.movable_left;
+        this.dy = this.move_state ? 5 : 0;
       }
     }
 
@@ -239,7 +243,8 @@ export class Player extends Bomb {
         this.animation = true;
         this.move = this.movable_right;
         if (right_object) right_object.move_right = true;
-        this.dy = 2;
+        this.move_state = this.movable_right;
+        this.dy = this.move_state ? 3 : 2;
       }
     }
 
@@ -258,7 +263,7 @@ export class Player extends Bomb {
     const state3 = World.counter % 3;
     context!.drawImage(
       this.img,
-      state3 * BLOCK_WIDTH,
+      this.move_state ? 0 : state3 * BLOCK_WIDTH,
       this.dy * BLOCK_WIDTH,
       BLOCK_WIDTH,
       BLOCK_WIDTH,
