@@ -30,8 +30,6 @@ export class Player extends Bomb {
   move_up: boolean = false;
   move_down: boolean = false;
 
-  moved: boolean = false;
-
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
     this.dy = 1;
@@ -189,6 +187,8 @@ export class Player extends Bomb {
     if (right_object) right_object.move_right = false;
     if (left_object) left_object.move_left = false;
 
+    if (this.direction === null) this.dy = 1;
+
     if (this.direction === "UP" && this.y > 0) {
       if (this.move) {
         this.move = false;
@@ -198,6 +198,7 @@ export class Player extends Bomb {
         this.animation = true;
         this.move = this.movable_up;
         if (up_object) up_object.move_up = true;
+        this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
       }
     }
 
@@ -210,6 +211,7 @@ export class Player extends Bomb {
         this.animation = true;
         this.move = this.movable_down;
         if (down_object) down_object.move_down = true;
+        this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
       }
     }
 
@@ -223,6 +225,7 @@ export class Player extends Bomb {
         this.animation = true;
         this.move = this.movable_left;
         if (left_object) left_object.move_left = true;
+        this.dy = 0;
       }
     }
 
@@ -236,6 +239,7 @@ export class Player extends Bomb {
         this.animation = true;
         this.move = this.movable_right;
         if (right_object) right_object.move_right = true;
+        this.dy = 2;
       }
     }
 
@@ -300,9 +304,5 @@ export class Player extends Bomb {
       BLOCK_WIDTH,
       BLOCK_WIDTH
     );
-  }
-
-  setState(dy: number) {
-    this.dy = dy;
   }
 }
