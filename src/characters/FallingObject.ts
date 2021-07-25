@@ -8,6 +8,8 @@ export default class FallingObject extends GameObject {
   falling: boolean = false;
   left: boolean = false;
   right: boolean = false;
+  move_left: boolean = false;
+  move_right: boolean = false;
   static audio: HTMLMediaElement = new Audio(fall);
   ready_to_play: boolean = false;
   fallen: boolean = false;
@@ -66,6 +68,8 @@ export default class FallingObject extends GameObject {
   updateState() {
     if (this.check_way_down()) {
       this.falling = true;
+      this.move_left = false;
+      this.move_right = false;
       this.right = false;
       this.left = false;
       this.ready_to_play = true;
