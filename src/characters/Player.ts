@@ -5,6 +5,7 @@ import merphy from "../assets/images/merphy.png";
 import { getPosition, getPlayerPosition } from "../utils/helpers";
 import { store } from "../store/store";
 import { getUserInput } from "../store/playerSlice";
+import MovableObject from "./MovableObject";
 
 const BLOCK_WIDTH = 32;
 export class Player extends Bomb {
@@ -15,6 +16,15 @@ export class Player extends Bomb {
   animation: boolean = false;
   img: HTMLImageElement = new Image();
   input_timeout: any = 0;
+  dir_up: boolean = false;
+  dir_down: boolean = false;
+  dir_right: boolean = false;
+  dir_left: boolean = false;
+  movable_up: boolean = false;
+  movable_down: boolean = false;
+  movable_right: boolean = false;
+  movable_left: boolean = false;
+  move_state: boolean = false;
 
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
@@ -66,7 +76,7 @@ export class Player extends Bomb {
       (item) => item.y === this.y && item.x === this.x - 1
     );
 
-    return obj ? obj.char : " ";
+    return obj;
   }
 
   find_right() {
@@ -74,7 +84,7 @@ export class Player extends Bomb {
       (item) => item.y === this.y && item.x === this.x + 1
     );
 
-    return obj ? obj.char : " ";
+    return obj;
   }
 
   find_up() {
@@ -82,7 +92,7 @@ export class Player extends Bomb {
       (item) => item.y === this.y - 1 && item.x === this.x
     );
 
-    return obj ? obj.char : " ";
+    return obj;
   }
 
   find_down() {
@@ -90,7 +100,49 @@ export class Player extends Bomb {
       (item) => item.y === this.y + 1 && item.x === this.x
     );
 
-    return obj ? obj.char : " ";
+    return obj;
+  }
+
+  move_possible(char: string) {
+    return !Player.STOP_OBJECTS.includes(char);
+  }
+
+  look_around() {
+    const up_object = this.find_up();
+    const down_object = this.find_down();
+    const left_object = this.find_left();
+    const right_object = this.find_right();
+
+    this.dir_up = up_object ? this.move_possible(up_object.char) : true;
+    this.dir_down = down_object ? this.move_possible(down_object.char) : true;
+    this.dir_left = left_object ? this.move_possible(left_object.char) : true;
+    this.dir_right = right_object
+      ? this.move_possible(right_object.char)
+      : true;
+
+    this.movable_down = down_object && down_object.movable_down;
+    this.movable_left = left_object && left_object.movable_left;
+    this.movable_right = right_object && right_object.movable_right;
+    this.movable_up = up_object && up_object.movable_up;
+
+    return {
+      up_object,
+      down_object,
+      left_object,
+      right_object,
+    };
+  }
+
+  move_action(
+    up_object: MovableObject,
+    down_object: MovableObject,
+    left_object: MovableObject,
+    right_object: MovableObject
+  ) {
+    if (this.movable_down && this.move) down_object.y += 1;
+    if (this.movable_left && this.move) left_object.x -= 1;
+    if (this.movable_right && this.move) right_object.x += 1;
+    if (this.movable_up && this.move) up_object.y -= 1;
   }
 
   updateState() {
@@ -114,6 +166,9 @@ export class Player extends Bomb {
     //   }
     // }
     super.updateState();
+
+    const { up_object, down_object, left_object, right_object } =
+      this.look_around();
     const state = store.getState();
     const user_input = getUserInput(state);
 
@@ -123,40 +178,78 @@ export class Player extends Bomb {
     const maxX = World.width - 1;
 
     this.animation = false;
+    if (up_object) up_object.move_up = false;
+    if (down_object) down_object.move_down = false;
+    if (right_object) right_object.move_right = false;
+    if (left_object) left_object.move_left = false;
+
+    if (this.direction === null) {
+      this.dy = 1;
+      this.move_state = false;
+    }
 
     if (this.direction === "UP" && this.y > 0) {
-      if (!Player.STOP_OBJECTS.includes(this.find_up())) {
+      if (this.move) {
+        this.move = false;
+      } else if (this.dir_up || this.movable_up) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y -= 1;
         this.animation = true;
+        this.move = this.movable_up;
+        if (up_object) up_object.move_up = true;
+        this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
+        this.move_state = this.movable_up;
+        this.dy = this.move_state ? 5 : this.dy;
       }
     }
 
     if (this.direction === "DOWN" && this.y < maxY) {
-      if (!Player.STOP_OBJECTS.includes(this.find_down())) {
+      if (this.move) {
+        this.move = false;
+      } else if (this.dir_down || this.movable_down) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.y += 1;
         this.animation = true;
+        this.move = this.movable_down;
+        if (down_object) down_object.move_down = true;
+        this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
+        this.move_state = this.movable_down;
+        this.dy = this.move_state ? 3 : this.dy;
       }
     }
 
     if (this.direction === "LEFT" && this.x > 0) {
-      if (!Player.STOP_OBJECTS.includes(this.find_left())) {
+      if (this.move) {
+        this.move = false;
+      } else if (this.dir_left || this.movable_left) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.x -= 1;
         this.prev_horizontal_state = "LEFT";
         this.animation = true;
+        this.move = this.movable_left;
+        if (left_object) left_object.move_left = true;
+        this.move_state = this.movable_left;
+        this.dy = this.move_state ? 5 : 0;
       }
     }
 
     if (this.direction === "RIGHT" && this.x < maxX) {
-      if (!Player.STOP_OBJECTS.includes(this.find_right())) {
+      if (this.move) {
+        this.move = false;
+      } else if (this.dir_right || this.movable_right) {
         World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
         this.prev_horizontal_state = "RIGHT";
         this.x += 1;
         this.animation = true;
+        this.move = this.movable_right;
+        if (right_object) right_object.move_right = true;
+        this.move_state = this.movable_right;
+        this.dy = this.move_state ? 3 : 2;
       }
     }
+
+    if (this.direction !== null)
+      this.move_action(up_object, down_object, left_object, right_object);
   }
 
   draw(
@@ -170,7 +263,7 @@ export class Player extends Bomb {
     const state3 = World.counter % 3;
     context!.drawImage(
       this.img,
-      state3 * BLOCK_WIDTH,
+      this.move_state ? 0 : state3 * BLOCK_WIDTH,
       this.dy * BLOCK_WIDTH,
       BLOCK_WIDTH,
       BLOCK_WIDTH,
@@ -216,9 +309,5 @@ export class Player extends Bomb {
       BLOCK_WIDTH,
       BLOCK_WIDTH
     );
-  }
-
-  setState(dy: number) {
-    this.dy = dy;
   }
 }
