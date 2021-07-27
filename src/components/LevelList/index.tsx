@@ -26,6 +26,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexWrap: "wrap",
       // background: "white",
+      overflow: "auto",
+      paddingBottom: "35px",
       width: "100%",
       alignItems: "flex-start",
       alignContent: "flex-start",
