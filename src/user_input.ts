@@ -1,6 +1,11 @@
 import World from "./characters/World";
 import { store } from "./store/store";
-import { setUserInput } from "./store/playerSlice";
+import {
+  setUserInput,
+  setUserAction,
+  resetUserAction,
+  getUserAction,
+} from "./store/playerSlice";
 
 document.onkeydown = (e: { code: string }) => {
   const player = World.GAME_OBJECTS.find((item) => item.char === "A");
@@ -21,6 +26,9 @@ document.onkeydown = (e: { code: string }) => {
       case "ArrowLeft":
         clearTimeout(player.input_timeout);
         store.dispatch(setUserInput("LEFT"));
+        break;
+      case "Space":
+        if (!getUserAction(store.getState())) store.dispatch(setUserAction());
         break;
       case "KeyW":
         clearTimeout(World.player2!.input_timeout);
@@ -49,6 +57,9 @@ document.onkeyup = (e: { code: string }) => {
       case "KeyS":
       case "KeyA":
       case "KeyD":
+        break;
+      case "Space":
+        store.dispatch(resetUserAction());
         break;
       default:
         player.input_timeout = setTimeout(() => {

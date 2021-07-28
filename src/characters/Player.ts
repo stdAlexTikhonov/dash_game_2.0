@@ -1,10 +1,11 @@
 import Bomb from "./Bomb";
 import EmptyBlock from "./EmptyBlock";
+import RedDisc from "./RedDisk";
 import World from "./World";
 import merphy from "../assets/images/merphy.png";
 import { getPosition, getPlayerPosition } from "../utils/helpers";
 import { store } from "../store/store";
-import { getUserInput } from "../store/playerSlice";
+import { getUserInput, getUserAction } from "../store/playerSlice";
 import MovableObject from "./MovableObject";
 
 const BLOCK_WIDTH = 32;
@@ -25,6 +26,8 @@ export class Player extends Bomb {
   movable_right: boolean = false;
   movable_left: boolean = false;
   move_state: boolean = false;
+  bombs: number = 0;
+  action: boolean = false;
 
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
@@ -145,6 +148,13 @@ export class Player extends Bomb {
     if (this.movable_up && this.move) up_object.y -= 1;
   }
 
+  put_bomb() {
+    if (this.bombs > 0) {
+      World.GAME_OBJECTS.push(new RedDisc(this.y, this.x, true));
+      this.bombs--;
+    }
+  }
+
   updateState() {
     // const gamepods = window.navigator.getGamepads();
     // if (gamepods[0]) {
@@ -173,6 +183,7 @@ export class Player extends Bomb {
     const user_input = getUserInput(state);
 
     this.direction = user_input;
+    this.action = getUserAction(state);
 
     const maxY = World.height - 1;
     const maxX = World.width - 1;
@@ -250,6 +261,8 @@ export class Player extends Bomb {
 
     if (this.direction !== null)
       this.move_action(up_object, down_object, left_object, right_object);
+
+    if (this.action) this.put_bomb();
   }
 
   draw(
