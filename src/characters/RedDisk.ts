@@ -1,11 +1,15 @@
-import GameObject from "./GameObject";
+import Bomb from "./Bomb";
 import red_disk from "../assets/images/red_disk.png";
-export default class RedDisc extends GameObject {
+export default class RedDisc extends Bomb {
   img: HTMLImageElement = new Image();
+  activated: boolean = false;
 
-  constructor(y: number, x: number) {
+  count = 10;
+
+  constructor(y: number, x: number, activated: boolean = false) {
     super(y, x, "%");
     this.img.src = red_disk;
+    this.activated = activated;
   }
 
   collect() {
@@ -14,5 +18,7 @@ export default class RedDisc extends GameObject {
 
   updateState() {
     super.updateState();
+    if (this.activated) this.count--;
+    if (this.count <= 0) this.detonate();
   }
 }
