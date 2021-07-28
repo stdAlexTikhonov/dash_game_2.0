@@ -7,6 +7,7 @@ const BLOCK_WIDTH = 32;
 
 export default class Bug extends GameObject {
   img: HTMLImageElement = new Image();
+  activated: boolean = false;
 
   constructor(y: number, x: number) {
     super(y, x, "C");
@@ -33,7 +34,7 @@ export default class Bug extends GameObject {
     context!.drawImage(
       this.img,
       state8 * BLOCK_WIDTH,
-      0,
+      this.activated ? BLOCK_WIDTH : 0,
       BLOCK_WIDTH,
       BLOCK_WIDTH,
       pos_x,
@@ -41,5 +42,60 @@ export default class Bug extends GameObject {
       BLOCK_WIDTH,
       BLOCK_WIDTH
     );
+  }
+
+  activate() {
+    this.activated = true;
+    World.GAME_OBJECTS.forEach((item) =>
+      item.char === "Y" ? item.detonate() : null
+    );
+  }
+
+  find_left() {
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y && item.x === this.x - 1
+    );
+
+    return obj;
+  }
+
+  find_right() {
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y && item.x === this.x + 1
+    );
+
+    return obj;
+  }
+
+  find_up() {
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y - 1 && item.x === this.x
+    );
+    return obj;
+  }
+
+  find_down() {
+    const obj = World.GAME_OBJECTS.find(
+      (item) => item.y === this.y + 1 && item.x === this.x
+    );
+    return obj;
+  }
+
+  look_around() {
+    const up = this.find_up();
+    const down = this.find_down();
+    const left = this.find_left();
+    const right = this.find_right();
+
+    if (up && up.char === "A" && up.direction === "DOWN") this.activate();
+    if (down && down.char === "A" && down.direction === "UP") this.activate();
+    if (left && left.char === "A" && left.direction === "RIGHT")
+      this.activate();
+    if (right && right.char === "A" && right.direction === "LEFT")
+      this.activate();
+  }
+
+  updateState() {
+    this.look_around();
   }
 }
