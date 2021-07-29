@@ -1,6 +1,7 @@
 import Bomb from "./Bomb";
 import red_disk from "../assets/images/red_disk.png";
 import { BLOCK_WIDTH } from "../utils/constansts";
+import World from "./World";
 export default class RedDisc extends Bomb {
   img: HTMLImageElement = new Image();
   activated: boolean = false;
@@ -13,12 +14,20 @@ export default class RedDisc extends Bomb {
     this.activated = activated;
   }
 
-  collect() {
-    this.finished = true;
+  check_player() {
+    const player = World.GAME_OBJECTS.find(
+      (item) => item.x === this.x && item.y === this.y && item.char === "A"
+    );
+
+    if (player && !this.activated) {
+      this.finished = true;
+      player.bombs++;
+    }
   }
 
   updateState() {
     super.updateState();
+    this.check_player();
     if (this.activated) this.count--;
     if (this.count <= 0) this.detonate();
   }

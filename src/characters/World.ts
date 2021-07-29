@@ -153,10 +153,6 @@ class World {
       this.GAME_OBJECTS.forEach((item) => {
         if (item.x === player.x && item.y === player.y) {
           if ([".", "*"].includes(item.char)) item.collect();
-          else if (item.char === "%" && !item.activated) {
-            item.collect();
-            player.bombs++;
-          }
         }
       });
 
