@@ -143,19 +143,6 @@ class World {
   }
 
   updateMap() {
-    const player = this.GAME_OBJECTS.find((item) => item.char === "A");
-
-    if (player && player.finished) {
-      this.last_player_x = player.x;
-      this.last_player_y = player.y;
-    }
-    if (player)
-      this.GAME_OBJECTS.forEach((item) => {
-        if (item.x === player.x && item.y === player.y) {
-          if ([".", "*"].includes(item.char)) item.collect();
-        }
-      });
-
     this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
       return !item.finished;
     });
