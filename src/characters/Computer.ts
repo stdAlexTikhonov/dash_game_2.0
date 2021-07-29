@@ -87,11 +87,18 @@ export default class Bug extends GameObject {
     const left = this.find_left();
     const right = this.find_right();
 
-    if (up && up.char === "A" && up.direction === "DOWN") this.activate();
-    if (down && down.char === "A" && down.direction === "UP") this.activate();
-    if (left && left.char === "A" && left.direction === "RIGHT")
+    if (up && up.char === "A" && up.direction === "DOWN" && up.action)
       this.activate();
-    if (right && right.char === "A" && right.direction === "LEFT")
+    if (down && down.char === "A" && down.direction === "UP" && down.action)
+      this.activate();
+    if (left && left.char === "A" && left.direction === "RIGHT" && left.action)
+      this.activate();
+    if (
+      right &&
+      right.char === "A" &&
+      right.direction === "LEFT" &&
+      right.action
+    )
       this.activate();
   }
 
