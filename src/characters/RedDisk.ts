@@ -15,13 +15,53 @@ export default class RedDisc extends Bomb {
   }
 
   check_player() {
-    const player = World.GAME_OBJECTS.find(
-      (item) => item.x === this.x && item.y === this.y && item.char === "A"
-    );
+    const { player } = World;
 
-    if (player && !this.activated) {
-      this.finished = true;
-      player.bombs++;
+    if (player) {
+      if (player!.x === this.x && player!.y === this.y && !this.activated) {
+        this.finished = true;
+        player!.bombs++;
+      }
+
+      if (
+        player.x === this.x &&
+        player.y === this.y + 1 &&
+        player.action &&
+        player.direction === "UP"
+      ) {
+        this.finished = true;
+        player!.bombs++;
+      }
+
+      if (
+        player.x === this.x &&
+        player.y === this.y - 1 &&
+        player.action &&
+        player.direction === "DOWN"
+      ) {
+        this.finished = true;
+        player!.bombs++;
+      }
+
+      if (
+        player.x === this.x - 1 &&
+        player.y === this.y &&
+        player.action &&
+        player.direction === "RIGHT"
+      ) {
+        this.finished = true;
+        player!.bombs++;
+      }
+
+      if (
+        player.x === this.x + 1 &&
+        player.y === this.y &&
+        player.action &&
+        player.direction === "LEFT"
+      ) {
+        this.finished = true;
+        player!.bombs++;
+      }
     }
   }
 

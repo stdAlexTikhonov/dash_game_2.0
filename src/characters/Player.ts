@@ -265,6 +265,9 @@ export class Player extends Bomb {
 
       if (this.direction !== null)
         this.move_action(up_object, down_object, left_object, right_object);
+
+      World.last_player_x = this.x;
+      World.last_player_y = this.y;
     }
   }
 
