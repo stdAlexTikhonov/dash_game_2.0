@@ -7,10 +7,38 @@ const BLOCK_WIDTH = 32;
 
 export default class Bug extends GameObject {
   img: HTMLImageElement = new Image();
+  activate: boolean = false;
+  counter: number = 0;
+  state: number = 0;
+  random: number = Math.random() * 21 + 10;
 
   constructor(y: number, x: number) {
     super(y, x, "B");
     this.img.src = bug;
+  }
+
+  check_player() {
+    const { player } = World;
+
+    if (player) {
+      if (player.x === this.x && player.y === this.y)
+        if (this.activate) this.finished = true;
+        else player.detonate();
+    }
+  }
+
+  updateState() {
+    this.check_player();
+    if (!this.activate && this.state === 5) this.activate = true;
+
+    if (this.activate) {
+      if (this.counter < this.random) {
+        this.counter++;
+      } else {
+        this.counter = 0;
+        this.activate = false;
+      }
+    }
   }
 
   draw(
@@ -21,7 +49,7 @@ export default class Bug extends GameObject {
     viewport_start_x: number,
     value: number
   ) {
-    const state6 = World.counter % 6;
+    this.state = World.counter % 6;
     const { pos_y, pos_x } = getPosition(
       direction,
       animation,
@@ -32,7 +60,7 @@ export default class Bug extends GameObject {
 
     context!.drawImage(
       this.img,
-      state6 * BLOCK_WIDTH,
+      this.activate ? 0 : this.state * BLOCK_WIDTH,
       0,
       BLOCK_WIDTH,
       BLOCK_WIDTH,
