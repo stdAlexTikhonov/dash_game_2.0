@@ -194,75 +194,100 @@ export class Player extends Bomb {
     if (right_object) right_object.move_right = false;
     if (left_object) left_object.move_left = false;
 
-    if (this.direction === null) {
-      this.dy = 1;
-      this.move_state = false;
-    }
+    if (this.action) {
+      this.put_bomb();
+      this.dy = 4;
+    } else {
+      if (this.direction === null) {
+        this.dy = 1;
+        this.move_state = false;
+      }
 
-    if (this.direction === "UP" && this.y > 0) {
-      if (this.move) {
-        this.move = false;
-      } else if (this.dir_up || this.movable_up) {
-        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
-        this.y -= 1;
-        this.animation = true;
-        this.move = this.movable_up;
-        if (up_object) up_object.move_up = true;
-        this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
-        this.move_state = this.movable_up;
-        this.dy = this.move_state ? 5 : this.dy;
+      if (this.direction === "UP" && this.y > 0) {
+        if (this.move) {
+          this.move = false;
+        } else if (this.dir_up || this.movable_up) {
+          World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
+          this.y -= 1;
+          this.animation = true;
+          this.move = this.movable_up;
+          if (up_object) up_object.move_up = true;
+          this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
+          this.move_state = this.movable_up;
+          this.dy = this.move_state ? 5 : this.dy;
+        }
+      }
+
+      if (this.direction === "DOWN" && this.y < maxY) {
+        if (this.move) {
+          this.move = false;
+        } else if (this.dir_down || this.movable_down) {
+          World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
+          this.y += 1;
+          this.animation = true;
+          this.move = this.movable_down;
+          if (down_object) down_object.move_down = true;
+          this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
+          this.move_state = this.movable_down;
+          this.dy = this.move_state ? 3 : this.dy;
+        }
+      }
+
+      if (this.direction === "LEFT" && this.x > 0) {
+        if (this.move) {
+          this.move = false;
+        } else if (this.dir_left || this.movable_left) {
+          World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
+          this.x -= 1;
+          this.prev_horizontal_state = "LEFT";
+          this.animation = true;
+          this.move = this.movable_left;
+          if (left_object) left_object.move_left = true;
+          this.move_state = this.movable_left;
+          this.dy = this.move_state ? 5 : 0;
+        }
+      }
+
+      if (this.direction === "RIGHT" && this.x < maxX) {
+        if (this.move) {
+          this.move = false;
+        } else if (this.dir_right || this.movable_right) {
+          World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
+          this.prev_horizontal_state = "RIGHT";
+          this.x += 1;
+          this.animation = true;
+          this.move = this.movable_right;
+          if (right_object) right_object.move_right = true;
+          this.move_state = this.movable_right;
+          this.dy = this.move_state ? 3 : 2;
+        }
+      }
+
+      if (this.direction !== null)
+        this.move_action(up_object, down_object, left_object, right_object);
+
+      World.last_player_x = this.x;
+      World.last_player_y = this.y;
+    }
+  }
+
+  getState(state: number) {
+    if (this.action) {
+      switch (this.direction) {
+        case "UP":
+          return BLOCK_WIDTH;
+        case "LEFT":
+          return 4 * BLOCK_WIDTH;
+        case "DOWN":
+          return 2 * BLOCK_WIDTH;
+        case "RIGHT":
+          return 3 * BLOCK_WIDTH;
+        default:
+          return 0;
       }
     }
 
-    if (this.direction === "DOWN" && this.y < maxY) {
-      if (this.move) {
-        this.move = false;
-      } else if (this.dir_down || this.movable_down) {
-        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
-        this.y += 1;
-        this.animation = true;
-        this.move = this.movable_down;
-        if (down_object) down_object.move_down = true;
-        this.dy = this.prev_horizontal_state === "LEFT" ? 0 : 2;
-        this.move_state = this.movable_down;
-        this.dy = this.move_state ? 3 : this.dy;
-      }
-    }
-
-    if (this.direction === "LEFT" && this.x > 0) {
-      if (this.move) {
-        this.move = false;
-      } else if (this.dir_left || this.movable_left) {
-        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
-        this.x -= 1;
-        this.prev_horizontal_state = "LEFT";
-        this.animation = true;
-        this.move = this.movable_left;
-        if (left_object) left_object.move_left = true;
-        this.move_state = this.movable_left;
-        this.dy = this.move_state ? 5 : 0;
-      }
-    }
-
-    if (this.direction === "RIGHT" && this.x < maxX) {
-      if (this.move) {
-        this.move = false;
-      } else if (this.dir_right || this.movable_right) {
-        World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
-        this.prev_horizontal_state = "RIGHT";
-        this.x += 1;
-        this.animation = true;
-        this.move = this.movable_right;
-        if (right_object) right_object.move_right = true;
-        this.move_state = this.movable_right;
-        this.dy = this.move_state ? 3 : 2;
-      }
-    }
-
-    if (this.direction !== null)
-      this.move_action(up_object, down_object, left_object, right_object);
-
-    if (this.action) this.put_bomb();
+    return this.move_state ? 0 : state * BLOCK_WIDTH;
   }
 
   draw(
@@ -276,7 +301,7 @@ export class Player extends Bomb {
     const state3 = World.counter % 3;
     context!.drawImage(
       this.img,
-      this.move_state ? 0 : state3 * BLOCK_WIDTH,
+      this.getState(state3),
       this.dy * BLOCK_WIDTH,
       BLOCK_WIDTH,
       BLOCK_WIDTH,

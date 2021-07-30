@@ -93,18 +93,18 @@ class World {
     context.fillStyle = "black";
     context.fillRect(0, 0, this.viewport_w, this.viewport_h);
 
-    const player = this.GAME_OBJECTS.find((item) => item.char === "A");
-
     const viewport_start_x =
-      (player ? player.x : this.last_player_x) - Math.floor(this.width / 2);
+      (this.player ? this.player.x : this.last_player_x) -
+      Math.floor(this.width / 2);
     const viewport_start_y =
-      (player ? player.y : this.last_player_y) - Math.floor(this.height / 2);
+      (this.player ? this.player.y : this.last_player_y) -
+      Math.floor(this.height / 2);
 
     this.GAME_OBJECTS.forEach((elem) =>
       elem.draw(
         context,
-        player ? player.direction : "",
-        player ? player.animation : false,
+        this.player ? this.player.direction : "",
+        this.player ? this.player.animation : false,
         viewport_start_y,
         viewport_start_x,
         value
@@ -143,23 +143,6 @@ class World {
   }
 
   updateMap() {
-    const player = this.GAME_OBJECTS.find((item) => item.char === "A");
-
-    if (player && player.finished) {
-      this.last_player_x = player.x;
-      this.last_player_y = player.y;
-    }
-    if (player)
-      this.GAME_OBJECTS.forEach((item) => {
-        if (item.x === player.x && item.y === player.y) {
-          if ([".", "*"].includes(item.char)) item.collect();
-          else if (item.char === "%" && !item.activated) {
-            item.collect();
-            player.bombs++;
-          }
-        }
-      });
-
     this.GAME_OBJECTS = this.GAME_OBJECTS.filter((item) => {
       return !item.finished;
     });
@@ -168,6 +151,7 @@ class World {
   tick() {
     if (this.player2) this.player2.updateState();
     this.GAME_OBJECTS.sort((a, b) => b.y - a.y);
+    this.player = this.GAME_OBJECTS.find((item) => item.char === "A");
     this.GAME_OBJECTS.forEach((item) => item.updateState());
 
     this.updateMap();

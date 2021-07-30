@@ -2,6 +2,7 @@ import FallingObject from "./FallingObject";
 import food from "../assets/images/food.png";
 import { BLOCK_WIDTH } from "../utils/constansts";
 import infotron_sound from "../assets/audio/Infotron.mp3";
+import World from "./World";
 
 export default class Infotron extends FallingObject {
   img: HTMLImageElement = new Image();
@@ -13,6 +14,49 @@ export default class Infotron extends FallingObject {
     super(y, x, "*");
     this.img.src = food;
     Infotron.quantity += 1;
+  }
+
+  check_player() {
+    const { player } = World;
+    if (player) {
+      if (player!.x === this.x && player!.y === this.y) this.collect();
+
+      if (
+        player.x === this.x &&
+        player.y === this.y + 1 &&
+        player.action &&
+        player.direction === "UP"
+      ) {
+        this.collect();
+      }
+
+      if (
+        player.x === this.x &&
+        player.y === this.y - 1 &&
+        player.action &&
+        player.direction === "DOWN"
+      ) {
+        this.collect();
+      }
+
+      if (
+        player.x === this.x - 1 &&
+        player.y === this.y &&
+        player.action &&
+        player.direction === "RIGHT"
+      ) {
+        this.collect();
+      }
+
+      if (
+        player.x === this.x + 1 &&
+        player.y === this.y &&
+        player.action &&
+        player.direction === "LEFT"
+      ) {
+        this.collect();
+      }
+    }
   }
 
   collect() {
@@ -41,5 +85,10 @@ export default class Infotron extends FallingObject {
       this.left ? BLOCK_WIDTH : 0
     );
     this.state += 1;
+  }
+
+  updateState() {
+    super.updateState();
+    this.check_player();
   }
 }
