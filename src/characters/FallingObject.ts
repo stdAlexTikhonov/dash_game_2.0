@@ -61,7 +61,6 @@ export default class FallingObject extends GameObject {
     const under_object = World.GAME_OBJECTS.find(
       (item) => item.x === this.x && item.y === this.y + 1
     );
-
     if (under_object && under_object.detonate) under_object.detonate();
   }
 
