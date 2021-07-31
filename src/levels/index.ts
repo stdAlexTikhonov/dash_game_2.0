@@ -38,6 +38,17 @@ import LEVEL37 from "./level37";
 import LEVEL38 from "./level38";
 import LEVEL39 from "./level39";
 import LEVEL40 from "./level40";
+import LEVEL41 from "./level41";
+import LEVEL42 from "./level42";
+import LEVEL43 from "./level43";
+import LEVEL44 from "./level44";
+import LEVEL45 from "./level45";
+import LEVEL46 from "./level46";
+import LEVEL47 from "./level47";
+import LEVEL48 from "./level48";
+import LEVEL49 from "./level49";
+import LEVEL50 from "./level50";
+
 import TEST from "./test";
 
 const LEVELS = [
@@ -81,6 +92,16 @@ const LEVELS = [
   LEVEL38,
   LEVEL39,
   LEVEL40,
+  LEVEL41,
+  LEVEL42,
+  LEVEL43,
+  LEVEL44,
+  LEVEL45,
+  LEVEL46,
+  LEVEL47,
+  LEVEL48,
+  LEVEL49,
+  LEVEL50,
   TEST,
 ];
 
