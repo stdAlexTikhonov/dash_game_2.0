@@ -28,11 +28,13 @@ export class Player extends Bomb {
   move_state: boolean = false;
   bombs: number = 0;
   action: boolean = false;
+  add_empty: boolean;
 
   constructor(y: number, x: number, char: string) {
     super(y, x, char);
     this.dy = 1;
     this.direction = null;
+    this.add_empty = false;
     this.animation = false;
     this.img.src = merphy;
   }
@@ -128,6 +130,8 @@ export class Player extends Bomb {
     this.movable_right = right_object && right_object.movable_right;
     this.movable_up = up_object && up_object.movable_up;
 
+    this.add_empty = up_object && !up_object.falling;
+
     return {
       up_object,
       down_object,
@@ -176,7 +180,7 @@ export class Player extends Bomb {
     //   }
     // }
     super.updateState();
-
+    this.add_empty = false;
     const { up_object, down_object, left_object, right_object } =
       this.look_around();
     const state = store.getState();
@@ -207,7 +211,8 @@ export class Player extends Bomb {
         if (this.move) {
           this.move = false;
         } else if (this.dir_up || this.movable_up) {
-          World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
+          if (this.add_empty)
+            World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
           this.y -= 1;
           this.animation = true;
           this.move = this.movable_up;
@@ -222,7 +227,8 @@ export class Player extends Bomb {
         if (this.move) {
           this.move = false;
         } else if (this.dir_down || this.movable_down) {
-          World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
+          if (this.add_empty)
+            World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
           this.y += 1;
           this.animation = true;
           this.move = this.movable_down;
@@ -237,7 +243,8 @@ export class Player extends Bomb {
         if (this.move) {
           this.move = false;
         } else if (this.dir_left || this.movable_left) {
-          World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
+          if (this.add_empty)
+            World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
           this.x -= 1;
           this.prev_horizontal_state = "LEFT";
           this.animation = true;
@@ -252,7 +259,8 @@ export class Player extends Bomb {
         if (this.move) {
           this.move = false;
         } else if (this.dir_right || this.movable_right) {
-          World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
+          if (this.add_empty)
+            World.GAME_OBJECTS.push(new EmptyBlock(this.y, this.x));
           this.prev_horizontal_state = "RIGHT";
           this.x += 1;
           this.animation = true;
