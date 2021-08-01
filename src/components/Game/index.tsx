@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { Canvas } from "../Canvas";
 import { Dev } from "../DevelopmentMode";
-
+import { ControlPanel } from "../ControlPanel";
 import Box from "@material-ui/core/Box";
 import World from "../../characters/World";
 import { useAppSelector, useAppDispatch } from "../../hooks";
@@ -53,6 +53,7 @@ export const Game = () => {
     <Box display="flex" flexDirection="row-reverse">
       <Canvas player={1} />
       {multiplayer && <Canvas player={2} />}
+      <ControlPanel />
     </Box>
   );
 };

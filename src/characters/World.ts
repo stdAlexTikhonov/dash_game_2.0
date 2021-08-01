@@ -26,7 +26,13 @@ import PortalLeftRight from "./PortalLeftRight";
 import Explosion from "./Explosion";
 import Part from "./Part";
 import { store } from "../store/store";
-import { setPlayerReady } from "../store/playerSlice";
+import {
+  setPlayerReady,
+  setMaxScore,
+  resetScore,
+  resetBombs,
+} from "../store/playerSlice";
+import { resetTime } from "../store/gameSlice";
 
 class World {
   viewport_w: number = window.innerWidth;
@@ -162,6 +168,7 @@ class World {
     this.resetWorld();
     this.width = world_map[0].length;
     this.height = world_map.length;
+    Infotron.quantity = 0;
 
     world_map.forEach((row, y) => {
       row.forEach((cell, x) => {
@@ -209,12 +216,16 @@ class World {
     });
 
     this.GAME_OBJECTS.sort((a, b) => b.y - a.y);
+    store.dispatch(setMaxScore(Infotron.quantity));
   }
 
   resetWorld() {
     this.GAME_OBJECTS = [];
     this.player = null;
     this.player2 = null;
+    store.dispatch(resetScore());
+    store.dispatch(resetBombs());
+    store.dispatch(resetTime());
   }
 }
 

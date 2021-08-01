@@ -2,6 +2,8 @@ import Bomb from "./Bomb";
 import red_disk from "../assets/images/red_disk.png";
 import { BLOCK_WIDTH } from "../utils/constansts";
 import World from "./World";
+import { store } from "../store/store";
+import { addBomb } from "../store/playerSlice";
 export default class RedDisc extends Bomb {
   img: HTMLImageElement = new Image();
   activated: boolean = false;
@@ -21,6 +23,7 @@ export default class RedDisc extends Bomb {
       if (player!.x === this.x && player!.y === this.y && !this.activated) {
         this.finished = true;
         player!.bombs++;
+        store.dispatch(addBomb());
       }
 
       if (
@@ -31,6 +34,7 @@ export default class RedDisc extends Bomb {
       ) {
         this.finished = true;
         player!.bombs++;
+        store.dispatch(addBomb());
       }
 
       if (
@@ -41,6 +45,7 @@ export default class RedDisc extends Bomb {
       ) {
         this.finished = true;
         player!.bombs++;
+        store.dispatch(addBomb());
       }
 
       if (
@@ -51,6 +56,7 @@ export default class RedDisc extends Bomb {
       ) {
         this.finished = true;
         player!.bombs++;
+        store.dispatch(addBomb());
       }
 
       if (
@@ -61,6 +67,7 @@ export default class RedDisc extends Bomb {
       ) {
         this.finished = true;
         player!.bombs++;
+        store.dispatch(addBomb());
       }
     }
   }
