@@ -3,6 +3,8 @@ import food from "../assets/images/food.png";
 import { BLOCK_WIDTH } from "../utils/constansts";
 import infotron_sound from "../assets/audio/Infotron.mp3";
 import World from "./World";
+import { store } from "../store/store";
+import { addScore } from "../store/playerSlice";
 
 export default class Infotron extends FallingObject {
   img: HTMLImageElement = new Image();
@@ -60,7 +62,7 @@ export default class Infotron extends FallingObject {
   }
 
   collect() {
-    Infotron.quantity -= 1;
+    store.dispatch(addScore());
     Infotron.collect_audio.currentTime = 0;
     Infotron.collect_audio.play();
     this.finished = true;

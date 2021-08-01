@@ -3,6 +3,8 @@ import Typography from "@material-ui/core/Typography";
 import image from "../../assets/images/infotron.png";
 import bomb from "../../assets/images/bomb.png";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { useAppSelector } from "../../hooks";
+import { getScore, getMaxScore } from "../../store/playerSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,6 +26,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const ControlPanel = () => {
   const classes = useStyles();
+  const score = useAppSelector(getScore);
+  const max_score = useAppSelector(getMaxScore);
 
   return (
     <Box
@@ -46,7 +50,7 @@ export const ControlPanel = () => {
       <Box className={classes.block}>
         <img src={image} alt="infotron" width={18} height={18} />
         <Typography variant="h5" className={classes.text}>
-          00/00
+          {score} / {max_score}
         </Typography>
       </Box>
       <Box className={classes.block}>

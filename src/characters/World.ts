@@ -26,7 +26,7 @@ import PortalLeftRight from "./PortalLeftRight";
 import Explosion from "./Explosion";
 import Part from "./Part";
 import { store } from "../store/store";
-import { setPlayerReady } from "../store/playerSlice";
+import { setPlayerReady, setMaxScore } from "../store/playerSlice";
 
 class World {
   viewport_w: number = window.innerWidth;
@@ -209,6 +209,7 @@ class World {
     });
 
     this.GAME_OBJECTS.sort((a, b) => b.y - a.y);
+    store.dispatch(setMaxScore(Infotron.quantity));
   }
 
   resetWorld() {
