@@ -53,11 +53,17 @@ export const playerSlice = createSlice({
     addScore: (state) => {
       state.score += 1;
     },
+    resetScore: (state) => {
+      state.score = 0;
+    },
     addBomb: (state) => {
       state.bombs++;
     },
     putBomb: (state) => {
       state.bombs--;
+    },
+    resetBombs: (state) => {
+      state.bombs = 0;
     },
     // incrementByAmount: (state, action: PayloadAction<number>) => {
     //   state.value += action.payload;
@@ -78,6 +84,8 @@ export const {
   addScore,
   addBomb,
   putBomb,
+  resetScore,
+  resetBombs,
 } = playerSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

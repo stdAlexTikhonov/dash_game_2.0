@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     block: {
       background: "black",
       padding: 5,
-      width: 90,
+      width: 100,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
