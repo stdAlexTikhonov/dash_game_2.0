@@ -5,7 +5,7 @@ import World from "./World";
 import merphy from "../assets/images/merphy.png";
 import { getPosition, getPlayerPosition } from "../utils/helpers";
 import { store } from "../store/store";
-import { getUserInput, getUserAction } from "../store/playerSlice";
+import { getUserInput, getUserAction, putBomb } from "../store/playerSlice";
 import MovableObject from "./MovableObject";
 
 const BLOCK_WIDTH = 32;
@@ -156,6 +156,7 @@ export class Player extends Bomb {
     if (this.bombs > 0) {
       World.GAME_OBJECTS.push(new RedDisc(this.y, this.x, true));
       this.bombs--;
+      store.dispatch(putBomb());
     }
   }
 

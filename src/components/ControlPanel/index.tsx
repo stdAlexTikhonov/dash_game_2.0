@@ -4,7 +4,7 @@ import image from "../../assets/images/infotron.png";
 import bomb from "../../assets/images/bomb.png";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useAppSelector } from "../../hooks";
-import { getScore, getMaxScore } from "../../store/playerSlice";
+import { getScore, getMaxScore, getBombs } from "../../store/playerSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,6 +28,7 @@ export const ControlPanel = () => {
   const classes = useStyles();
   const score = useAppSelector(getScore);
   const max_score = useAppSelector(getMaxScore);
+  const bombs = useAppSelector(getBombs);
 
   return (
     <Box
@@ -56,7 +57,7 @@ export const ControlPanel = () => {
       <Box className={classes.block}>
         <img src={bomb} alt="bombs" width={18} height={18} />
         <Typography variant="h5" className={classes.text}>
-          0
+          {bombs}
         </Typography>
       </Box>
     </Box>
