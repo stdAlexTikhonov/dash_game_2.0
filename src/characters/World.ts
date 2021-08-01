@@ -32,7 +32,7 @@ import {
   resetScore,
   resetBombs,
 } from "../store/playerSlice";
-import { updateTime, resetTime } from "../store/gameSlice";
+import { resetTime } from "../store/gameSlice";
 
 class World {
   viewport_w: number = window.innerWidth;
@@ -162,7 +162,6 @@ class World {
 
     this.updateMap();
     this.counter++;
-    store.dispatch(updateTime());
   }
 
   setMap(world_map: string[][]) {

@@ -5,7 +5,7 @@ import bomb from "../../assets/images/bomb.png";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useAppSelector } from "../../hooks";
 import { getScore, getMaxScore, getBombs } from "../../store/playerSlice";
-import { getTime } from "../../store/gameSlice";
+import { Timer } from "../Timer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,16 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const format_value = (value: number) => (value >= 10 ? value : "0" + value);
-
 export const ControlPanel = () => {
   const classes = useStyles();
   const score = useAppSelector(getScore);
   const max_score = useAppSelector(getMaxScore);
   const bombs = useAppSelector(getBombs);
-  const time = useAppSelector(getTime);
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
 
   return (
     <Box
@@ -50,9 +45,7 @@ export const ControlPanel = () => {
         alignItems="center"
         display="flex"
       >
-        <Typography variant="h5" className={classes.text}>
-          {format_value(minutes)}:{format_value(seconds)}
-        </Typography>
+        <Timer />
       </Box>
       <Box className={classes.block}>
         <img src={image} alt="infotron" width={18} height={18} />
