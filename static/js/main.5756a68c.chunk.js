@@ -168,7 +168,7 @@
             e
           );
         })(m);
-      w.audio = new Audio("/dash_game_2.0" + O);
+      w.audio = new Audio(O);
       var B = (function (A) {
           Object(g.a)(e, A);
           var t = Object(f.a)(e);
@@ -906,7 +906,7 @@
             e
           );
         })(m);
-      fA.ground_sound = new Audio("/dash_game_2.0" + gA);
+      fA.ground_sound = new Audio(gA);
       var vA = e.p + "dash_game_2.0/static/media/fall.0543545c.mp3",
         xA = (function (A) {
           Object(g.a)(e, A);
@@ -1068,7 +1068,7 @@
             e
           );
         })(m);
-      xA.audio = new Audio("/dash_game_2.0" + vA);
+      xA.audio = new Audio(vA);
       var EA = e.p + "dash_game_2.0/static/media/move.86e9c66a.mp3",
         bA = (function (A) {
           Object(g.a)(e, A);
@@ -1180,7 +1180,7 @@
             e
           );
         })(xA);
-      bA.move_sound = new Audio("/dash_game_2.0" + EA);
+      bA.move_sound = new Audio(EA);
       var mA = (function (A) {
           Object(g.a)(e, A);
           var t = Object(f.a)(e);
@@ -1305,7 +1305,7 @@
             e
           );
         })(xA);
-      (BA.quantity = 0), (BA.collect_audio = new Audio("/dash_game_2.0" + wA));
+      (BA.quantity = 0), (BA.collect_audio = new Audio(wA));
       var jA = (function (A) {
           Object(g.a)(e, A);
           var t = Object(f.a)(e);
@@ -1768,7 +1768,7 @@
             e
           );
         })(IA);
-      SA.audio = new Audio("/dash_game_2.0" + O);
+      SA.audio = new Audio(O);
       var RA = (function (A) {
           Object(g.a)(e, A);
           var t = Object(f.a)(e);
@@ -2163,7 +2163,7 @@
             e
           );
         })(m);
-      FA.move_sound = new Audio("/dash_game_2.0" + EA);
+      FA.move_sound = new Audio(EA);
       var PA = (function (A) {
           Object(g.a)(e, A);
           var t = Object(f.a)(e);
