@@ -3034,7 +3034,7 @@
           Object(i.useEffect)(function () {
             A(W()),
               console.log("/dash_game_2.0" + tt[t]),
-              fetch("/dash_game_2.0" + tt[t])
+              fetch(tt[t])
                 .then(function (A) {
                   return A.text();
                 })
