@@ -3042,6 +3042,7 @@
                   var t = A.split("\r\n").map(function (A) {
                     return A.split("");
                   });
+                  console.log(t);
                   At.setMap(t);
                 });
           }, []);
