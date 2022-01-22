@@ -73,9 +73,9 @@
     "static/media/test.f878dbd9.bin": "/dash_game_2.0/static/media/test.f878dbd9.bin"
   },
   "entrypoints": [
-    "static/js/runtime-main.cd1030ba.js",
-    "static/js/2.6ad4a902.chunk.js",
-    "static/css/main.6c905bbd.chunk.css",
-    "static/js/main.14b1c635.chunk.js"
+    "/dash_game_2.0/static/js/runtime-main.cd1030ba.js",
+    "/dash_game_2.0/static/js/2.6ad4a902.chunk.js",
+    "/dash_game_2.0/static/css/main.6c905bbd.chunk.css",
+    "/dash_game_2.0/static/js/main.14b1c635.chunk.js"
   ]
 }
