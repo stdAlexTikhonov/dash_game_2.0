@@ -3040,7 +3040,7 @@
                 })
                 .then(function (A) {
                   console.log(A);
-                  var t = A.split("\r\n").map(function (A) {
+                  var t = A.split("&&").map(function (A) {
                     return A.split("");
                   });
 
