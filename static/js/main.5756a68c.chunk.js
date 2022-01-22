@@ -3584,7 +3584,7 @@
       }
       var de = e(81),
         le = e.p + "dash_game_2.0/static/media/background.7e2eb9ba.mp3",
-        pe = new de.Howl({ src: ["/dash_game_2.0" + le] }),
+        pe = new de.Howl({ src: [le] }),
         ye = function () {
           var A = at(J);
           return (
