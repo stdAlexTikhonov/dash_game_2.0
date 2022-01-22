@@ -3039,10 +3039,11 @@
                   return A.text();
                 })
                 .then(function (A) {
+                  console.log(A);
                   var t = A.split("\r\n").map(function (A) {
                     return A.split("");
                   });
-                  console.log(t);
+
                   At.setMap(t);
                 });
           }, []);
