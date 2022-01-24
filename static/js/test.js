@@ -2,7 +2,7 @@ document.addEventListener(
   "keydown",
   function (e) {
     if (e.key === "Enter") {
-      elem
+      document.documentElement
         .requestFullscreen({ navigationUI: "hide" })
         .then(() => {})
         .catch((err) => {
