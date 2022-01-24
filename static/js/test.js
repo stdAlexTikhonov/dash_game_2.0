@@ -4,7 +4,7 @@ window.onload = () => {
   goFS.addEventListener(
     "click",
     function () {
-      document.body.requestFullscreen();
+      document.body.webkitRequestFullScreen();
     },
     false
   );
