@@ -1,4 +1,4 @@
-document.onload = () => {
+window.onload = () => {
   const confirmation = confirm("Развернуть приложение на полный экран?");
 
   if (confirmation) {
