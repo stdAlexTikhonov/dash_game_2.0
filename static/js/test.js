@@ -1,4 +1,4 @@
-window.onload = () => {
+document.body.ontouchstart = () => {
   const confirmation = confirm("Развернуть приложение на полный экран?");
 
   if (confirmation) {
