@@ -1,8 +1,10 @@
-var goFS = document.getElementById("goFS");
-goFS.addEventListener(
-  "click",
-  function () {
-    document.body.requestFullscreen();
-  },
-  false
-);
+window.onload = () => {
+  var goFS = document.getElementById("goFS");
+  goFS.addEventListener(
+    "click",
+    function () {
+      document.body.requestFullscreen();
+    },
+    false
+  );
+};
