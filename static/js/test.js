@@ -1,16 +1,14 @@
-document.addEventListener(
-  "keydown",
-  function (e) {
-    if (e.key === "Enter") {
-      document.documentElement
-        .requestFullscreen({ navigationUI: "hide" })
-        .then(() => {})
-        .catch((err) => {
-          alert(
-            `An error occurred while trying to switch into full-screen mode: ${err.message} (${err.name})`
-          );
-        });
-    }
-  },
-  false
-);
+document.onload = () => {
+  const confirmation = confirm("Развернуть приложение на полный экран?");
+
+  if (confirmation) {
+    document.documentElement
+      .requestFullscreen({ navigationUI: "hide" })
+      .then(() => {})
+      .catch((err) => {
+        alert(
+          `An error occurred while trying to switch into full-screen mode: ${err.message} (${err.name})`
+        );
+      });
+  }
+};
